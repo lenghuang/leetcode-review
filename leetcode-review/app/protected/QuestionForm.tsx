@@ -18,7 +18,7 @@ export default function QuestionForm() {
 
   if (!!questions?.total && !!questions?.questions) {
     return (
-      <div className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground rounded-md border-2 border-inherit p-8">
+      <div className="flex w-full flex-1 flex-col justify-center gap-2 rounded-md border-2 border-inherit p-8 text-foreground">
         <p className="text-md text-white">
           You&apos;ve got {questions.total} total questions solved! Including
           but not not limited to...
@@ -35,12 +35,12 @@ export default function QuestionForm() {
   }
 
   return (
-    <form className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
+    <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
       <label className="text-md" htmlFor="text">
         LEETCODE_SESSION
       </label>
       <input
-        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+        className="mb-6 rounded-md border bg-inherit px-4 py-2"
         name="LEETCODE_SESSION"
         placeholder="some really long garbled text"
         required
@@ -49,14 +49,14 @@ export default function QuestionForm() {
         csrftoken
       </label>
       <input
-        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+        className="mb-6 rounded-md border bg-inherit px-4 py-2"
         name="csrftoken"
         placeholder="some slightly less long garbled text"
         required
       />
       <SubmitButton
         formAction={formActionInternal}
-        className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+        className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground"
         pendingText="Loading..."
       >
         Get 10 of Your Solved LeetCode Questions

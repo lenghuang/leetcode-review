@@ -8,7 +8,7 @@ const endpoint = "https://leetcode.com/graphql";
 export const leetCodeRequest = async (
   query: RequestDocument,
   variables?: any,
-  cookies?: string
+  cookies?: string,
 ) => {
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
