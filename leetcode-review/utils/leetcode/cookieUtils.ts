@@ -3,8 +3,6 @@
 export const formDataToCookies = (formData: FormData): string => {
   const cookies: string[] = [];
 
-  console.log(formData);
-
   // Iterate over FormData entries
   for (const [key, value] of formData.entries()) {
     // Concatenate key-value pair

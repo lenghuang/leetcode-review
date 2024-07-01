@@ -15,6 +15,7 @@ export const getProblemSetQuestionList = async (formData: FormData) => {
         status: "AC",
       },
     },
-    formDataToCookies(formData)
+    formDataToCookies(formData),
   );
+  return data;
 };
