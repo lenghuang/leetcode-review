@@ -1,19 +1,17 @@
-import DeployButton from "@/components/DeployButton";
 import AuthButton from "@/components/AuthButton";
-import { createClient } from "@/utils/supabase/server";
-import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
+import DeployButton from "@/components/DeployButton";
 import Header from "@/components/Header";
+import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
+import { checkAuthAsync } from "@/utils/application/checkAuthAsync";
+import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function ProtectedPage() {
   const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await checkAuthAsync(supabase);
   if (!user) {
-    return redirect("/login");
+    redirect("/login");
   }
 
   return (
