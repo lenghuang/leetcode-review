@@ -1,9 +1,13 @@
 import Link from "next/link";
 
-export default function BackLink() {
+type Props = {
+  href?: string;
+};
+
+export default function BackLink({ href }: Props) {
   return (
     <Link
-      href="/"
+      href={href ?? "/"}
       className="group absolute left-8 top-8 flex items-center rounded-md bg-btn-background px-4 py-2 text-sm text-foreground no-underline hover:bg-btn-background-hover"
     >
       <svg

@@ -2,6 +2,7 @@
 
 import { SubmitButton } from "@/components/shared/SubmitButton";
 import { getProblemSetQuestionList } from "@/utils/leetcode/queries/getProblemSetQuestionList";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function QuestionForm() {
@@ -26,7 +27,14 @@ export default function QuestionForm() {
         <ul>
           {questions.questions.map((q, index) => (
             <li key={index}>
-              {q.title}, a question with {q.difficulty} difficulty.
+              {q.title}, a question with {q.difficulty} difficulty.{" "}
+              <Link
+                className="text-green-700 underline"
+                href={`/protected/question?slug=${q.titleSlug}`}
+              >
+                {" "}
+                See more.{" "}
+              </Link>
             </li>
           ))}
         </ul>
