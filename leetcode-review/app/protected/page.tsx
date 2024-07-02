@@ -1,8 +1,8 @@
 import { checkAuthAsync } from "@/utils/application/checkAuthAsync";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import BackLink from "../../components/shared/BackLink";
-import QuestionForm from "../../components/shared/QuestionForm";
+import { BackLink } from "../../components/shared/BackLink";
+import { QuestionForm } from "./QuestionForm";
 
 export default async function ProtectedPage() {
   const supabase = createClient();

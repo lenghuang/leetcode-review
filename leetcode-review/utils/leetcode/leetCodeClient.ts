@@ -1,6 +1,10 @@
 // leetCodeClient.ts
 
 import { GraphQLClient, RequestDocument } from "graphql-request";
+import {
+  getLeetcodeCookieString,
+  isSyncedToLeetCode,
+} from "../application/cookies";
 
 // Define your GraphQL endpoint
 const endpoint = "https://leetcode.com/graphql";
@@ -8,11 +12,14 @@ const endpoint = "https://leetcode.com/graphql";
 export const leetCodeRequest = async (
   query: RequestDocument,
   variables?: any,
-  cookies?: string,
 ) => {
+  if (!isSyncedToLeetCode()) {
+    throw new Error("Not logged in to leetcode");
+  }
+
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
-      Cookie: cookies ?? "",
+      Cookie: getLeetcodeCookieString() ?? "",
     },
   });
 

@@ -4,7 +4,7 @@ type Props = {
   href?: string;
 };
 
-export default function BackLink({ href }: Props) {
+export const BackLink = ({ href }: Props) => {
   return (
     <Link
       href={href ?? "/"}
@@ -27,4 +27,4 @@ export default function BackLink({ href }: Props) {
       Back
     </Link>
   );
-}
+};
