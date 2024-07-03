@@ -14,7 +14,7 @@ export const leetCodeRequest = async (
   variables?: any,
 ) => {
   if (!isSyncedToLeetCode()) {
-    throw new Error("Not logged in to leetcode");
+    console.error("Not logged in to leetcode");
   }
 
   const graphQLClient = new GraphQLClient(endpoint, {
@@ -28,6 +28,7 @@ export const leetCodeRequest = async (
     return data;
   } catch (error) {
     console.error("GraphQL request error:", error);
-    throw new Error("Failed to fetch data");
   }
+
+  return null;
 };

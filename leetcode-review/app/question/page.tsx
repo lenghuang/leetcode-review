@@ -1,18 +1,23 @@
 import { BackLink } from "@/components/shared/BackLink";
 import { checkAuthAsync } from "@/utils/application/checkAuthAsync";
-import { submissionListQuery } from "@/utils/leetcode/graphql/submissionList";
+import {
+  SubmissionListQueryResponse,
+  getSubmissionListVariables,
+  submissionListQuery,
+} from "@/utils/leetcode/graphql/submission-list";
+
 import { leetCodeRequest } from "@/utils/leetcode/leetCodeClient";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-const getSubmissions = async (slug: string) => {
-  const data = await leetCodeRequest(submissionListQuery, {
-    questionSlug: slug,
-    offset: 0,
-    limit: 5,
-    lastKey: null,
-  });
-  return data;
+const getSubmissions = async (
+  slug: string,
+): Promise<SubmissionListQueryResponse> => {
+  const data = await leetCodeRequest(
+    submissionListQuery,
+    getSubmissionListVariables(slug),
+  );
+  return data as SubmissionListQueryResponse;
 };
 
 export default async function QuestionPage({
@@ -35,7 +40,7 @@ export default async function QuestionPage({
     <div className="flex min-h-screen flex-col">
       {/* Navigation or Header */}
       <header className="px-8 py-12">
-        <BackLink href="/protected" />
+        <BackLink href="/dashboard" />
       </header>
 
       {/* Title */}

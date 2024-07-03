@@ -1,18 +1,17 @@
-import { problemsetQuestionListQuery } from "@/utils/leetcode/graphql/problemsetQuestionList";
+import {
+  ProblemsetQuestionListResponse,
+  getProblemsetQuestionListVariables,
+  problemsetQuestionListQuery,
+} from "@/utils/leetcode/graphql/problemset-question-list";
 import { leetCodeRequest } from "@/utils/leetcode/leetCodeClient";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ProblemsetQuestionListResponse } from "./QuestionForm.types";
 
 const getQuestions = async (): Promise<ProblemsetQuestionListResponse> => {
-  const data = await leetCodeRequest(problemsetQuestionListQuery, {
-    categorySlug: "all-code-essentials",
-    skip: 0,
-    limit: 10,
-    filters: {
-      status: "AC",
-    },
-  });
+  const data = await leetCodeRequest(
+    problemsetQuestionListQuery,
+    getProblemsetQuestionListVariables(),
+  );
   return data as ProblemsetQuestionListResponse;
 };
 
@@ -34,7 +33,7 @@ export const QuestionForm = async () => {
               {q.title}, a question with {q.difficulty} difficulty.{" "}
               <Link
                 className="text-green-700 underline"
-                href={`/protected/question?slug=${q.titleSlug}`}
+                href={`/question?slug=${q.titleSlug}`}
               >
                 {" "}
                 See more.
