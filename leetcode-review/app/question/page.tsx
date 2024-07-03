@@ -64,7 +64,9 @@ export default async function QuestionPage({
           <p className="mb-2 mt-4 text-lg lg:text-xl">
             5 of your submissions for this question.
           </p>
-          <SubmissionView submissions={submissions} />
+          <div className="flex-none">
+            <SubmissionView submissions={submissions} />
+          </div>
         </div>
       </main>
 

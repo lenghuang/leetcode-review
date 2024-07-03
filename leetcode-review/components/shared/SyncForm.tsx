@@ -20,6 +20,11 @@ export default function SyncForm() {
     redirect("/sync");
   };
 
+  const redirectToDashboard = async () => {
+    "use server";
+    redirect("/dashboard");
+  };
+
   const synced =
     cookies().has(csrftokenCookieName) && cookies().has(lcSessionCookieName);
 
@@ -45,8 +50,15 @@ export default function SyncForm() {
           </div>{" "}
         </div>
         <SubmitButton
+          formAction={redirectToDashboard}
+          className="mb-2 rounded-md bg-green-700 px-4 py-2 text-background"
+          pendingText="Loading..."
+        >
+          Go To Dashboard
+        </SubmitButton>
+        <SubmitButton
           formAction={deleteCookieAction}
-          className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground"
+          className="mb-2 rounded-md bg-green-200 px-4 py-2 text-foreground"
           pendingText="Loading..."
         >
           Delete Your Cookies

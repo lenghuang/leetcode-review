@@ -5,12 +5,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SubmissionListSubmissions } from "@/utils/leetcode/graphql/submission-list";
+import { SubmissionViewDetail } from "./SubmissionViewDetail";
 
 type SumbissionViewProps = {
   submissions: SubmissionListSubmissions;
 };
 
-export const SubmissionView = ({ submissions }: SumbissionViewProps) => {
+export const SubmissionView = async ({ submissions }: SumbissionViewProps) => {
   return (
     <Accordion type="single" collapsible className="w-full">
       {submissions.map((sub) => {
@@ -29,7 +30,9 @@ export const SubmissionView = ({ submissions }: SumbissionViewProps) => {
                 <p>{status}</p>
               )}
             </AccordionTrigger>
-            <AccordionContent> your mom</AccordionContent>
+            <AccordionContent>
+              <SubmissionViewDetail submissionId={sub.id} />{" "}
+            </AccordionContent>
           </AccordionItem>
         );
       })}
