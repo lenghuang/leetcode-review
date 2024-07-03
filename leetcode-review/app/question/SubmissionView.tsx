@@ -21,7 +21,7 @@ export const SubmissionView = async ({ submissions }: SumbissionViewProps) => {
           <AccordionItem key={sub.id} value={sub.id}>
             <AccordionTrigger>
               <p>
-                [{dateObject.toLocaleDateString()}
+                [{dateObject.toLocaleDateString()}{" "}
                 {dateObject.toLocaleTimeString()}] [{sub.langName}]
               </p>
               {status === "Accepted" ? (
