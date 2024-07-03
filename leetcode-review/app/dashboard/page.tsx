@@ -21,10 +21,10 @@ export default async function ProtectedPage() {
 
       {/* Title */}
       <section className="py-12 text-center">
-        <h1 className="text-3xl font-bold leading-tight text-white lg:text-4xl">
+        <h1 className="text-3xl font-bold leading-tight lg:text-4xl">
           LeetCode Review
         </h1>
-        <p className="mt-4 text-lg text-white lg:text-xl">
+        <p className="mt-4 text-lg lg:text-xl">
           The best way to review solved LeetCode questions, on the go.
         </p>
       </section>

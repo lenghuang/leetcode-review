@@ -5,10 +5,10 @@ import {
   getSubmissionListVariables,
   submissionListQuery,
 } from "@/utils/leetcode/graphql/submission-list";
-
 import { leetCodeRequest } from "@/utils/leetcode/leetCodeClient";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { SubmissionView } from "./SubmissionView";
 
 const getSubmissions = async (
   slug: string,
@@ -33,7 +33,7 @@ export default async function QuestionPage({
   }
 
   const {
-    questionSubmissionList: { lastKey, hasNext, submissions },
+    questionSubmissionList: { submissions },
   } = await getSubmissions(searchParams?.slug);
 
   return (
@@ -45,10 +45,10 @@ export default async function QuestionPage({
 
       {/* Title */}
       <section className="py-12 text-center">
-        <h1 className="text-3xl font-bold leading-tight text-white lg:text-4xl">
+        <h1 className="text-3xl font-bold leading-tight lg:text-4xl">
           LeetCode Review
         </h1>
-        <p className="mt-4 text-lg text-white lg:text-xl">
+        <p className="e mt-4 text-lg lg:text-xl">
           The best way to review solved LeetCode questions, on the go.
         </p>
       </section>
@@ -61,26 +61,10 @@ export default async function QuestionPage({
               {searchParams.slug}
             </p>
           )}
-          <p className="mb-2 mt-4 text-lg text-white lg:text-xl">
+          <p className="mb-2 mt-4 text-lg lg:text-xl">
             5 of your submissions for this question.
           </p>
-          <ul>
-            {submissions.map((sub) => {
-              const dateObject = new Date(sub?.timestamp * 1000);
-              const status = sub?.statusDisplay;
-              return (
-                <li key={sub?.id}>
-                  [{dateObject.toLocaleDateString()}{" "}
-                  {dateObject.toLocaleTimeString()}] [{sub?.langName}] --{" "}
-                  {status === "Accepted" ? (
-                    <span className="text-green-700">{status}</span>
-                  ) : (
-                    status
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+          <SubmissionView submissions={submissions} />
         </div>
       </main>
 

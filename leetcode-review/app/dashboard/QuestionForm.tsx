@@ -23,7 +23,7 @@ export const QuestionForm = async () => {
   if (total && questions) {
     return (
       <div className="flex w-full flex-1 flex-col justify-center gap-2 rounded-md border-2 border-inherit p-8 text-foreground">
-        <p className="text-md text-white">
+        <p className="text-md">
           You&apos;ve got {total} total questions solved! Including but not not
           limited to...
         </p>
