@@ -1,6 +1,11 @@
 import { BackLink } from "@/components/shared/BackLink";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import {
+  QuestionContentQueryResponse,
+  getQuestionContentVariables,
+  questionContentQuery,
+} from "@/lib/leetcode/graphql/question-content";
+import {
   SubmissionListQueryResponse,
   getSubmissionListVariables,
   submissionListQuery,
@@ -8,6 +13,7 @@ import {
 import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { QuestionContentView } from "./QuestionContentView";
 import { SubmissionView } from "./SubmissionView";
 
 const getSubmissions = async (
@@ -18,6 +24,16 @@ const getSubmissions = async (
     getSubmissionListVariables(slug),
   );
   return data as SubmissionListQueryResponse;
+};
+
+const getQuestionContent = async (
+  slug: string,
+): Promise<QuestionContentQueryResponse> => {
+  const data = await leetCodeRequest(
+    questionContentQuery,
+    getQuestionContentVariables(slug),
+  );
+  return data as QuestionContentQueryResponse;
 };
 
 export default async function QuestionPage({
@@ -35,6 +51,10 @@ export default async function QuestionPage({
   const {
     questionSubmissionList: { submissions },
   } = await getSubmissions(searchParams?.slug);
+
+  const {
+    question: { content },
+  } = await getQuestionContent(searchParams?.slug);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -61,6 +81,9 @@ export default async function QuestionPage({
               {searchParams.slug}
             </p>
           )}
+          <div className="flex-none">
+            <QuestionContentView content={content} />
+          </div>
           <p className="mb-2 mt-4 text-lg lg:text-xl">
             5 of your submissions for this question.
           </p>
