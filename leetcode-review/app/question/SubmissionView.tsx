@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SubmissionListSubmissions } from "@/utils/leetcode/graphql/submission-list";
+import { SubmissionListSubmissions } from "@/lib/leetcode/graphql/submission-list";
 import { SubmissionViewDetail } from "./SubmissionViewDetail";
 
 type SumbissionViewProps = {

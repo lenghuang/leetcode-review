@@ -1,5 +1,5 @@
 import { SubmitButton } from "@/components/shared/SubmitButton";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";

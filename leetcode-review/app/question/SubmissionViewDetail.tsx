@@ -2,8 +2,8 @@ import {
   SubmissionDetailQueryResponse,
   getSubmissionDetailVariables,
   submissionDetailQuery,
-} from "@/utils/leetcode/graphql/submission-detail";
-import { leetCodeRequest } from "@/utils/leetcode/leetCodeClient";
+} from "@/lib/leetcode/graphql/submission-detail";
+import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
 
 const getSubmission = async (
   submissionId: string,

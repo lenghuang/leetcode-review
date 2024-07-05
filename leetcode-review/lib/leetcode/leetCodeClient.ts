@@ -1,10 +1,7 @@
 // leetCodeClient.ts
 
 import { GraphQLClient, RequestDocument } from "graphql-request";
-import {
-  getLeetcodeCookieString,
-  isSyncedToLeetCode,
-} from "../application/cookies";
+import { getLeetcodeCookieString, isSyncedToLeetCode } from "../auth/cookies";
 
 // Define your GraphQL endpoint
 const endpoint = "https://leetcode.com/graphql";

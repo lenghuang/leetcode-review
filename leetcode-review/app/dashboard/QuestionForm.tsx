@@ -2,8 +2,8 @@ import {
   ProblemsetQuestionListResponse,
   getProblemsetQuestionListVariables,
   problemsetQuestionListQuery,
-} from "@/utils/leetcode/graphql/problemset-question-list";
-import { leetCodeRequest } from "@/utils/leetcode/leetCodeClient";
+} from "@/lib/leetcode/graphql/problemset-question-list";
+import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 

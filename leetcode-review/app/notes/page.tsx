@@ -1,5 +1,5 @@
-import { checkAuthAsync } from "@/utils/application/checkAuthAsync";
-import { createClient } from "@/utils/supabase/server";
+import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function Page() {

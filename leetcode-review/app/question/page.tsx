@@ -1,12 +1,12 @@
 import { BackLink } from "@/components/shared/BackLink";
-import { checkAuthAsync } from "@/utils/application/checkAuthAsync";
+import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import {
   SubmissionListQueryResponse,
   getSubmissionListVariables,
   submissionListQuery,
-} from "@/utils/leetcode/graphql/submission-list";
-import { leetCodeRequest } from "@/utils/leetcode/leetCodeClient";
-import { createClient } from "@/utils/supabase/server";
+} from "@/lib/leetcode/graphql/submission-list";
+import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmissionView } from "./SubmissionView";
 

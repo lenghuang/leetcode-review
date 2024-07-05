@@ -1,7 +1,7 @@
 import Header from "@/components/tutorial/Header";
 import ConnectSupabaseSteps from "@/components/tutorial/tutorial-steps/ConnectSupabaseSteps";
 import SignUpUserSteps from "@/components/tutorial/tutorial-steps/SignUpUserSteps";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import AuthButton from "../components/tutorial/AuthButton";
 import DeployButton from "../components/tutorial/DeployButton";
 

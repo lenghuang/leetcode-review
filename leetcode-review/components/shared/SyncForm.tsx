@@ -1,5 +1,5 @@
 import { SubmitButton } from "@/components/shared/SubmitButton";
-import { setCookieFromFormData } from "@/utils/application/cookies";
+import { setCookieFromFormData } from "@/lib/auth/cookies";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
