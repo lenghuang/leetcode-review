@@ -1,9 +1,3 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { SubmissionListSubmissions } from "@/lib/leetcode/graphql/submission-list";
 import { SubmissionViewDetail } from "./SubmissionViewDetail";
 
@@ -13,13 +7,16 @@ type SumbissionViewProps = {
 
 export const SubmissionView = async ({ submissions }: SumbissionViewProps) => {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <div className="flex flex-col gap-4">
       {submissions.map((sub) => {
         const dateObject = new Date(sub.timestamp * 1000);
         const status = sub.statusDisplay;
         return (
-          <AccordionItem key={sub.id} value={sub.id}>
-            <AccordionTrigger>
+          <details
+            className="collapse-arrow collapse rounded border"
+            key={sub.id}
+          >
+            <summary className="collapse-title justify-between">
               <p>
                 [{dateObject.toLocaleDateString()}{" "}
                 {dateObject.toLocaleTimeString()}] [{sub.langName}]
@@ -29,13 +26,13 @@ export const SubmissionView = async ({ submissions }: SumbissionViewProps) => {
               ) : (
                 <p>{status}</p>
               )}
-            </AccordionTrigger>
-            <AccordionContent>
+            </summary>
+            <div className="collapse-content">
               <SubmissionViewDetail submissionId={sub.id} />{" "}
-            </AccordionContent>
-          </AccordionItem>
+            </div>
+          </details>
         );
       })}
-    </Accordion>
+    </div>
   );
 };
