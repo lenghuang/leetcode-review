@@ -13,8 +13,8 @@ import {
 import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { QuestionContentView } from "./QuestionContentView";
-import { SubmissionView } from "./SubmissionView";
+import { QuestionContentView } from "../../components/shared/QuestionContentView";
+import { SubmissionView } from "../../components/shared/SubmissionView";
 
 const getSubmissions = async (
   slug: string,

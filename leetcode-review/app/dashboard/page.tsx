@@ -2,9 +2,9 @@ import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { BackLink } from "../../components/shared/BackLink";
-import { QuestionForm } from "./QuestionForm";
+import { QuestionForm } from "../../components/shared/QuestionForm";
 
-export default async function ProtectedPage() {
+export default async function Dashboard() {
   const supabase = createClient();
 
   const user = await checkAuthAsync(supabase);
