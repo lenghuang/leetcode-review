@@ -16,7 +16,6 @@
     "*": "prettier --write"
   },
   "dependencies": {
-    "@heroicons/react": "^2.1.4",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.17",

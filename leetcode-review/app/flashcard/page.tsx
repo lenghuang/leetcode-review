@@ -7,23 +7,26 @@
 // www.youtube.com/watch?v=dP75Khfy4s4
 
 import { ExitQuestionIcon } from "@/components/shared/ExitQuestionIcon";
+import { RadialProgress } from "@/components/shared/RadialProgress";
 
 export default async function QuestionPage({
   searchParams,
 }: {
   searchParams: { slug: string };
 }) {
+  const progressValue = Math.floor(Math.random() * 101);
+
   return (
     <>
       {/* Progress Bar */}
-      <div className="flex w-full bg-red-50 p-4">
+      <div className="flex w-full items-center justify-between p-4">
         <ExitQuestionIcon slug={searchParams?.slug} />
+        <RadialProgress value={progressValue} />
       </div>
+
       {/* Question */}
-      <div className="flex w-full flex-1 bg-yellow-50 p-4">
-        {" "}
-        this is question content
-      </div>
+      <div className="flex w-full flex-1 p-4"> this is question content</div>
+
       {/* Hint */}
     </>
   );
