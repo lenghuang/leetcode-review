@@ -1,8 +1,11 @@
+import clsx from "clsx";
 import DOMPurify from "isomorphic-dompurify";
 import { QuestionExampleModal } from "./QuestionExampleModal";
 
 type QuestionContentViewProps = {
   content: string;
+  title: string;
+  difficulty: string;
 };
 
 type QuestionContentSplitObject = {
@@ -12,19 +15,23 @@ type QuestionContentSplitObject = {
 
 export const QuestionContentCompactView = ({
   content,
+  title,
+  difficulty,
 }: QuestionContentViewProps) => {
   const { questionHtmlString, otherInfoHtmlString } =
     breakStringAtExamples(content);
 
   return (
-    <div className="m-4">
-      <div className="bg-base-300 text-base-content h-fit rounded-lg border p-4">
+    <div className="mx-4">
+      <h1 className="mb-2 text-xl font-bold">{title}</h1>
+      <div className="bg-base-300 text-base-content relative h-fit rounded-lg border p-4">
         <div
-          className="[&_*]:text-pretty [&_*]:break-words"
+          className="[&_code]:bg-neutral [&_code]:text-neutral-content [&_pre]:text-neutral [&_*]:text-pretty [&_*]:break-words [&_code]:mx-0.5 [&_code]:rounded [&_code]:p-1 [&_code]:text-xs [&_li]:m-1 [&_pre]:my-2 [&_pre]:border-l-2 [&_pre]:pl-2 [&_pre]:text-sm"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(questionHtmlString),
           }}
         ></div>
+        <DifficultyBadge difficulty={difficulty} />
       </div>
       {!!otherInfoHtmlString && (
         <QuestionExampleModal content={otherInfoHtmlString} />
@@ -53,4 +60,18 @@ const breakStringAtExamples = (content: string): QuestionContentSplitObject => {
     questionHtmlString,
     otherInfoHtmlString,
   };
+};
+
+const DifficultyBadge = ({ difficulty }: { difficulty: string }) => {
+  const badgeColor = clsx({
+    "badge-success": difficulty === "Easy",
+    "badge-warning": difficulty === "Medium",
+    "badge-red": difficulty === "Hard",
+    "badge-accent": !["Easy", "Medium", "Hard"].includes(difficulty), // Fallback color
+  });
+  return (
+    <div className={clsx("badge absolute -right-2 -top-2 shadow", badgeColor)}>
+      {difficulty}
+    </div>
+  );
 };

@@ -44,7 +44,7 @@ export const QuestionExampleModal = ({ content }: { content: string }) => {
 const QuestionExampleText = ({ content }: { content: string }) => {
   return (
     <div
-      className="[&_code]:bg-base-300 [&_pre]:text-neutral [&_*]:text-pretty [&_*]:break-words [&_code]:rounded [&_code]:p-1 [&_code]:text-xs [&_li]:m-1 [&_pre]:my-2 [&_pre]:border-l-2 [&_pre]:pl-2 [&_pre]:text-sm"
+      className="[&_code]:bg-base-300 [&_pre]:text-neutral [&_*]:text-pretty [&_*]:break-words [&_code]:mx-0.5 [&_code]:rounded [&_code]:p-1 [&_code]:text-xs [&_li]:m-1 [&_pre]:my-2 [&_pre]:border-l-2 [&_pre]:pl-2 [&_pre]:text-sm"
       dangerouslySetInnerHTML={{
         __html: DOMPurify.sanitize(content),
       }}
