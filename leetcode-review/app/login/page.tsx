@@ -1,6 +1,5 @@
 import { SubmitButton } from "@/components/shared/SubmitButton";
 import { createClient } from "@/lib/supabase/server";
-import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -31,24 +30,26 @@ export default function Login({
   const signUp = async (formData: FormData) => {
     "use server";
 
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const supabase = createClient();
+    return redirect("/login?message=Could not authenticate user");
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    });
+    // const origin = headers().get("origin");
+    // const email = formData.get("email") as string;
+    // const password = formData.get("password") as string;
+    // const supabase = createClient();
 
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
+    // const { error } = await supabase.auth.signUp({
+    //   email,
+    //   password,
+    //   options: {
+    //     emailRedirectTo: `${origin}/auth/callback`,
+    //   },
+    // });
 
-    return redirect("/login?message=Check email to continue sign in process");
+    // if (error) {
+    //   return redirect("/login?message=Could not authenticate user");
+    // }
+
+    // return redirect("/login?message=Check email to continue sign in process");
   };
 
   return (

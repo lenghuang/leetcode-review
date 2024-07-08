@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export function ExitQuestionIcon({ slug }: { slug: string }) {
+export function ExitQuestionIcon() {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Link
       className="btn btn-ghost btn-square"
-      href={`/question?slug=${slug}`}
+      href={`/dashboard`}
       onClick={() => {
         setIsLoading(true);
       }}

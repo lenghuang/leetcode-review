@@ -31,19 +31,34 @@ const getQuestionTitle = async (
 export const getQuestionTitleAndContent = async (
   slug: string,
 ): Promise<{
-  questionContent: string;
-  questionTitle: string;
-  questionDifficulty: string;
+  questionContent: string | null;
+  questionTitle: string | null;
+  questionDifficulty: string | null;
+  questionFrontendId: string | null;
 }> => {
-  const {
-    question: { content },
-  } = await getQuestionContent(slug);
-  const {
-    question: { title, difficulty },
-  } = await getQuestionTitle(slug);
-  return {
-    questionContent: content,
-    questionTitle: title,
-    questionDifficulty: difficulty,
-  };
+  try {
+    const contentResponse = await getQuestionContent(slug);
+    const questionContent = contentResponse?.question?.content || null;
+
+    const titleResponse = await getQuestionTitle(slug);
+    const questionTitle = titleResponse?.question?.title || null;
+    const questionDifficulty = titleResponse?.question?.difficulty || null;
+    const questionFrontendId =
+      titleResponse?.question?.questionFrontendId || null;
+
+    return {
+      questionContent,
+      questionTitle,
+      questionDifficulty,
+      questionFrontendId,
+    };
+  } catch (error) {
+    console.error("Error fetching question data:", error);
+    return {
+      questionContent: null,
+      questionTitle: null,
+      questionDifficulty: null,
+      questionFrontendId: null,
+    };
+  }
 };

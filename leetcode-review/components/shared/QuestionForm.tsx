@@ -33,7 +33,7 @@ export const QuestionForm = async () => {
               {q.title}, a question with {q.difficulty} difficulty.{" "}
               <Link
                 className="text-info underline"
-                href={`/question?slug=${q.titleSlug}`}
+                href={`/flashcard?slug=${q.titleSlug}`}
               >
                 {" "}
                 See more.

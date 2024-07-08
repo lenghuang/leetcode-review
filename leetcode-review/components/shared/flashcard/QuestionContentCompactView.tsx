@@ -6,6 +6,7 @@ type QuestionContentViewProps = {
   content: string;
   title: string;
   difficulty: string;
+  questionId: string;
 };
 
 type QuestionContentSplitObject = {
@@ -17,16 +18,17 @@ export const QuestionContentCompactView = ({
   content,
   title,
   difficulty,
+  questionId,
 }: QuestionContentViewProps) => {
   const { questionHtmlString, otherInfoHtmlString } =
     breakStringAtExamples(content);
 
   return (
     <div className="mx-4">
-      <h1 className="mb-2 text-xl font-bold">{title}</h1>
-      <div className="bg-base-300 text-base-content relative h-fit rounded-lg border p-4">
+      <h1 className="mb-2 text-xl font-bold">{`${questionId}. ${title}`}</h1>
+      <div className="bg-base-200 text-base-content relative h-fit rounded-lg border p-4">
         <div
-          className="[&_code]:bg-neutral [&_code]:text-neutral-content [&_pre]:text-neutral [&_*]:text-pretty [&_*]:break-words [&_code]:mx-0.5 [&_code]:rounded [&_code]:p-1 [&_code]:text-xs [&_li]:m-1 [&_pre]:my-2 [&_pre]:border-l-2 [&_pre]:pl-2 [&_pre]:text-sm"
+          className="[&_code]:bg-base-300 [&_pre]:text-neutral [&_*]:text-pretty [&_*]:break-words [&_code]:mx-0.5 [&_code]:rounded [&_code]:p-1 [&_code]:text-xs [&_li]:m-1 [&_pre]:my-2 [&_pre]:border-l-2 [&_pre]:pl-2 [&_pre]:text-sm"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(questionHtmlString),
           }}
@@ -66,7 +68,7 @@ const DifficultyBadge = ({ difficulty }: { difficulty: string }) => {
   const badgeColor = clsx({
     "badge-success": difficulty === "Easy",
     "badge-warning": difficulty === "Medium",
-    "badge-red": difficulty === "Hard",
+    "badge-error": difficulty === "Hard",
     "badge-accent": !["Easy", "Medium", "Hard"].includes(difficulty), // Fallback color
   });
   return (
