@@ -7,7 +7,7 @@ export function ExitQuestionIcon({ slug }: { slug: string }) {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Link
-      className="btn btn-square btn-small"
+      className="btn btn-ghost btn-square"
       href={`/question?slug=${slug}`}
       onClick={() => {
         setIsLoading(true);

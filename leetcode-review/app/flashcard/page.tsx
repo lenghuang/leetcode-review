@@ -6,8 +6,25 @@
 // Then, make a Duolingo UI based on it
 // www.youtube.com/watch?v=dP75Khfy4s4
 
-import { ExitQuestionIcon } from "@/components/shared/ExitQuestionIcon";
-import { RadialProgress } from "@/components/shared/RadialProgress";
+import { ExitQuestionIcon } from "@/components/shared/flashcard/ExitQuestionIcon";
+import { QuestionContentCompactView } from "@/components/shared/flashcard/QuestionContentCompactView";
+import { RadialProgress } from "@/components/shared/flashcard/RadialProgress";
+import {
+  QuestionContentQueryResponse,
+  getQuestionContentVariables,
+  questionContentQuery,
+} from "@/lib/leetcode/graphql/question-content";
+import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
+
+const getQuestionContent = async (
+  slug: string,
+): Promise<QuestionContentQueryResponse> => {
+  const data = await leetCodeRequest(
+    questionContentQuery,
+    getQuestionContentVariables(slug),
+  );
+  return data as QuestionContentQueryResponse;
+};
 
 export default async function QuestionPage({
   searchParams,
@@ -15,6 +32,9 @@ export default async function QuestionPage({
   searchParams: { slug: string };
 }) {
   const progressValue = Math.floor(Math.random() * 101);
+  const {
+    question: { content },
+  } = await getQuestionContent(searchParams?.slug);
 
   return (
     <>
@@ -25,7 +45,9 @@ export default async function QuestionPage({
       </div>
 
       {/* Question */}
-      <div className="flex w-full flex-1 p-4"> this is question content</div>
+      <div className="flex w-full flex-1 flex-col">
+        <QuestionContentCompactView content={content} />
+      </div>
 
       {/* Hint */}
     </>

@@ -32,7 +32,7 @@ export const QuestionForm = async () => {
             <li key={index}>
               {q.title}, a question with {q.difficulty} difficulty.{" "}
               <Link
-                className="text-green-700 underline"
+                className="text-info underline"
                 href={`/question?slug=${q.titleSlug}`}
               >
                 {" "}
