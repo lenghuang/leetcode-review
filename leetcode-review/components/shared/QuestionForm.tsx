@@ -4,8 +4,8 @@ import {
   problemsetQuestionListQuery,
 } from "@/lib/leetcode/graphql/problemset-question-list";
 import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
-import Link from "next/link";
 import { redirect } from "next/navigation";
+import { LinkWithLoadingText } from "./LinkWithLoadingText";
 
 const getQuestions = async (): Promise<ProblemsetQuestionListResponse> => {
   const data = await leetCodeRequest(
@@ -31,13 +31,10 @@ export const QuestionForm = async () => {
           {questions.map((q, index) => (
             <li key={index}>
               {q.title}, a question with {q.difficulty} difficulty.{" "}
-              <Link
-                className="text-info underline"
-                href={`/flashcard?slug=${q.titleSlug}`}
-              >
+              <LinkWithLoadingText href={`/flashcard?slug=${q.titleSlug}`}>
                 {" "}
                 See more.
-              </Link>
+              </LinkWithLoadingText>
             </li>
           ))}
         </ul>
