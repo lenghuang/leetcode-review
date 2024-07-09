@@ -12,25 +12,28 @@ const getQuestions = async (): Promise<ProblemsetQuestionListResponse> => {
     problemsetQuestionListQuery,
     getProblemsetQuestionListVariables(),
   );
-  return data as ProblemsetQuestionListResponse;
+  return (data ?? {
+    problemsetQuestionList: null,
+  }) as ProblemsetQuestionListResponse;
 };
 
 export const QuestionForm = async () => {
-  const {
-    problemsetQuestionList: { total, questions },
-  } = await getQuestions();
+  const { problemsetQuestionList } = await getQuestions();
+  const total = problemsetQuestionList?.total;
+  const questions = problemsetQuestionList?.questions;
 
   if (total && questions) {
     return (
-      <div className="flex w-full flex-1 flex-col justify-center gap-2 rounded-md border-2 border-inherit p-8 text-foreground">
-        <p className="text-md">
+      <div className="bg-base-200 mx-4 my-8 flex flex-col justify-center gap-2 rounded-xl p-4">
+        <p className="font-semibold">
           You&apos;ve got {total} total questions solved! Including but not not
           limited to...
         </p>
-        <ul>
+        <ul className="list-disc pl-4">
           {questions.map((q, index) => (
             <li key={index}>
-              {q.title}, a question with {q.difficulty} difficulty.{" "}
+              <span className="text-neutral font-semibold">{q.title}</span>, a
+              question with {q.difficulty} difficulty.{" "}
               <LinkWithLoadingText href={`/flashcard?slug=${q.titleSlug}`}>
                 {" "}
                 See more.

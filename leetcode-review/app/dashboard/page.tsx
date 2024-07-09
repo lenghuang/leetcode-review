@@ -1,7 +1,7 @@
+import { NavBar } from "@/components/shared/NavBar";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { BackLink } from "../../components/shared/BackLink";
 import { QuestionForm } from "../../components/shared/QuestionForm";
 
 export default async function Dashboard() {
@@ -13,31 +13,18 @@ export default async function Dashboard() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Navigation or Header */}
-      <header className="px-8 py-12">
-        <BackLink />
-      </header>
-
-      {/* Title */}
-      <section className="py-12 text-center">
-        <h1 className="text-3xl font-bold leading-tight lg:text-4xl">
-          LeetCode Review
-        </h1>
-        <p className="mt-4 text-lg lg:text-xl">
-          The best way to review solved LeetCode questions, on the go.
-        </p>
-      </section>
-
-      {/* Main Content */}
-      <main className="flex-1 flex-col items-center justify-center">
-        <div className="max-w-4xl px-3">
+    <div className="flex min-h-screen min-w-full flex-col items-center">
+      <NavBar />
+      <div className="flex max-w-screen-lg flex-1 flex-col">
+        {/* Navigation / Header */}
+        <h1 className="mx-4 mt-8 text-xl font-bold">Your dashboard</h1>
+        {/* Main Content */}
+        <div className="flex flex-1 flex-col">
           <QuestionForm />
         </div>
-      </main>
-
+      </div>
       {/* Footer */}
-      <footer className="py-4 text-center">
+      <footer className="bg-neutral text-neutral-content min-w-full py-4 text-center">
         <p className="text-sm">Work in progress by lendevelops</p>
       </footer>
     </div>

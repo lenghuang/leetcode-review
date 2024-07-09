@@ -20,5 +20,5 @@ export interface ProblemsetQuestionList {
 }
 
 export interface ProblemsetQuestionListResponse {
-  problemsetQuestionList: ProblemsetQuestionList;
+  problemsetQuestionList?: ProblemsetQuestionList;
 }

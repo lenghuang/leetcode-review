@@ -8,15 +8,17 @@ const redirectToDashboard = async () => {
 
 export default async function Index() {
   return (
-    <div className="flex max-w-4xl flex-1 flex-col gap-20 px-3">
-      leetcode, work in progress{" "}
+    <div className="flex flex-1 flex-col items-center justify-center gap-20 px-3">
+      <h1 className="text-3xl font-bold leading-tight lg:text-4xl">
+        WIP Landing Page
+      </h1>
       <form>
         <SubmitButton
           formAction={redirectToDashboard}
-          className="mb-2 rounded-md bg-green-700 px-4 py-2 text-background"
+          className="btn btn-primary text-primary-content mb-2 rounded-md px-4 py-2"
           pendingText="Loading..."
         >
-          Go To Dashboard
+          Get Started
         </SubmitButton>
       </form>
     </div>

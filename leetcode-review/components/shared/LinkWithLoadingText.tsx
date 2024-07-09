@@ -4,7 +4,7 @@ import Link, { LinkProps } from "next/link";
 import { HTMLAttributes, PropsWithChildren, ReactNode, useState } from "react";
 
 export interface LinkWithLoadingProps extends PropsWithChildren<LinkProps> {
-  loadingChildren: ReactNode;
+  loadingchildren: ReactNode;
 }
 
 export const LinkWithLoading = (props: LinkWithLoadingProps) => {
@@ -12,7 +12,7 @@ export const LinkWithLoading = (props: LinkWithLoadingProps) => {
 
   return (
     <Link onClick={() => setIsLoading(true)} {...props}>
-      {isLoading ? props.loadingChildren : props.children}
+      {isLoading ? props.loadingchildren : props.children}
     </Link>
   );
 };
@@ -23,8 +23,8 @@ export const LinkWithLoadingText = (
 ) => {
   return (
     <LinkWithLoading
-      className="text-info underline"
-      loadingChildren={"Loading..."}
+      className="text-accent underline"
+      loadingchildren={"Loading..."}
       {...props}
     ></LinkWithLoading>
   );

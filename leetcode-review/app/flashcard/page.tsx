@@ -28,7 +28,7 @@ export default async function QuestionPage({
   } = await getQuestionTitleAndContent(searchParams?.slug);
 
   return (
-    <>
+    <div className="flex min-h-screen max-w-screen-lg flex-col">
       {/* Progress Bar */}
       <div className="flex w-full items-center justify-between p-4">
         <ExitQuestionIcon />
@@ -42,7 +42,6 @@ export default async function QuestionPage({
       !!questionDifficulty &&
       !!questionFrontendId ? (
         <div className="flex w-full flex-col">
-          {" "}
           <QuestionContentCompactView
             title={questionTitle}
             content={questionContent}
@@ -60,6 +59,6 @@ export default async function QuestionPage({
       <div className="flex w-full flex-1 flex-col p-4">
         <MultipleChoiceRadioButtons />
       </div>
-    </>
+    </div>
   );
 }
