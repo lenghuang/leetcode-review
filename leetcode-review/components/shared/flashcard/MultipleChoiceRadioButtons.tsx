@@ -7,15 +7,15 @@ export const MultipleChoiceRadioButtons = () => {
   ];
 
   return (
-    <div className="p-4">
+    <>
       <h2 className="text-lg font-bold">Choose the correct approach</h2>
       {choices.map((choice, i) => (
         <RadioChoice key={i} label={choice} />
       ))}
-      <div className="btn btn-block btn-primary mt-4 rounded-xl">
+      <div className="btn btn-block btn-primary mt-8 rounded-xl">
         Select Answer
       </div>
-    </div>
+    </>
   );
 };
 

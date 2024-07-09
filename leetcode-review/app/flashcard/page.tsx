@@ -5,6 +5,7 @@ import { RadialProgress } from "@/components/shared/flashcard/RadialProgress";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import { getQuestionTitleAndContent } from "@/lib/leetcode/graphql/getQuestionTitleAndContent";
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export default async function QuestionPage({
   searchParams,
@@ -15,7 +16,7 @@ export default async function QuestionPage({
 
   const user = await checkAuthAsync(supabase);
   if (!user) {
-    // redirect("/login");
+    redirect("/login");
   }
 
   const progressValue = Math.floor(Math.random() * 101);
@@ -40,7 +41,7 @@ export default async function QuestionPage({
       !!questionTitle &&
       !!questionDifficulty &&
       !!questionFrontendId ? (
-        <div className="flex w-full flex-1 flex-col">
+        <div className="flex w-full flex-col">
           {" "}
           <QuestionContentCompactView
             title={questionTitle}
@@ -56,7 +57,7 @@ export default async function QuestionPage({
       )}
 
       {/* Answer */}
-      <div className="flex w-full flex-1 flex-col">
+      <div className="flex w-full flex-1 flex-col p-4">
         <MultipleChoiceRadioButtons />
       </div>
     </>
