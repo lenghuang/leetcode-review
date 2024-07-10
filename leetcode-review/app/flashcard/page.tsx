@@ -3,7 +3,7 @@ import { MultipleChoiceRadioButtons } from "@/components/shared/flashcard/Multip
 import { QuestionContentCompactView } from "@/components/shared/flashcard/QuestionContentCompactView";
 import { RadialProgress } from "@/components/shared/flashcard/RadialProgress";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
-import { getQuestionTitleAndContent } from "@/lib/leetcode/graphql/getQuestionTitleAndContent";
+import { getQuestionTitleAndContent } from "@/lib/leetcode";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 

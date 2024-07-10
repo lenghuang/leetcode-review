@@ -1,21 +1,6 @@
-import {
-  ProblemsetQuestionListResponse,
-  getProblemsetQuestionListVariables,
-  problemsetQuestionListQuery,
-} from "@/lib/leetcode/graphql/problemset-question-list";
-import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
+import { getQuestions } from "@/lib/leetcode";
 import { redirect } from "next/navigation";
 import { LinkWithLoadingText } from "./LinkWithLoadingText";
-
-const getQuestions = async (): Promise<ProblemsetQuestionListResponse> => {
-  const data = await leetCodeRequest(
-    problemsetQuestionListQuery,
-    getProblemsetQuestionListVariables(),
-  );
-  return (data ?? {
-    problemsetQuestionList: null,
-  }) as ProblemsetQuestionListResponse;
-};
 
 export const QuestionForm = async () => {
   const { problemsetQuestionList } = await getQuestions();

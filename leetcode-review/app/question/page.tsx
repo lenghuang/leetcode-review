@@ -1,40 +1,10 @@
 import { BackLink } from "@/components/shared/BackLink";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
-import {
-  QuestionContentQueryResponse,
-  getQuestionContentVariables,
-  questionContentQuery,
-} from "@/lib/leetcode/graphql/question-content";
-import {
-  SubmissionListQueryResponse,
-  getSubmissionListVariables,
-  submissionListQuery,
-} from "@/lib/leetcode/graphql/submission-list";
-import { leetCodeRequest } from "@/lib/leetcode/leetCodeClient";
+import { getQuestionContent, getSubmissions } from "@/lib/leetcode";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { QuestionContentView } from "../../components/shared/QuestionContentView";
 import { SubmissionView } from "../../components/shared/SubmissionView";
-
-const getSubmissions = async (
-  slug: string,
-): Promise<SubmissionListQueryResponse> => {
-  const data = await leetCodeRequest(
-    submissionListQuery,
-    getSubmissionListVariables(slug),
-  );
-  return data as SubmissionListQueryResponse;
-};
-
-const getQuestionContent = async (
-  slug: string,
-): Promise<QuestionContentQueryResponse> => {
-  const data = await leetCodeRequest(
-    questionContentQuery,
-    getQuestionContentVariables(slug),
-  );
-  return data as QuestionContentQueryResponse;
-};
 
 export default async function QuestionPage({
   searchParams,

@@ -1,12 +1,12 @@
-import { leetCodeRequest } from "../leetCodeClient";
 import {
   QuestionContentQueryResponse,
   getQuestionContentVariables,
   questionContentQuery,
-} from "./question-content";
-import { QuestionTitleQuery } from "./question-title/questionTitle.query";
-import { QuestionTitleQueryResponse } from "./question-title/questionTitle.types";
-import { getQuestionTitleVariables } from "./question-title/questionTitle.variables";
+} from "../graphql/question-content";
+import { QuestionTitleQuery } from "../graphql/question-title/questionTitle.query";
+import { QuestionTitleQueryResponse } from "../graphql/question-title/questionTitle.types";
+import { getQuestionTitleVariables } from "../graphql/question-title/questionTitle.variables";
+import { leetCodeRequest } from "../leetCodeClient";
 
 const getQuestionContent = async (
   slug: string,
