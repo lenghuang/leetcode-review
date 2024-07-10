@@ -9,3 +9,7 @@
 // We can have some kind of "universal" question and answer generated with ChatGPT per question.
 // Can maybe feed official LC solution to the prompt if available.
 // then we can see if we can create questions based on user's submissions
+
+export const StudySetPage = () => {
+  return <div>empty page</div>;
+};
