@@ -34,7 +34,9 @@ export const QuestionForm = async () => {
             <li key={index}>
               <span className="text-neutral font-semibold">{q.title}</span>, a
               question with {q.difficulty} difficulty.{" "}
-              <LinkWithLoadingText href={`/flashcard?slug=${q.titleSlug}`}>
+              <LinkWithLoadingText
+                href={`/chatgptexploration?slug=${q.titleSlug}`}
+              >
                 {" "}
                 See more.
               </LinkWithLoadingText>
