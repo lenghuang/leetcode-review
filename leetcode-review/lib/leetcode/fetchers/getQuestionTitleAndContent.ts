@@ -3,9 +3,11 @@ import {
   getQuestionContentVariables,
   questionContentQuery,
 } from "../graphql/question-content";
-import { QuestionTitleQuery } from "../graphql/question-title/questionTitle.query";
-import { QuestionTitleQueryResponse } from "../graphql/question-title/questionTitle.types";
-import { getQuestionTitleVariables } from "../graphql/question-title/questionTitle.variables";
+import {
+  QuestionTitleQueryResponse,
+  getQuestionTitleVariables,
+  questionTitleQuery,
+} from "../graphql/question-title";
 import { leetCodeRequest } from "../leetCodeClient";
 
 const getQuestionContent = async (
@@ -22,7 +24,7 @@ const getQuestionTitle = async (
   slug: string,
 ): Promise<QuestionTitleQueryResponse> => {
   const data = await leetCodeRequest(
-    QuestionTitleQuery,
+    questionTitleQuery,
     getQuestionTitleVariables(slug),
   );
   return data as QuestionTitleQueryResponse;

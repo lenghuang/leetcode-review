@@ -38,7 +38,6 @@ export default async function QuestionPage({
       </div>
 
       {/* Question */}
-
       {!!questionContent &&
       !!questionTitle &&
       !!questionDifficulty &&

@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export const QuestionTitleQuery = gql`
+export const questionTitleQuery = gql`
   query questionTitle($titleSlug: String!) {
     question(titleSlug: $titleSlug) {
       questionId
