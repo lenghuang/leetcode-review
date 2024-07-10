@@ -1,8 +1,8 @@
 import { ExitQuestionIcon } from "@/components/shared/flashcard/ExitQuestionIcon";
-import { MultipleChoiceRadioButtons } from "@/components/shared/flashcard/MultipleChoiceRadioButtons";
 import { QuestionContentCompactView } from "@/components/shared/flashcard/QuestionContentCompactView";
 import { RadialProgress } from "@/components/shared/flashcard/RadialProgress";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
+import { getIntuition } from "@/lib/chatgpt/functions/intuition";
 import { getQuestionTitleAndContent } from "@/lib/leetcode";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -26,6 +26,8 @@ export default async function QuestionPage({
     questionDifficulty,
     questionFrontendId,
   } = await getQuestionTitleAndContent(searchParams?.slug);
+
+  const intuition = await getIntuition(searchParams?.slug);
 
   return (
     <div className="flex min-h-screen max-w-screen-lg flex-col">
@@ -57,7 +59,8 @@ export default async function QuestionPage({
 
       {/* Answer */}
       <div className="flex w-full flex-1 flex-col p-4">
-        <MultipleChoiceRadioButtons />
+        <h1 className="mb-2 text-xl font-bold">Problem Intuition</h1>
+        <p>{intuition}</p>
       </div>
     </div>
   );
