@@ -10,6 +10,6 @@
 // Can maybe feed official LC solution to the prompt if available.
 // then we can see if we can create questions based on user's submissions
 
-export const StudySetPage = () => {
+export default async function StudySetPage() {
   return <div>empty page</div>;
-};
+}
