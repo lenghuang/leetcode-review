@@ -29,7 +29,7 @@ export default async function QuestionPage({
 
   const intuition = !!searchParams?.ai
     ? await getIntuition(searchParams?.slug)
-    : "Avoiding ChatGPT call. Add &=ai=true to trigger it";
+    : "Avoiding ChatGPT call. Add [ &ai=true ] to trigger it";
 
   return (
     <div className="flex min-h-screen max-w-screen-lg flex-col">
