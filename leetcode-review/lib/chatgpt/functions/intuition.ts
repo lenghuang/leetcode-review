@@ -25,12 +25,6 @@ export const getIntuition = async (slug: string): Promise<string> => {
 
   const prompt = getPrompt(topicTags, questionContent, submissionCode);
 
-  // Debugging
-  const shouldUseChatGpt = true;
-  if (shouldUseChatGpt) {
-    return "Hardcoded response to avoid calls to chatgpt";
-  }
-
   // Real code
   const chatCompletion = await openai.chat.completions.create({
     messages: [

@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 export default async function QuestionPage({
   searchParams,
 }: {
-  searchParams: { slug: string };
+  searchParams: { slug: string; ai: boolean };
 }) {
   const supabase = createClient();
 
@@ -27,7 +27,9 @@ export default async function QuestionPage({
     questionFrontendId,
   } = await getQuestionTitleAndContent(searchParams?.slug);
 
-  const intuition = await getIntuition(searchParams?.slug);
+  const intuition = !!searchParams?.ai
+    ? await getIntuition(searchParams?.slug)
+    : "Avoiding ChatGPT call. Add &=ai=true to trigger it";
 
   return (
     <div className="flex min-h-screen max-w-screen-lg flex-col">
