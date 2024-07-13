@@ -10,11 +10,6 @@ export const jsonExample = JSON.stringify({
   },
   alternativeAnswers: [
     {
-      code: "comp = target + n",
-      explanation:
-        "This implies that comp - n = target, so we have two numbers that subtract to target, instead of sum.",
-    },
-    {
       code: "comp = target * n",
       explanation:
         "This implies that comp / n = target, so we have two numbers that divide into target, instead of sum.",
@@ -39,9 +34,14 @@ export const getMultipleChoicePrompt = (
 
       I have a LeetCode question for you. I want you to be able to understand it.
       I also have a solution to that question. I will provide it to you.
-      Find the line of code that's the most critical to understanding the logic of the algorithm.
-      Given that line of code, give me the original submission content, but with the critical line of code marked as missing.
-      Then, generate 3 additional incorrect alternatives to that line of code, along with a short explanation for why it's wrong.
+
+      Find the 1-2 lines of code that are the most critical to understanding the logic of the algorithm.
+      Avoid choosing lines that just iterates through a list.
+      Avoid choosing lines that just initializes a variable(s).
+      Avoid choosing lines that just increment index trackers.
+
+      Given those lines of code, give me the original submission content, but with the critical line of code marked as missing.
+      Then, generate 2 additional incorrect alternatives to that line of code, along with a short explanation for why it's wrong.
       Also, give me an explanation for why the original line of code is the correct one.
 
       Here is an example prompt I'd give you.
@@ -53,8 +53,10 @@ export const getMultipleChoicePrompt = (
       Here's the JSON answer I'd expect: ${jsonExample}
 
       Now, do what I did above, but for the below question and solution.
-      Please indicate each line you remove with a properly indented line saying "MISSING LINE".
-      Those comments should be wrapped with a <span class=\"lcrv-missing-line\"> tag so I can target it in front end styling.
+      Please indicate each line you remove with a properly indented line saying "<span class=\"lcrv-missing-line\">MISSING LINE</span>".
+      Do not reveal the answer in the line you remove.
+      Make sure all the answers are different.
+      Make sure the correct answer is not altered from the code you originally removed.
 
       Here is the question: ${question}
       You may need to infer what language the below solution uses.
