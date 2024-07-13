@@ -1,4 +1,5 @@
 import { FillInTheBlankProblem } from "@/lib/chatgpt/functions/multiplechoice";
+import DOMPurify from "isomorphic-dompurify";
 
 export const FillInTheBlankView = ({
   multipleChoice,
@@ -8,9 +9,15 @@ export const FillInTheBlankView = ({
   return (
     <>
       <div className="max-w-full rounded-xl bg-base-200 p-4">
-        <pre className="block overflow-x-scroll whitespace-pre">
-          {multipleChoice.submissionCodeMissing}
-        </pre>
+        <pre
+          className="block overflow-x-scroll whitespace-pre [&_.lcrv-missing-line]:font-bold [&_.lcrv-missing-line]:text-primary"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(multipleChoice.submissionCodeMissing, {
+              ALLOWED_TAGS: ["span"],
+              ALLOWED_ATTR: ["class"],
+            }),
+          }}
+        />
       </div>
       <ul>
         <li key={0} className="my-4">

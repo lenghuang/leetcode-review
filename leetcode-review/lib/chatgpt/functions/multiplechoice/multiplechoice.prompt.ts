@@ -2,7 +2,7 @@ export const jsonExample = JSON.stringify({
   submissionCodeOriginal:
     "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        table = {}\n        for i, n in enumerate(nums):\n            comp = target - n\n            if comp in table and table[comp] != i:\n                return [i, table[target-n]]\n            table[n] = i\n        return []",
   submissionCodeMissing:
-    "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        table = {}\n        for i, n in enumerate(nums):\n            # [MISSING LINE HERE]\n            if comp in table and table[comp] != i:\n                return [i, table[target-n]]\n            table[n] = i\n        return []",
+    'class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        table = {}\n        for i, n in enumerate(nums):\n            <span className="lcrv-missing-line"># [MISSING LINE HERE]</span>\n            if comp in table and table[comp] != i:\n                return [i, table[target-n]]\n            table[n] = i\n        return []',
   correctAnswer: {
     code: "comp = target - n",
     explanation:
@@ -53,7 +53,8 @@ export const getMultipleChoicePrompt = (
       Here's the JSON answer I'd expect: ${jsonExample}
 
       Now, do what I did above, but for the below question and solution.
-      Please indicate each line you remove with a properly indented line of code comments, explaining that you removed code.
+      Please indicate each line you remove with a properly indented line saying "MISSING LINE".
+      Those comments should be wrapped with a <span class=\"lcrv-missing-line\"> tag so I can target it in front end styling.
 
       Here is the question: ${question}
       You may need to infer what language the below solution uses.
