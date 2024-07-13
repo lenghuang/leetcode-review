@@ -20,4 +20,7 @@ module.exports = {
     themes: ["nord"],
   },
   plugins: [require("daisyui")],
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
 };
