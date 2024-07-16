@@ -10,8 +10,6 @@ export const MissingLineCodeSubmissionView = ({
 }) => {
   let submissionCodeMissing = submissionCode.trim();
 
-  // Warning; below implementation may be susceptible to duplicates
-
   // Check if the chat gpt returned "correct answer" exists in the original submission
   if (submissionCode.includes(multipleChoice.correctAnswer.code)) {
     submissionCodeMissing = submissionCode.replaceAll(
@@ -28,7 +26,7 @@ export const MissingLineCodeSubmissionView = ({
 
   return (
     <pre
-      className="block overflow-x-scroll whitespace-pre [&_.lcrv-missing-line]:font-bold [&_.lcrv-missing-line]:text-primary"
+      className="block overflow-x-scroll whitespace-pre text-sm [&_.lcrv-missing-line]:font-bold [&_.lcrv-missing-line]:text-primary"
       dangerouslySetInnerHTML={{
         __html: DOMPurify.sanitize(submissionCodeMissing, {
           ALLOWED_TAGS: ["span"],
