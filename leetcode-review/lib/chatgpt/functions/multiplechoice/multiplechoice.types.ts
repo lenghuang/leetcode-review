@@ -4,8 +4,6 @@ export interface Answer {
 }
 
 export interface FillInTheBlankProblem {
-  submissionCodeOriginal: string;
-  submissionCodeMissing: string;
   correctAnswer: Answer;
   alternativeAnswers: Answer[];
 }

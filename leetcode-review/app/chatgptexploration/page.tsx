@@ -79,8 +79,11 @@ export default async function QuestionPage({
       <div className="flex w-full flex-1 flex-col p-4">
         <h1 className="mb-2 text-xl font-bold">Problem Intuition</h1>
         {/* <p>{intuition}</p> */}
-        {!!multipleChoice ? (
-          <FillInTheBlankView multipleChoice={multipleChoice} />
+        {!!multipleChoice && !!submissionDetails?.code ? (
+          <FillInTheBlankView
+            multipleChoice={multipleChoice}
+            submissionCode={submissionDetails.code}
+          />
         ) : (
           <p>ChatGPT Response not loaded by default.</p>
         )}

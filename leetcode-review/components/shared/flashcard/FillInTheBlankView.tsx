@@ -1,22 +1,22 @@
+import { cleanSubmission } from "@/lib/chatgpt/functions/clean-submissions";
 import { FillInTheBlankProblem } from "@/lib/chatgpt/functions/multiplechoice";
-import DOMPurify from "isomorphic-dompurify";
+import { MissingLineCodeSubmissionView } from "./MissingLineCodeSubmissionView";
 
-export const FillInTheBlankView = ({
+export const FillInTheBlankView = async ({
   multipleChoice,
+  submissionCode,
 }: {
   multipleChoice: FillInTheBlankProblem;
+  submissionCode: string;
 }) => {
+  const submissionCodeClean = await cleanSubmission(submissionCode);
+
   return (
     <>
       <div className="max-w-full rounded-xl bg-base-200 p-4">
-        <pre
-          className="block overflow-x-scroll whitespace-pre [&_.lcrv-missing-line]:font-bold [&_.lcrv-missing-line]:text-primary"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(multipleChoice.submissionCodeMissing, {
-              ALLOWED_TAGS: ["span"],
-              ALLOWED_ATTR: ["class"],
-            }),
-          }}
+        <MissingLineCodeSubmissionView
+          multipleChoice={multipleChoice}
+          submissionCode={submissionCodeClean ?? submissionCode}
         />
       </div>
       <ul>

@@ -1,6 +1,7 @@
 import { getQuestionContent, getSingleQuestionTopicTags } from "@/lib/leetcode";
 import { getOneAcceptedSubmission } from "@/lib/leetcode/fetchers/getOneAcceptedSubmission";
-import openai from "../openai";
+import openai from "../../openai";
+import { getIntuitionPrompt } from "./intuition.prompt";
 
 export const getIntuition = async (slug: string): Promise<string> => {
   // Get Topic Tags
@@ -23,7 +24,7 @@ export const getIntuition = async (slug: string): Promise<string> => {
   }
   const submissionCode = submissionDetails.code;
 
-  const prompt = getPrompt(topicTags, questionContent, submissionCode);
+  const prompt = getIntuitionPrompt(topicTags, questionContent, submissionCode);
 
   // Real code
   const chatCompletion = await openai.chat.completions.create({
@@ -36,34 +37,13 @@ export const getIntuition = async (slug: string): Promise<string> => {
     model: "gpt-3.5-turbo",
   });
 
+  if (chatCompletion?.choices.length < 1) {
+    console.error("Missing chat completion choices");
+    return "";
+  }
+
   const messages = chatCompletion?.choices
     .map((x) => x.message.content)
     .join(" | ");
   return messages;
-};
-
-const getPrompt = (
-  topics: Array<string>,
-  question: string,
-  submission: string,
-): string => {
-  return `
-    I am currently working on solving problems on LeetCode DSA Problems, and I could use your assistance.
-    My goal is to understand the solution I provided to you in less than 5 sentences.
-    I will first present you the question, and then a solution in code to that question.
-    I want to use your response in a flash card, so that I can easily practice the concepts to a question in a brief way.
-
-    Here are the topics:
-    ${topics.join(",")}
-
-    Here is the question:
-    ${question}
-
-    Here is a solution that works:
-    ${submission}
-
-    Can you generate for me a less than 5 sentence explanation / psuedocode for this question?
-    Your tone should be as if you're telling me what to do, like an algorithm.
-    Return the answer to me in one paragraph.
-    Avoid repeating the original question, like saying, "To solve the problem, follow these steps"`;
 };

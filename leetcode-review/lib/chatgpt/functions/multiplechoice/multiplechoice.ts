@@ -5,8 +5,6 @@ import { getMultipleChoicePrompt, jsonExample } from "./multiplechoice.prompt";
 import { FillInTheBlankProblem } from "./multiplechoice.types";
 
 const errorObject: FillInTheBlankProblem = {
-  submissionCodeOriginal: "",
-  submissionCodeMissing: "",
   correctAnswer: { code: "", explanation: "" },
   alternativeAnswers: [],
 };

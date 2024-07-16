@@ -1,8 +1,4 @@
 export const jsonExample = JSON.stringify({
-  submissionCodeOriginal:
-    "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        table = {}\n        for i, n in enumerate(nums):\n            comp = target - n\n            if comp in table and table[comp] != i:\n                return [i, table[target-n]]\n            table[n] = i\n        return []",
-  submissionCodeMissing:
-    'class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        table = {}\n        for i, n in enumerate(nums):\n            <span className="lcrv-missing-line"># [MISSING LINE HERE]</span>\n            if comp in table and table[comp] != i:\n                return [i, table[target-n]]\n            table[n] = i\n        return []',
   correctAnswer: {
     code: "comp = target - n",
     explanation:
@@ -64,8 +60,6 @@ export const getMultipleChoicePrompt = (
 
       Please provide your answer in the specified json format.
       {
-          submissionCodeOriginal : string,
-          submissionCodeMissing : string,
           correctAnswer : { code: string, explanation: string }
           alternativeAnswers : Array<{ code: string, explanation: string }>
       }
