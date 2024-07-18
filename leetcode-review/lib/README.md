@@ -5,3 +5,12 @@ This folder is used for all sorts of backend business logic. These functions sho
 - `auth` relates to the starter app code for how Supabase handles authentication
 - `chatgpt` relates to all code which sends prompts to OpenAI API
 - `leetcode` relates to all logic dealing with the LeetCode public GraphQL endpoint
+
+Generally, when importing these, we want to target these top level directories.
+
+```js
+// Preferred Style
+import { checkAuthAsync } from "@/lib/auth";
+// (Bad) Don't do this
+import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
+```
