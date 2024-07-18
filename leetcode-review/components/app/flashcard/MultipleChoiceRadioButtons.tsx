@@ -12,7 +12,7 @@ export const MultipleChoiceRadioButtons = () => {
       {choices.map((choice, i) => (
         <RadioChoice key={i} label={choice} />
       ))}
-      <div className="btn btn-block btn-primary mt-8 rounded-xl">
+      <div className="btn btn-primary btn-block mt-8 rounded-xl">
         Select Answer
       </div>
     </>

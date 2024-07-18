@@ -1,4 +1,4 @@
-import { FillInTheBlankProblem } from "@/lib/chatgpt/functions/multiplechoice";
+import { FillInTheBlankProblem } from "@/lib/chatgpt";
 import DOMPurify from "isomorphic-dompurify";
 
 export const MissingLineCodeSubmissionView = ({

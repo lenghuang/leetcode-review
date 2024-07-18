@@ -1,8 +1,8 @@
-import { NavBar } from "@/components/shared/NavBar";
+import { QuestionForm } from "@/components/app/dashboard";
+import { NavBar } from "@/components/shared";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { QuestionForm } from "../../components/shared/QuestionForm";
 
 export default async function Dashboard() {
   const supabase = createClient();
@@ -24,7 +24,7 @@ export default async function Dashboard() {
         </div>
       </div>
       {/* Footer */}
-      <footer className="bg-neutral text-neutral-content min-w-full py-4 text-center">
+      <footer className="min-w-full bg-neutral py-4 text-center text-neutral-content">
         <p className="text-sm">Work in progress by lendevelops</p>
       </footer>
     </div>

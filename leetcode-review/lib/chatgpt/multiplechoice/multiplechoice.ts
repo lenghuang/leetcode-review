@@ -1,6 +1,9 @@
-import { getQuestionContent, getSingleQuestionTopicTags } from "@/lib/leetcode";
-import { getOneAcceptedSubmission } from "@/lib/leetcode/fetchers/getOneAcceptedSubmission";
-import openai from "../../openai";
+import {
+  getOneAcceptedSubmission,
+  getQuestionContent,
+  getSingleQuestionTopicTags,
+} from "@/lib/leetcode";
+import openai from "../openai";
 import { getMultipleChoicePrompt, jsonExample } from "./multiplechoice.prompt";
 import { FillInTheBlankProblem } from "./multiplechoice.types";
 

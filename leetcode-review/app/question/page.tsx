@@ -1,10 +1,9 @@
-import { BackLink } from "@/components/shared/BackLink";
+import { QuestionContentView, SubmissionView } from "@/components/app/question";
+import { BackLink } from "@/components/shared";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import { getQuestionContent, getSubmissions } from "@/lib/leetcode";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { QuestionContentView } from "../../components/shared/QuestionContentView";
-import { SubmissionView } from "../../components/shared/SubmissionView";
 
 export default async function QuestionPage({
   searchParams,

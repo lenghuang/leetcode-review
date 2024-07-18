@@ -1,6 +1,9 @@
-import { getQuestionContent, getSingleQuestionTopicTags } from "@/lib/leetcode";
-import { getOneAcceptedSubmission } from "@/lib/leetcode/fetchers/getOneAcceptedSubmission";
-import openai from "../../openai";
+import {
+  getOneAcceptedSubmission,
+  getQuestionContent,
+  getSingleQuestionTopicTags,
+} from "@/lib/leetcode";
+import openai from "../openai";
 import { getIntuitionPrompt } from "./intuition.prompt";
 
 export const getIntuition = async (slug: string): Promise<string> => {

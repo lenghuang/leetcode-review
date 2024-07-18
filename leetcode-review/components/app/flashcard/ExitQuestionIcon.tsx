@@ -7,7 +7,7 @@ export function ExitQuestionIcon() {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Link
-      className="btn btn-ghost btn-square"
+      className="btn btn-square btn-ghost"
       href={`/dashboard`}
       onClick={() => {
         setIsLoading(true);

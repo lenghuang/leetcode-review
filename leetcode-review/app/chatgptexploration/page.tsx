@@ -1,13 +1,17 @@
-import { SubmitButton } from "@/components/shared/SubmitButton";
-import { ExitQuestionIcon } from "@/components/shared/flashcard/ExitQuestionIcon";
-import { FillInTheBlankView } from "@/components/shared/flashcard/FillInTheBlankView";
-import { QuestionContentCompactView } from "@/components/shared/flashcard/QuestionContentCompactView";
-import { RadialProgress } from "@/components/shared/flashcard/RadialProgress";
-import { SolutionModal } from "@/components/shared/flashcard/SolutionModal";
+import {
+  ExitQuestionIcon,
+  FillInTheBlankView,
+  QuestionContentCompactView,
+  RadialProgress,
+  SolutionModal,
+} from "@/components/app/flashcard";
+import { SubmitButton } from "@/components/shared";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
-import { getMultipleChoiceQuestions } from "@/lib/chatgpt/functions/multiplechoice";
-import { getQuestionTitleAndContent } from "@/lib/leetcode";
-import { getOneAcceptedSubmission } from "@/lib/leetcode/fetchers/getOneAcceptedSubmission";
+import { getMultipleChoiceQuestions } from "@/lib/chatgpt";
+import {
+  getOneAcceptedSubmission,
+  getQuestionTitleAndContent,
+} from "@/lib/leetcode";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 

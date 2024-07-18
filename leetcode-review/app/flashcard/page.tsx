@@ -1,7 +1,9 @@
-import { ExitQuestionIcon } from "@/components/shared/flashcard/ExitQuestionIcon";
-import { MultipleChoiceRadioButtons } from "@/components/shared/flashcard/MultipleChoiceRadioButtons";
-import { QuestionContentCompactView } from "@/components/shared/flashcard/QuestionContentCompactView";
-import { RadialProgress } from "@/components/shared/flashcard/RadialProgress";
+import {
+  ExitQuestionIcon,
+  MultipleChoiceRadioButtons,
+  QuestionContentCompactView,
+  RadialProgress,
+} from "@/components/app/flashcard";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import { getQuestionTitleAndContent } from "@/lib/leetcode";
 import { createClient } from "@/lib/supabase/server";

@@ -1,5 +1,4 @@
-import SyncForm from "@/components/shared/SyncForm";
-import { BackLink } from "../../components/shared/BackLink";
+import { BackLink, SyncForm } from "@/components/shared";
 
 export default async function SyncPage() {
   return (

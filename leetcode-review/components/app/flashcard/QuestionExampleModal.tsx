@@ -26,7 +26,7 @@ export const QuestionExampleModal = ({ content }: { content: string }) => {
       >
         <div className="modal-box">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
               ✕
             </button>
           </form>
@@ -44,7 +44,7 @@ export const QuestionExampleModal = ({ content }: { content: string }) => {
 const QuestionExampleText = ({ content }: { content: string }) => {
   return (
     <div
-      className="[&_code]:bg-base-300 [&_pre]:text-neutral [&_*]:text-pretty [&_*]:break-words [&_code]:mx-0.5 [&_code]:rounded [&_code]:p-1 [&_code]:text-xs [&_li]:m-1 [&_pre]:my-2 [&_pre]:border-l-2 [&_pre]:pl-2 [&_pre]:text-sm"
+      className="[&_*]:text-pretty [&_*]:break-words [&_code]:mx-0.5 [&_code]:rounded [&_code]:bg-base-300 [&_code]:p-1 [&_code]:text-xs [&_li]:m-1 [&_pre]:my-2 [&_pre]:border-l-2 [&_pre]:pl-2 [&_pre]:text-sm [&_pre]:text-neutral"
       dangerouslySetInnerHTML={{
         __html: DOMPurify.sanitize(content),
       }}

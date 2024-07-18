@@ -1,4 +1,4 @@
-import { SubmitButton } from "@/components/shared/SubmitButton";
+import { SubmitButton } from "@/components/shared";
 import { redirect } from "next/navigation";
 
 const redirectToDashboard = async () => {
@@ -15,7 +15,7 @@ export default async function Index() {
       <form>
         <SubmitButton
           formAction={redirectToDashboard}
-          className="btn btn-primary text-primary-content mb-2 rounded-md px-4 py-2"
+          className="btn btn-primary mb-2 rounded-md px-4 py-2 text-primary-content"
           pendingText="Loading..."
         >
           Get Started

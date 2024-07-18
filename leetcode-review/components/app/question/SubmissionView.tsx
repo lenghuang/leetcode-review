@@ -1,4 +1,4 @@
-import { SubmissionListSubmissions } from "@/lib/leetcode/graphql/submission-list";
+import { SubmissionListSubmissions } from "@/lib/leetcode";
 import { SubmissionViewDetail } from "./SubmissionViewDetail";
 
 type SumbissionViewProps = {
@@ -13,7 +13,7 @@ export const SubmissionView = async ({ submissions }: SumbissionViewProps) => {
         const status = sub.statusDisplay;
         return (
           <details
-            className="collapse-arrow collapse rounded border"
+            className="collapse collapse-arrow rounded border"
             key={sub.id}
           >
             <summary className="collapse-title justify-between">

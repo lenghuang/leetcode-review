@@ -1,4 +1,4 @@
-import { SubmitButton } from "@/components/shared/SubmitButton";
+import { SubmitButton } from "@/components/shared";
 import { setCookieFromFormData } from "@/lib/auth/cookies";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 const lcSessionCookieName = "LEETCODE_SESSION";
 const csrftokenCookieName = "csrftoken";
 
-export default function SyncForm() {
+export function SyncForm() {
   const upsertCookieAction = async (formData: FormData) => {
     "use server";
     setCookieFromFormData(lcSessionCookieName, formData);

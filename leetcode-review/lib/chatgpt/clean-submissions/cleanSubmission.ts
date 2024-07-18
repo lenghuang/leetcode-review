@@ -1,4 +1,4 @@
-import openai from "../../openai";
+import openai from "../openai";
 import { getCleanSubmissionPrompt } from "./cleanSubmission.prompt";
 
 export const cleanSubmission = async (submission: string): Promise<string> => {

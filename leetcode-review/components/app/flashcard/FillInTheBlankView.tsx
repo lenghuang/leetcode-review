@@ -1,5 +1,4 @@
-import { cleanSubmission } from "@/lib/chatgpt/functions/clean-submissions";
-import { FillInTheBlankProblem } from "@/lib/chatgpt/functions/multiplechoice";
+import { cleanSubmission, FillInTheBlankProblem } from "@/lib/chatgpt";
 import { MissingLineCodeSubmissionView } from "./MissingLineCodeSubmissionView";
 
 export const FillInTheBlankView = async ({
