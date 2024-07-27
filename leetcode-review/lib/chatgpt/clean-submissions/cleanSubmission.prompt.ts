@@ -3,14 +3,10 @@ const exampleSubmissionClean = `def findMedianSortedArrays(self, nums1: List[int
 
 export const getCleanSubmissionPrompt = (submission: string): string => {
   return `
-    You are an expert at parsing LeetCode Data Structures and Algorithms Problems.
-    You are just as skilled as an IDE, Linter, and Copilot at understanding code patterns.
-
-    I have a small task for you. I will give you a snippet of code.
+    I will give you a snippet of code.
     There may be large chunks of comments, in it, specifically, multi-line comments in different programming languages.
 
-    Remove all multi-line comments in the submission.
-    Also remove comments that you think are not necessary or part of the core flow.
+    Remove all comments that you think are not necessary or part of the core flow.
 
     Also cautiously remove some boilerplate code such as class declarations, and unindent the solution accordingly.
     These will normally look like "class Solution:" in Python "class Solution {}" in Java, and "class Solution {\npublic:\n}" in C++.
