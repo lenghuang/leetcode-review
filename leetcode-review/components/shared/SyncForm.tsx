@@ -1,5 +1,6 @@
 import { SubmitButton } from "@/components/shared";
 import { setCookieFromFormData } from "@/lib/auth/cookies";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -33,32 +34,23 @@ export function SyncForm() {
     const csrftokenCookie = cookies().get(csrftokenCookieName);
 
     return (
-      <form className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground">
-        <div className="mb-6 rounded-md border bg-inherit px-4 py-6">
-          <div className="truncate">
-            <span className="truncate text-green-700">
-              {lcSessionCookie?.name}:
-            </span>{" "}
-            {lcSessionCookie?.value}
-          </div>
-          <hr className="my-4" />
-          <div className="truncate">
-            <span className="truncate text-green-700">
-              {csrftokenCookie?.name}:
-            </span>{" "}
-            {csrftokenCookie?.value}
-          </div>{" "}
-        </div>
+      <form className="flex flex-col justify-center gap-2">
+        {lcSessionCookie && csrftokenCookie && (
+          <ValuesTable
+            lcSessionCookie={lcSessionCookie}
+            csrftokenCookie={csrftokenCookie}
+          />
+        )}
         <SubmitButton
           formAction={redirectToDashboard}
-          className="mb-2 rounded-md bg-green-700 px-4 py-2 text-background"
+          className="mb-2 rounded-md bg-primary px-4 py-2 text-background"
           pendingText="Loading..."
         >
           Go To Dashboard
         </SubmitButton>
         <SubmitButton
           formAction={deleteCookieAction}
-          className="mb-2 rounded-md bg-green-200 px-4 py-2 text-foreground"
+          className="mb-2 rounded-md bg-secondary px-4 py-2 text-foreground"
           pendingText="Loading..."
         >
           Delete Your Cookies
@@ -97,3 +89,52 @@ export function SyncForm() {
     </form>
   );
 }
+
+const ValuesTable1 = ({
+  lcSessionCookie,
+  csrftokenCookie,
+}: {
+  lcSessionCookie: RequestCookie;
+  csrftokenCookie: RequestCookie;
+}) => {
+  return (
+    <div className="mb-6 rounded-md border bg-base-300 px-4 py-6">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <div className="truncate text-pretty break-words text-primary">
+            {lcSessionCookie.name}:
+          </div>
+          <div className="truncate text-pretty">{lcSessionCookie.value}</div>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:gap-2">
+          <span className="truncate text-pretty text-primary">
+            {csrftokenCookie.name}:
+          </span>
+          <span className="truncate text-pretty">{csrftokenCookie.value}</span>
+        </div>
+      </div>
+      <hr className="my-4" />
+    </div>
+  );
+};
+
+const ValuesTable = ({
+  lcSessionCookie,
+  csrftokenCookie,
+}: {
+  lcSessionCookie: RequestCookie;
+  csrftokenCookie: RequestCookie;
+}) => {
+  return (
+    <div className="mb-6 rounded-md border bg-base-300 px-4 py-6">
+      <div className="flex flex-row gap-2">
+        <div className="text-pretty break-words text-primary">
+          {lcSessionCookie.name}:
+        </div>
+        <div className="w-full text-pretty break-words">
+          blahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah
+        </div>
+      </div>
+    </div>
+  );
+};

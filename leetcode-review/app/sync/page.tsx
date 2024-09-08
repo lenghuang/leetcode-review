@@ -1,32 +1,19 @@
-import { BackLink, SyncForm } from "@/components/shared";
+import { NavBar, SyncForm } from "@/components/shared";
 
 export default async function SyncPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Navigation or Header */}
-      <header className="px-8 py-12">
-        <BackLink />
-      </header>
-
-      {/* Title */}
-      <section className="text-pretty px-8 py-12 text-center">
-        <h1 className="text-3xl font-bold leading-tight lg:text-4xl">
-          Leetcode Login
+    <div className="flex min-h-screen min-w-full flex-col items-center">
+      <NavBar />
+      <div className="flex max-w-screen-lg flex-1 flex-col gap-4">
+        {/* Navigation / Header */}
+        <h1 className="mt-8 text-xl font-bold">
+          Connect your LeetCode account
         </h1>
-        <p className="mt-4 text-pretty text-lg lg:text-xl">
-          Log on to Leetcode.com, then take cookies from there and copy it here.
-        </p>
-      </section>
-
-      {/* Main Content */}
-      <main className="flex-1 flex-col items-center justify-center">
-        <div className="max-w-4xl px-3">
-          <SyncForm />
-        </div>
-      </main>
-
+        {/* Main Content */}
+        <SyncForm />
+      </div>
       {/* Footer */}
-      <footer className="py-4 text-center">
+      <footer className="min-w-full bg-neutral py-4 text-center text-neutral-content">
         <p className="text-sm">Work in progress by lendevelops</p>
       </footer>
     </div>
