@@ -9,4 +9,6 @@ export default async function Index() {
   if (!user) {
     redirect("home");
   }
+
+  redirect("app");
 }

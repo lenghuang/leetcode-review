@@ -1,4 +1,4 @@
-import { SubmitButton } from "@/components/shared";
+import { SubmitButton } from "@/components";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
