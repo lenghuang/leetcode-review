@@ -7,12 +7,12 @@ export default async function ExplorePage() {
       title: "Arrays",
       description: "Learn more about arrays",
       ctaContent: "Start",
-      redirectTo: "/topics/arrays",
+      redirectTo: "/explore/topics/arrays",
     },
     {
       title: "Strings",
       description: "String together your thoughts",
-      redirectTo: "/topics/strings",
+      redirectTo: "/explore/topics/strings",
     },
   ];
 

@@ -8,7 +8,7 @@ export const metadata = {
   description: "Quickly refresh your memory on LeetCode problems.",
 };
 
-export default async function TopicsLayout({
+export default async function QuestionsLayout({
   children,
 }: {
   children: React.ReactNode;
