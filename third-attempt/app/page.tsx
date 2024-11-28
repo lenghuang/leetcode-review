@@ -10,5 +10,5 @@ export default async function Index() {
     redirect("home");
   }
 
-  redirect("app");
+  redirect("topics");
 }

@@ -1,17 +1,18 @@
 import { TopicTile } from "@/components/TopicTile";
 
 export default async function ExplorePage() {
+  // Will need to define types for this and stuff based on backend query
   const dummyData: any = [
     {
       title: "Arrays",
       description: "Learn more about arrays",
       ctaContent: "Start",
-      redirectTo: "/app/arrays",
+      redirectTo: "/topics/arrays",
     },
     {
       title: "Strings",
       description: "String together your thoughts",
-      redirectTo: "/app/strings",
+      redirectTo: "/topics/strings",
     },
   ];
 
@@ -22,7 +23,9 @@ export default async function ExplorePage() {
       table for possible topics with our internal representation. As well as a
       mapping from leetcode topics to our own topics Once user clicks in to
       something here, we'll be able to go to a new page that has more specific
-      info on that topic.
+      info on that topic. This is a generic explore that is decoupled from the
+      notion of "topics" and "questions", and can surface both in an explore fyp
+      kind of way.
       {dummyData.map((topic: any, i: number) => (
         <TopicTile
           key={`topic-tile-${i}`}
