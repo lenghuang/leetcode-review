@@ -75,7 +75,7 @@ export default function Login({
         />
         <SubmitButton
           formAction={signIn}
-          className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground"
+          className="mb-2 rounded-md bg-primary px-4 py-2 text-foreground"
           pendingText="Signing In..."
         >
           Sign In
