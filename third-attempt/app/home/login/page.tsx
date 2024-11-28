@@ -1,5 +1,6 @@
 import { SubmitButton } from "@/components/SubmitButton/SubmitButton";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
+import { AppRouterPath } from "@/lib/enums";
 import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -23,10 +24,12 @@ export default async function Login({
     });
 
     if (error) {
-      return redirect("/home/login?message=Could not authenticate user");
+      return redirect(
+        `${AppRouterPath.Login}?message=Could not authenticate user`,
+      );
     }
 
-    return redirect("/app");
+    return redirect(AppRouterPath.Explore);
   };
 
   const signUp = async (formData: FormData) => {
@@ -46,11 +49,13 @@ export default async function Login({
     });
 
     if (error) {
-      return redirect("/home/login?message=Could not authenticate user");
+      return redirect(
+        `${AppRouterPath.Login}?message=Could not authenticate user`,
+      );
     }
 
     return redirect(
-      "/home/login?message=Check email to continue sign in process",
+      `${AppRouterPath.Login}?message=Check email to continue sign in process`,
     );
   };
 

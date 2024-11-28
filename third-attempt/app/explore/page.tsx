@@ -1,4 +1,5 @@
 import { TopicTile } from "@/components/TopicTile";
+import { AppRouterPath } from "@/lib/enums";
 
 export default async function ExplorePage() {
   // Will need to define types for this and stuff based on backend query
@@ -7,12 +8,12 @@ export default async function ExplorePage() {
       title: "Arrays",
       description: "Learn more about arrays",
       ctaContent: "Start",
-      redirectTo: "/explore/topics/arrays",
+      redirectTo: `${AppRouterPath.Topics}/arrays`,
     },
     {
       title: "Strings",
       description: "String together your thoughts",
-      redirectTo: "/explore/topics/strings",
+      redirectTo: `${AppRouterPath.Topics}/strings`,
     },
   ];
 

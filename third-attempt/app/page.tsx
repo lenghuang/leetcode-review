@@ -1,4 +1,5 @@
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
+import { AppRouterPath } from "@/lib/enums";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -7,8 +8,8 @@ export default async function Index() {
 
   const user = await checkAuthAsync(supabase);
   if (!user) {
-    redirect("home");
+    redirect(AppRouterPath.Home);
   }
 
-  redirect("topics");
+  redirect(AppRouterPath.Explore);
 }

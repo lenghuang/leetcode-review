@@ -1,5 +1,6 @@
 import { SubmitButton } from "@/components";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
+import { AppRouterPath } from "@/lib/enums";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -8,9 +9,9 @@ const redirectToDashboard = async () => {
   const supabase = createClient();
   const user = await checkAuthAsync(supabase);
   if (!user) {
-    redirect("/home/login");
+    redirect(AppRouterPath.Login);
   } else {
-    redirect("/app");
+    redirect(AppRouterPath.Explore);
   }
 };
 

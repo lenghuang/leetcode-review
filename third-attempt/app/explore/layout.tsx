@@ -1,5 +1,6 @@
 import { NavBar } from "@/components/NavBar";
 import { checkAuthAsync } from "@/lib/auth/checkAuthAsync";
+import { AppRouterPath } from "@/lib/enums";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -17,7 +18,7 @@ export default async function ExploreLayout({
 
   const user = await checkAuthAsync(supabase);
   if (!user) {
-    redirect("home");
+    redirect(AppRouterPath.Home);
   }
 
   return (
