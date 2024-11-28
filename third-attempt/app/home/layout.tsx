@@ -7,25 +7,17 @@ export default function HomeLayout({
 }) {
   return (
     <div>
-      <div className="relative bg-primary">
-        <h1
+      <div className="mb-8 flex w-full flex-col justify-center bg-primary">
+        <div
+          className="min-h-64 max-w-7xl rounded-br-2xl bg-primary bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundColor: "rgba(94,129,172,0.6)",
-            boxShadow: "0 0 50px 50px rgb(94,129,172,0.6)",
+            backgroundImage: `url(${heroImage.src})`,
+            clipPath: "ellipse(64rem 32rem at 0% 10%)",
           }}
-          className="absolute z-10 m-2 bg-primary p-4 text-6xl font-medium text-base-100"
-        >
+        />
+        <h1 className="p-8 text-6xl font-medium text-base-100">
           Leetcode Review
         </h1>
-
-        <div
-          className="h-64 bg-contain bg-right bg-no-repeat"
-          style={{
-            backgroundColor: "white",
-            backgroundImage: `url(${heroImage.src})`,
-            clipPath: "ellipse(16rem 16rem at 100% 50%)",
-          }}
-        ></div>
       </div>
       {children}
     </div>
