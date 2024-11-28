@@ -1,5 +1,10 @@
 import heroImage from "@/assets/heroImage.jpg";
 
+export const metadata = {
+  title: "Leetcode Review",
+  description: "Quickly refresh your memory on LeetCode problems.",
+};
+
 export default function HomeLayout({
   children,
 }: {
