@@ -1,20 +1,20 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-first-attempt/node_modules
-first-attempt/.pnp
+node_modules
+.pnp
 .pnp.js
 .yarn/install-state.gz
 
 # testing
-first-attempt/coverage
+coverage
 
 # next.js
-first-attempt/.next/
-first-attempt//out/
+.next/
+/out/
 
 # production
-first-attempt/build
+build
 
 # misc
 .DS_Store
