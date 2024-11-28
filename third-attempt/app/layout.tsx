@@ -7,7 +7,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "LeetCode Review",
+  title: "Leetcode Review",
   description: "Quickly refresh your memory on LeetCode problems.",
 };
 
