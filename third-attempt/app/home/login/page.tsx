@@ -19,11 +19,11 @@ export default function Login({
       password,
     });
 
-    if (error) {
+    if (true) {
       return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect("/dashboard");
+    return redirect("/app");
   };
 
   const signUp = async (formData: FormData) => {

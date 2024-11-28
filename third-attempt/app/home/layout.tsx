@@ -6,7 +6,7 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <>
       <div className="mb-8 flex w-full flex-col justify-center bg-primary">
         <div
           className="min-h-64 max-w-7xl rounded-br-2xl bg-primary bg-cover bg-center bg-no-repeat"
@@ -19,7 +19,7 @@ export default function HomeLayout({
           Leetcode Review
         </h1>
       </div>
-      {children}
-    </div>
+      <div className="flex min-h-96 flex-1">{children}</div>
+    </>
   );
 }
