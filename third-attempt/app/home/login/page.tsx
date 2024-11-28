@@ -19,8 +19,8 @@ export default function Login({
       password,
     });
 
-    if (true) {
-      return redirect("/login?message=Could not authenticate user");
+    if (error) {
+      return redirect("/home/login?message=Could not authenticate user");
     }
 
     return redirect("/app");
@@ -29,7 +29,7 @@ export default function Login({
   const signUp = async (formData: FormData) => {
     "use server";
 
-    return redirect("/login?message=Could not authenticate user");
+    return redirect("/home/login?message=Could not authenticate user");
 
     // const origin = headers().get("origin");
     // const email = formData.get("email") as string;
