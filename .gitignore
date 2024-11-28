@@ -1,20 +1,20 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-leetcode-review/node_modules
-leetcode-review/.pnp
+first-attempt/node_modules
+first-attempt/.pnp
 .pnp.js
 .yarn/install-state.gz
 
 # testing
-leetcode-review/coverage
+first-attempt/coverage
 
 # next.js
-leetcode-review/.next/
-leetcode-review//out/
+first-attempt/.next/
+first-attempt//out/
 
 # production
-leetcode-review/build
+first-attempt/build
 
 # misc
 .DS_Store
