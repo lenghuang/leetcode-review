@@ -8,22 +8,20 @@ export default function HomeLayout({
   return (
     <div>
       <div className="relative bg-primary">
-        <div
+        <h1
           style={{
-            backgroundColor: "rgba(94,129,172,0.3)",
-            boxShadow: "4rem 0 96rem rgb(94,129,172,0.7)",
+            backgroundColor: "rgba(94,129,172,0.6)",
+            boxShadow: "0 0 50px 50px rgb(94,129,172,0.6)",
           }}
-          className="absolute z-10 m-4 p-4 text-base-100"
+          className="absolute z-10 m-2 bg-primary p-4 text-6xl font-medium text-base-100"
         >
-          <h1 className="text-6xl font-medium">Leetcode Review</h1>
-          <p className="text-l">
-            An easy way to review key concepts and practice data structures and
-            algorithms questions.
-          </p>
-        </div>
+          Leetcode Review
+        </h1>
+
         <div
           className="h-64 bg-contain bg-right bg-no-repeat"
           style={{
+            backgroundColor: "white",
             backgroundImage: `url(${heroImage.src})`,
             clipPath: "ellipse(16rem 16rem at 100% 50%)",
           }}
