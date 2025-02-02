@@ -18,7 +18,7 @@ pre-commit run --all-files
 
 Make new virtual environment
 
-```
+```bash
 python3 -m venv venv
 ```
 

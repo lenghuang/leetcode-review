@@ -4,8 +4,7 @@ from clients.openrouter import OpenRouter
 should_use_openai = False
 should_use_openrouter = False
 
-
-def chat():
+def dummy_chat():
     try:
         if should_use_openai:
             client = OpenAIClient()
@@ -27,7 +26,7 @@ def chat():
         if should_use_openrouter:
             client = OpenRouter()
             client.chat.completions.create(
-                model="google/gemini-2.0-flash-thinking-exp:free",
+                model="meta-llama/llama-3.1-8b-instruct:free",
                 messages=[
                     {
                         "role": "developer",

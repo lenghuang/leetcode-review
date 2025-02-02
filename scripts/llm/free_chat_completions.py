@@ -43,3 +43,18 @@ def create(messages=None):
             continue
 
     raise Exception("All models failed")
+
+
+def dummy_chat():
+    create(
+        [
+            {
+                "role": "developer",
+                "content": "You give concise expert-level software advice",
+            },
+            {
+                "role": "user",
+                "content": "How do I approach writing a C server/client",
+            },
+        ]
+    )

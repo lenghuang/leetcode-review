@@ -3,6 +3,7 @@ from openai import OpenAI
 
 config = Config()
 
+
 class OpenAIClient:
     def __init__(self):
         """
@@ -10,9 +11,8 @@ class OpenAIClient:
 
         Args:
         - api_key (str): The API key for OpenAI.
-        - base_url (str): The base URL for OpenAI.
         """
-        self.openai_client = OpenAI(
+        self.client = OpenAI(
             api_key=config.OPENAI_API_KEY,
         )
 
@@ -26,4 +26,4 @@ class OpenAIClient:
         Returns:
         - Any: The attribute or method from the OpenAI client.
         """
-        return getattr(self.openai_client, name)
+        return getattr(self.client, name)

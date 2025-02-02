@@ -14,7 +14,12 @@ class Config:
             print(f"{key}: {value}")
         print()
 
+    def is_dev_mode(self):
+        # Check if dev_mode (case insensitive) is set to a truthy value
+        return self.DEV_MODE.lower() in ["true", "yes", "1", "on"]
+
 
 # Usage
 # config = Config()
 # print(config.YOUR_ENV_VARIABLE)
+# print(config.is_dev_mode())

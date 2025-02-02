@@ -1,31 +1,30 @@
 from config import Config
-from openai import OpenAI
+from supabase import create_client
 
 config = Config()
 
 
-class OpenRouter:
+class SupabaseClient:
     def __init__(self):
         """
-        Initialize the OpenRouter class.
+        Initialize the SupabaseClient class.
 
         Args:
         - api_key (str): The API key for OpenAI.
         - base_url (str): The base URL for OpenAI.
         """
-        self.client = OpenAI(
-            api_key=config.OPENROUTER_API_KEY,
-            base_url=config.OPENROUTER_BASE_URL,
+        self.client = create_client(
+            config.SUPABASE_URL, config.SUPABASE_ANON_KEY
         )
 
     def __getattr__(self, name: str):
         """
-        Proxy attribute access to the OpenAI client.
+        Proxy attribute access to the SupabaseClient.
 
         Args:
         - name (str): The name of the attribute to access.
 
         Returns:
-        - Any: The attribute or method from the OpenAI client.
+        - Any: The attribute or method from the SupabaseClient.
         """
         return getattr(self.client, name)
