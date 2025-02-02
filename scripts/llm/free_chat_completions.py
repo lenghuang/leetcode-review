@@ -35,9 +35,9 @@ def create(messages=None):
                 model=model,
                 messages=messages,
             )
-            print(f"{completion.choices[0].message}\n")
+            res = completion.choices[0].message
             print(f"Successful chat called with {model}\n")
-            return
+            return res
         except Exception as e:
             print(f"An OpenRouter error occurred with {model}: {e}\n")
             continue
