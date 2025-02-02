@@ -4,7 +4,8 @@ from openai import OpenAI
 config = Config()
 
 should_use_openai = False
-should_use_openrouter = True
+should_use_openrouter = False
+
 
 def chat():
     try:
