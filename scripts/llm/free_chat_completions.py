@@ -3,6 +3,9 @@ from openai import OpenAI
 
 config = Config()
 
+# https://openrouter.ai/models?max_price=0
+# Free limit: 20 requests per minute, 200 per day
+
 DEV_MODELS = [
     "microsoft/phi-3-medium-128k-instruct:free",
     "huggingfaceh4/zephyr-7b-beta:free",
