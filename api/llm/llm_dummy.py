@@ -3,9 +3,7 @@ from openai import OpenAI
 
 config = Config()
 
-
-def get_dummy_response():
-
+def chat():
     try:
         # OpenAI Client
         openai_client = OpenAI(api_key=config.OPENAI_API_KEY)
@@ -26,11 +24,11 @@ def get_dummy_response():
 
     try:
         # OpenRouter Client
-        open_router_client = OpenAI(
+        openrouter_client = OpenAI(
             api_key=config.OPENROUTER_API_KEY,
             base_url="https://openrouter.ai/api/v1",
         )
-        completion = open_router_client.chat.completions.create(
+        completion = openrouter_client.chat.completions.create(
             model="google/gemini-2.0-flash-thinking-exp:free",
             messages=[
                 {

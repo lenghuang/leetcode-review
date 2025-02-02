@@ -2,7 +2,7 @@
 
 Directory containing python code that I ran to generate AI based questions
 
-# Common commands
+# Developer notes
 
 To save a `requirements.txt` file
 
@@ -16,8 +16,20 @@ To run pre-commit hook
 pre-commit run --all-files
 ```
 
+Make new virtual environment
+
+```
+python3 -m venv venv
+```
+
 Activate virtual environment
 
 ```bash
 source venv/bin/activate
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
 ```

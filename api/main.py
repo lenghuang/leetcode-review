@@ -1,5 +1,5 @@
-import llm
 from config import Config
+from llm import llm_dummy
 
 config = Config()
 
@@ -9,7 +9,7 @@ def main():
     if config.DEV_MODE:
         config.print_variables()
 
-    llm.get_dummy_response()
+    llm_dummy.chat()
 
 
 if __name__ == "__main__":
