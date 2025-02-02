@@ -1,4 +1,5 @@
-from dotenv import dotenv_values
+from baml_client import reset_baml_env_vars
+from dotenv import dotenv_values, load_dotenv
 
 
 class Config:
@@ -7,6 +8,9 @@ class Config:
         env_vars = dotenv_values(dotenv_path)
         for key, value in env_vars.items():
             setattr(self, key, value)
+
+        # Load dot env variables also, for BAML
+        reset_baml_env_vars(env_vars)
 
     def print_variables(self):
         print("Loaded Environment Variables")

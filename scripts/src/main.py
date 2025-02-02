@@ -20,6 +20,5 @@ def main():
     # Main execution tasks
     kaggle_lc_generate_questions.execute()
 
-
 if __name__ == "__main__":
     main()

@@ -33,3 +33,9 @@ Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
+
+Set up BAML prompts
+
+```bash
+baml-cli generate
+```

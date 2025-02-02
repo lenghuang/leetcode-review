@@ -1,3 +1,5 @@
+from baml_client.sync_client import b
+from baml_client.types import MultipleChoiceV0Question
 from clients.supabaseserviceclient import SupabaseServiceRoleClient
 from config import Config
 from llm import free_chat_completions
@@ -16,11 +18,8 @@ def get_combined_questions_data():
     )
     return response.data
 
-def multiple_choice_v0_chat_completion(data):
-    user_input = str({
-        key: data.get(key) for key in data if key in ["content", "answer", "explanation"]
-    })
-
+# Not used
+def multiple_choice_v0_chat_completion_with_python(user_input):
     res = free_chat_completions.create([
         {
             "role": "system",
@@ -31,14 +30,31 @@ def multiple_choice_v0_chat_completion(data):
             "content": user_input
         }
     ])
-
     return res
 
+def multiple_choice_v0_chat_completion_with_baml(user_input):
+    try:
+        if config.is_dev_mode():
+            res = b.GenerateMultipleChoiceV0Dev(user_input)
+        else:
+            res = b.GenerateMultipleChoiceV0(user_input)
+        return res
+    except Exception as e:
+        print(f"MultipleChoiceV0 Baml Error {e}")
+        return None
 
 def execute():
     all_data = get_combined_questions_data()
     for data in all_data:
-        res = multiple_choice_v0_chat_completion(data["data"])
+        user_data = data["data"]
+        user_input = str({
+            key: user_data.get(key)
+            for key in data
+            if key in ["content", "answer", "explanation"]
+        })
+
+        res = multiple_choice_v0_chat_completion_with_baml(user_input)
+
         print(f"{res}\n")
 
 def dummy_check():
