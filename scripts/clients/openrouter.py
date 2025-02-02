@@ -3,7 +3,6 @@ from openai import OpenAI
 
 config = Config()
 
-
 class OpenRouter:
     def __init__(self):
         """

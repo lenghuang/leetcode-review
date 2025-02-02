@@ -1,11 +1,8 @@
-from dotenv import dotenv_values, load_dotenv
+from dotenv import dotenv_values
 
 
 class Config:
     def __init__(self, dotenv_path=".env"):
-        # Load the various .env values from the current path
-        load_dotenv(dotenv_path)
-
         # Load just the values in the .env file into Config object
         env_vars = dotenv_values(dotenv_path)
         for key, value in env_vars.items():

@@ -1,6 +1,5 @@
+from clients.openrouter import OpenRouter
 from config import Config
-
-from .openrouter import OpenRouter
 
 config = Config()
 

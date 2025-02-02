@@ -1,9 +1,5 @@
-from config import Config
-from openai import OpenAI
-
-from .openrouter import OpenRouter
-
-config = Config()
+from clients.openaiclient import OpenAIClient
+from clients.openrouter import OpenRouter
 
 should_use_openai = False
 should_use_openrouter = False
@@ -12,8 +8,8 @@ should_use_openrouter = False
 def chat():
     try:
         if should_use_openai:
-            openai_client = OpenAI(api_key=config.OPENAI_API_KEY)
-            completion = openai_client.chat.completions.create(
+            client = OpenAIClient()
+            completion = client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
                     {
@@ -29,8 +25,8 @@ def chat():
 
     try:
         if should_use_openrouter:
-            openrouter_client = OpenRouter()
-            completion = openrouter_client.chat.completions.create(
+            client = OpenRouter()
+            client.chat.completions.create(
                 model="google/gemini-2.0-flash-thinking-exp:free",
                 messages=[
                     {
