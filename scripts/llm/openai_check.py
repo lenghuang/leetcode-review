@@ -4,6 +4,7 @@ from clients.openrouter import OpenRouter
 should_use_openai = False
 should_use_openrouter = False
 
+
 def dummy_chat():
     try:
         if should_use_openai:

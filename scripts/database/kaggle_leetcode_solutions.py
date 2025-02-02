@@ -4,55 +4,81 @@ import kagglehub
 from clients.supabaseserviceclient import SupabaseServiceRoleClient
 
 
-def upload():
+class LeetCodeDataUploader:
+    def __init__(self, dataset_path: str = "erichartford/leetcode-solutions"):
+        self.dataset_path = dataset_path
+        self.supabase = SupabaseServiceRoleClient()
+        self.question_data_keys = [
+            "id",
+            "slug",
+            "title",
+            "difficulty",
+            "content",
+        ]
 
-    # Download latest version
-    path = kagglehub.dataset_download("erichartford/leetcode-solutions")
+    def download_dataset(self) -> str:
+        return kagglehub.dataset_download(self.dataset_path)
 
-    print("Path to dataset files:", path)
+    def extract_question_data(self, json_obj):
+        return {
+            key: json_obj.get(key)
+            for key in self.question_data_keys
+            if key in json_obj
+        }
 
-    supabase = SupabaseServiceRoleClient()
+    def insert_question(self, question_data) -> int:
+        response = (
+            self.supabase.table("ImportedQuestions")
+            .insert(
+                {
+                    "source": f"kaggle/{self.dataset_path}",
+                    "source_id": question_data["id"],
+                    "question_data": question_data,
+                }
+            )
+            .execute()
+        )
+        return response.data[0]["id"]
 
-    row_count = 1  # specify the number of rows you want to read
-    with open(path + "/leetcode-solutions.jsonl") as f:
-        for i, line in enumerate(f):
-            if i == row_count:  # break the loop after x iterations
-                break
+    def insert_solutions(self, question_id: int, answers, base_id: str):
+        explanation = answers["explanation"]
+        for language, solution in answers.items():
+            if language == "explanation":
+                continue
 
-            json_obj = json.loads(line)
-
-            question_data_keys = ["id", "slug", "title", "difficulty", "content"]
-            question_data = {
-                key: json_obj.get(key) for key in question_data_keys if key in json_obj
-            }
-
-            response = supabase.table("ImportedQuestions").insert({
-                "source": "kaggle/erichartford/leetcode-solutions",
-                "source_id": question_data["id"],
-                "question_data": question_data
-            }).execute()
-
-            supabase_question_id = response.data[0]["id"]
-
-            answers = json_obj["answer"]
-            explanation = answers["explanation"]
-            for language, solution in answers.items():
-
-                if language == "explanation":
-                    continue
-
-                solution_id = question_data["id"] + "-" + language
-
-                supabase.table("ImportedSolutions").insert({
-                    "source": "kaggle/erichartford/leetcode-solutions",
-                    "question_id": supabase_question_id,
+            solution_id = f"{base_id}-{language}"
+            self.supabase.table("ImportedSolutions").insert(
+                {
+                    "source": f"kaggle/{self.dataset_path}",
+                    "question_id": question_id,
                     "source_id": solution_id,
                     "solution_data": {
                         "solution": solution,
-                        "explanation": explanation
-                    }
-                }).execute()
+                        "explanation": explanation,
+                    },
+                }
+            ).execute()
+
+    def process_line(self, line: str):
+        try:
+            json_obj = json.loads(line)
+            question_data = self.extract_question_data(json_obj)
+            question_id = self.insert_question(question_data)
+            self.insert_solutions(
+                question_id, json_obj["answer"], question_data["id"]
+            )
+        except Exception as e:
+            print(f"Error processing line: {e}")
 
 
+def upload():
+    try:
+        uploader = LeetCodeDataUploader()
+        path = uploader.download_dataset()
 
+        with open(f"{path}/leetcode-solutions.jsonl") as f:
+            for i, line in enumerate(f):
+                uploader.process_line(line)
 
+    except Exception as e:
+        print(f"Upload failed: {e}")
