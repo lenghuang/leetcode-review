@@ -20,7 +20,7 @@ def chat():
                     {"role": "user", "content": "Hello!"},
                 ],
             )
-            print(completion.choices[0].message)
+            print(f"{completion.choices[0].message}\n")
     except Exception as e:
         print(f"An OpenAI error occurred: {e}\n")
 
@@ -40,6 +40,6 @@ def chat():
                     {"role": "user", "content": "Hello!"},
                 ],
             )
-            print(completion.choices[0].message)
+            print(f"{completion.choices[0].message}\n")
     except Exception as e:
         print(f"An OpenRouter error occurred: {e}\n")
