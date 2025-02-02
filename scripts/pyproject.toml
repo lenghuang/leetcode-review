@@ -3,17 +3,6 @@ line-length = 79
 include = '\.pyi?$'
 exclude = '''
 /(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | \venv
-  | .venv
-  | venv
-  | _build
-  | buck-out
-  | build
-  | dist
+  venv
 )/
 '''

@@ -1,5 +1,5 @@
 from baml_client import reset_baml_env_vars
-from dotenv import dotenv_values, load_dotenv
+from dotenv import dotenv_values
 
 
 class Config:
