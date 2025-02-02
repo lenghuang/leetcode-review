@@ -7,7 +7,7 @@ config = Config()
 # Free limit: 20 requests per minute, 200 per day
 
 DEV_MODELS = [
-    "microsoft/phi-3-medium-128k-instruct:free",
+    "gryphe/mythomax-l2-13b:free",
     "huggingfaceh4/zephyr-7b-beta:free",
     "microsoft/phi-3-mini-128k-instruct:free",
     "meta-llama/llama-3.1-8b-instruct:free",
@@ -54,7 +54,8 @@ def dummy_chat():
             },
             {
                 "role": "user",
-                "content": "How do I approach writing a C server/client",
+                "content": "How many r's are in strawberry?"
+                + "Answer in less than 500 characters.",
             },
         ]
     )

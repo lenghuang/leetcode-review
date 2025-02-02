@@ -8,12 +8,11 @@ config = Config()
 def main():
 
     if config.is_dev_mode():
+        # Keep all my imports
         config.print_variables()
         openai_check.dummy_chat()
         free_chat_completions.dummy_chat()
-
-    # One time upload
-    kaggle_leetcode_solutions.upload()
+        kaggle_leetcode_solutions.dummy_check()
 
 
 if __name__ == "__main__":

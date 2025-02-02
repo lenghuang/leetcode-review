@@ -82,3 +82,26 @@ def upload():
 
     except Exception as e:
         print(f"Upload failed: {e}")
+
+
+def dummy_check():
+    supabase = SupabaseServiceRoleClient()
+    response = (
+        supabase.table("ImportedQuestions")
+        .select("source", count="exact")
+        .eq("source", "kaggle/erichartford/leetcode-solutions")
+        .execute()
+    )
+    print(
+        f"Total kaggle/erichartford imported questions count: {response.count}"
+    )
+
+    response = (
+        supabase.table("ImportedSolutions")
+        .select("source", count="exact")
+        .eq("source", "kaggle/erichartford/leetcode-solutions")
+        .execute()
+    )
+    print(
+        f"Total kaggle/erichartford imported solutions count: {response.count}"
+    )
