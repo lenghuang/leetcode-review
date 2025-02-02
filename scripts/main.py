@@ -15,9 +15,6 @@ def main():
         kaggle_lc_separate.dummy_check()
         kaggle_lc_combined.dummy_check()
 
-    # Main execution tasks
-    kaggle_lc_combined.upload()
-
 
 if __name__ == "__main__":
     main()

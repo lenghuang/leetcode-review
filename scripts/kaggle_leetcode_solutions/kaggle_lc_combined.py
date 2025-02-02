@@ -22,9 +22,7 @@ class CombinedLeetCodeDataUploader:
 
             # Add back all the keys except the specific answer
             data = {
-                key: json_obj.get(key)
-                for key in json_obj
-                if key != "answer"
+                key: json_obj.get(key) for key in json_obj if key != "answer"
             }
 
             # Add it back in manually
@@ -35,7 +33,6 @@ class CombinedLeetCodeDataUploader:
             question_data.append(data)
 
         return question_data
-
 
     def insert_question(self, data) -> int:
         response = (
@@ -83,5 +80,5 @@ def dummy_check():
         .execute()
     )
     print(
-        f"Total kaggle/erichartford combined questions count: {response.count}\n"
+        f"[kaggle/erichartford] combined questions count: {response.count}\n"
     )
