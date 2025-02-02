@@ -1,9 +1,7 @@
 from config import Config
-from kaggle_leetcode_solutions import (
-    kaggle_lc_combined,
-    kaggle_lc_generate_questions,
-    kaggle_lc_separate,
-)
+from kaggle_leetcode_solutions import (kaggle_lc_combined,
+                                       kaggle_lc_generate_questions,
+                                       kaggle_lc_separate)
 from llm import free_chat_completions, openai_check
 
 config = Config()
