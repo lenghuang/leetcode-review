@@ -1,5 +1,6 @@
 from config import Config
-from openai import OpenAI
+
+from .openrouter import OpenRouter
 
 config = Config()
 
@@ -30,11 +31,8 @@ def create(messages=None):
 
     for model in models:
         try:
-            openrouter_client = OpenAI(
-                api_key=config.OPENROUTER_API_KEY,
-                base_url=config.OPENROUTER_BASE_URL,
-            )
-            completion = openrouter_client.chat.completions.create(
+            client = OpenRouter()
+            completion = client.chat.completions.create(
                 model=model,
                 messages=messages,
             )

@@ -1,6 +1,8 @@
 from config import Config
 from openai import OpenAI
 
+from .openrouter import OpenRouter
+
 config = Config()
 
 should_use_openai = False
@@ -27,10 +29,7 @@ def chat():
 
     try:
         if should_use_openrouter:
-            openrouter_client = OpenAI(
-                api_key=config.OPENROUTER_API_KEY,
-                base_url=config.OPENROUTER_BASE_URL,
-            )
+            openrouter_client = OpenRouter()
             completion = openrouter_client.chat.completions.create(
                 model="google/gemini-2.0-flash-thinking-exp:free",
                 messages=[
