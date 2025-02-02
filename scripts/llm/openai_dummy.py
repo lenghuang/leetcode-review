@@ -29,7 +29,7 @@ def chat():
         if should_use_openrouter:
             openrouter_client = OpenAI(
                 api_key=config.OPENROUTER_API_KEY,
-                base_url="https://openrouter.ai/api/v1",
+                base_url=config.OPENROUTER_BASE_URL,
             )
             completion = openrouter_client.chat.completions.create(
                 model="google/gemini-2.0-flash-thinking-exp:free",
