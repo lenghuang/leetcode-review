@@ -26,7 +26,7 @@ def create(messages=None):
     if not messages or len(messages) == 0:
         raise ValueError("At least one message is required")
 
-    models = DEV_MODELS if config.DEV_MODE else FREE_MODELS
+    models = DEV_MODELS if config.is_dev_mode() else FREE_MODELS
 
     for model in models:
         try:
@@ -36,10 +36,10 @@ def create(messages=None):
                 messages=messages,
             )
             res = completion.choices[0].message
-            print(f"Successful chat called with {model}\n")
+            print(f"Successful chat called with {model}")
             return res
         except Exception as e:
-            print(f"An OpenRouter error occurred with {model}: {e}\n")
+            print(f"An OpenRouter error occurred with {model}: {e}")
             continue
 
     raise Exception("All models failed")

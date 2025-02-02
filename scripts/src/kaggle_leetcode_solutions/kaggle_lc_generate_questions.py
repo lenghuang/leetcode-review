@@ -10,7 +10,7 @@ def get_combined_questions_data():
     response = (
         supabase.table("ImportedQuestionsAndSolutions")
         .select("*", count="exact")
-        .range(14, 15) # for debugging
+        .range(14, 14) # for debugging
         .eq("source", "kaggle/erichartford/leetcode-solutions-combined")
         .execute()
     )
@@ -39,7 +39,7 @@ def execute():
     all_data = get_combined_questions_data()
     for data in all_data:
         res = multiple_choice_v0_chat_completion(data["data"])
-        print(res)
+        print(f"{res}\n")
 
 def dummy_check():
     print("Hello world\n")

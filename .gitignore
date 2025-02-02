@@ -45,3 +45,6 @@ Thoughts.md
 
 # python
 __pycache__
+
+# baml generated files
+baml_client
