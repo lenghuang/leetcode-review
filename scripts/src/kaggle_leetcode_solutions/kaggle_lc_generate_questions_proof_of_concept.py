@@ -52,7 +52,7 @@ def execute():
         user_input = str(
             {
                 key: user_data.get(key)
-                for key in data
+                for key in user_data
                 if key in ["content", "answer", "explanation"]
             }
         )

@@ -1,7 +1,5 @@
 from config import Config
-from kaggle_leetcode_solutions import (
-    kaggle_lc_generate_questions_proof_of_concept,
-)
+from kaggle_leetcode_solutions import kaggle_generate_grind_75
 
 config = Config()
 
@@ -12,7 +10,7 @@ def main():
         config.print_variables()
 
     # Main execution tasks
-    kaggle_lc_generate_questions_proof_of_concept.execute()
+    kaggle_generate_grind_75.execute()
 
 
 if __name__ == "__main__":

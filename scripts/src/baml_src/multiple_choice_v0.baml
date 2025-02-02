@@ -66,9 +66,25 @@ function GenerateMultipleChoiceV0Dev(question_data: string) -> MultipleChoiceV0Q
   "#
 }
 
+function GenerateMultipleChoiceV0Paid(question_data: string) -> MultipleChoiceV0Question[] {
+  client "OpenRouterGeminiFlash15Paid"
+  prompt #"
+    {{ MultipleChoiceV0Prompt(question_data) }}
+    {{  ctx.output_format }}
+  "#
+}
+
+function GenerateMultipleChoiceV0PaidCheap(question_data: string) -> MultipleChoiceV0Question[] {
+  client "OpenRouterMetaLlama321bInstruct"
+  prompt #"
+    {{ MultipleChoiceV0Prompt(question_data) }}
+    {{  ctx.output_format }}
+  "#
+}
+
 // Test case using a sample LeetCode problem
 test length_of_longest_substring {
-  functions [GenerateMultipleChoiceV0Dev]
+  functions [GenerateMultipleChoiceV0Dev, GenerateMultipleChoiceV0PaidCheap]
   args {
     question_data #"
       {

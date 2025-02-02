@@ -52,6 +52,30 @@ client<llm> OpenRouterDeepseekR1Free {
   }
 }
 
+// https://openrouter.ai/google/gemini-flash-1.5
+// $0.075/M input tokens
+client<llm> OpenRouterGeminiFlash15Paid {
+  provider openai-generic
+  retry_policy Exponential
+  options {
+    model "google/gemini-flash-1.5"
+    base_url env.OPENROUTER_BASE_URL
+    api_key env.OPENROUTER_API_KEY
+  }
+}
+
+// https://openrouter.ai/meta-llama/llama-3.2-1b-instruct
+// $0.01/M input tokens
+client<llm> OpenRouterMetaLlama321bInstruct {
+  provider openai-generic
+  retry_policy Exponential
+  options {
+    model "meta-llama/llama-3.2-1b-instruct"
+    base_url env.OPENROUTER_BASE_URL
+    api_key env.OPENROUTER_API_KEY
+  }
+}
+
 
 // https://openrouter.ai/qwen/qwen-2-7b-instruct:free
 client<llm> OpenRouterQwen27bInstructFree {
