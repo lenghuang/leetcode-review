@@ -92,9 +92,7 @@ def dummy_check():
         .eq("source", "kaggle/erichartford/leetcode-solutions")
         .execute()
     )
-    print(
-        f"Total kaggle/erichartford imported questions count: {response.count}"
-    )
+    print(f"Total kaggle/erichartford questions count: {response.count}")
 
     response = (
         supabase.table("ImportedSolutions")
@@ -102,6 +100,4 @@ def dummy_check():
         .eq("source", "kaggle/erichartford/leetcode-solutions")
         .execute()
     )
-    print(
-        f"Total kaggle/erichartford imported solutions count: {response.count}"
-    )
+    print(f"Total kaggle/erichartford solutions count: {response.count}\n")
