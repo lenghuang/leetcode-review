@@ -36,9 +36,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# private log
-Thoughts.md
-
 # pear ai
 .aider*
 .env
