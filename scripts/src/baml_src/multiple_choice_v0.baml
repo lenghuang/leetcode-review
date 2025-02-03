@@ -67,7 +67,7 @@ function GenerateMultipleChoiceV0Dev(question_data: string) -> MultipleChoiceV0Q
 }
 
 function GenerateMultipleChoiceV0Paid(question_data: string) -> MultipleChoiceV0Question[] {
-  client "OpenRouterGeminiFlash15Paid"
+  client "OpenRouterOpenAIo1Mini"
   prompt #"
     {{ MultipleChoiceV0Prompt(question_data) }}
     {{  ctx.output_format }}
@@ -75,7 +75,7 @@ function GenerateMultipleChoiceV0Paid(question_data: string) -> MultipleChoiceV0
 }
 
 function GenerateMultipleChoiceV0PaidCheap(question_data: string) -> MultipleChoiceV0Question[] {
-  client "OpenRouterMetaLlama321bInstruct"
+  client "OpenRouterGeminiFlash15Paid"
   prompt #"
     {{ MultipleChoiceV0Prompt(question_data) }}
     {{  ctx.output_format }}

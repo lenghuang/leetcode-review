@@ -76,6 +76,29 @@ client<llm> OpenRouterMetaLlama321bInstruct {
   }
 }
 
+// https://openrouter.ai/anthropic/claude-3.5-sonnet
+// $3/M input tokens
+client<llm> OpenRouterAnthropicClaude35Sonnet {
+  provider openai-generic
+  retry_policy Exponential
+  options {
+    model "meta-llama/llama-3.2-1b-instruct"
+    base_url env.OPENROUTER_BASE_URL
+    api_key env.OPENROUTER_API_KEY
+  }
+}
+
+// https://openrouter.ai/openai/o1-mini
+// $1.1/M input tokens
+client<llm> OpenRouterOpenAIo1Mini {
+  provider openai-generic
+  retry_policy Constant
+  options {
+    model "openai/o1-mini"
+    base_url env.OPENROUTER_BASE_URL
+    api_key env.OPENROUTER_API_KEY
+  }
+}
 
 // https://openrouter.ai/qwen/qwen-2-7b-instruct:free
 client<llm> OpenRouterQwen27bInstructFree {
