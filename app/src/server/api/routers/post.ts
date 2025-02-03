@@ -18,21 +18,32 @@ export const postRouter = createTRPCRouter({
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.post.create({
-        data: {
-          name: input.name,
-          createdBy: { connect: { id: ctx.session.user.id } },
-        },
+      console.log(input);
+
+      const response = await ctx.db.from("T3AppStarterPosts").insert({
+        name: input.name,
+        user_id: ctx.session.user.id,
       });
+
+      console.log("\ncreate");
+      console.log(response);
+
+      return response;
     }),
 
   getLatest: protectedProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
+    const response = await ctx.db
+      .from("T3AppStarterPosts")
+      .select("*")
+      .eq("user_id", ctx.session.user.id)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
 
-    return post ?? null;
+    console.log("\nget latest");
+    console.log(response);
+
+    return response?.data ?? null;
   }),
 
   getSecretMessage: protectedProcedure.query(() => {
