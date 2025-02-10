@@ -1,0 +1,1017 @@
+{
+  "audit_log_entries": {
+    "table": {
+      "tableName": "audit_log_entries",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "audit_log_entries",
+        "columnName": "instance_id",
+        "comment": ""
+      },
+      {
+        "tableName": "audit_log_entries",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "audit_log_entries",
+        "columnName": "payload",
+        "comment": ""
+      },
+      {
+        "tableName": "audit_log_entries",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "audit_log_entries",
+        "columnName": "ip_address",
+        "comment": ""
+      }
+    ]
+  },
+  "flow_state": {
+    "table": {
+      "tableName": "flow_state",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "flow_state",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "user_id",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "auth_code",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "code_challenge_method",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "code_challenge",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "provider_type",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "provider_access_token",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "provider_refresh_token",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "updated_at",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "authentication_method",
+        "comment": ""
+      },
+      {
+        "tableName": "flow_state",
+        "columnName": "auth_code_issued_at",
+        "comment": ""
+      }
+    ]
+  },
+  "identities": {
+    "table": {
+      "tableName": "identities",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "identities",
+        "columnName": "provider_id",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "user_id",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "identity_data",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "provider",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "last_sign_in_at",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "updated_at",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "email",
+        "comment": ""
+      },
+      {
+        "tableName": "identities",
+        "columnName": "id",
+        "comment": ""
+      }
+    ]
+  },
+  "instances": {
+    "table": {
+      "tableName": "instances",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "instances",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "instances",
+        "columnName": "uuid",
+        "comment": ""
+      },
+      {
+        "tableName": "instances",
+        "columnName": "raw_base_config",
+        "comment": ""
+      },
+      {
+        "tableName": "instances",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "instances",
+        "columnName": "updated_at",
+        "comment": ""
+      }
+    ]
+  },
+  "mfa_amr_claims": {
+    "table": {
+      "tableName": "mfa_amr_claims",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "mfa_amr_claims",
+        "columnName": "session_id",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_amr_claims",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_amr_claims",
+        "columnName": "updated_at",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_amr_claims",
+        "columnName": "authentication_method",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_amr_claims",
+        "columnName": "id",
+        "comment": ""
+      }
+    ]
+  },
+  "mfa_challenges": {
+    "table": {
+      "tableName": "mfa_challenges",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "mfa_challenges",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_challenges",
+        "columnName": "factor_id",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_challenges",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_challenges",
+        "columnName": "verified_at",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_challenges",
+        "columnName": "ip_address",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_challenges",
+        "columnName": "otp_code",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_challenges",
+        "columnName": "web_authn_session_data",
+        "comment": ""
+      }
+    ]
+  },
+  "mfa_factors": {
+    "table": {
+      "tableName": "mfa_factors",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "mfa_factors",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "user_id",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "friendly_name",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "factor_type",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "status",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "updated_at",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "secret",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "phone",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "last_challenged_at",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "web_authn_credential",
+        "comment": ""
+      },
+      {
+        "tableName": "mfa_factors",
+        "columnName": "web_authn_aaguid",
+        "comment": ""
+      }
+    ]
+  },
+  "one_time_tokens": {
+    "table": {
+      "tableName": "one_time_tokens",
+      "comment": "This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "one_time_tokens",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "one_time_tokens",
+        "columnName": "user_id",
+        "comment": ""
+      },
+      {
+        "tableName": "one_time_tokens",
+        "columnName": "token_type",
+        "comment": ""
+      },
+      {
+        "tableName": "one_time_tokens",
+        "columnName": "token_hash",
+        "comment": ""
+      },
+      {
+        "tableName": "one_time_tokens",
+        "columnName": "relates_to",
+        "comment": ""
+      },
+      {
+        "tableName": "one_time_tokens",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "one_time_tokens",
+        "columnName": "updated_at",
+        "comment": ""
+      }
+    ]
+  },
+  "refresh_tokens": {
+    "table": {
+      "tableName": "refresh_tokens",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "instance_id",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "token",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "user_id",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "revoked",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "updated_at",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "parent",
+        "comment": ""
+      },
+      {
+        "tableName": "refresh_tokens",
+        "columnName": "session_id",
+        "comment": ""
+      }
+    ]
+  },
+  "saml_providers": {
+    "table": {
+      "tableName": "saml_providers",
+      "comment": "This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.\nThis model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "saml_providers",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "sso_provider_id",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "entity_id",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "metadata_xml",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "metadata_url",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "attribute_mapping",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "updated_at",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_providers",
+        "columnName": "name_id_format",
+        "comment": ""
+      }
+    ]
+  },
+  "saml_relay_states": {
+    "table": {
+      "tableName": "saml_relay_states",
+      "comment": "This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.\nThis model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "sso_provider_id",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "request_id",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "for_email",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "redirect_to",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "updated_at",
+        "comment": ""
+      },
+      {
+        "tableName": "saml_relay_states",
+        "columnName": "flow_state_id",
+        "comment": ""
+      }
+    ]
+  },
+  "schema_migrations": {
+    "table": {
+      "tableName": "schema_migrations",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "schema_migrations",
+        "columnName": "version",
+        "comment": ""
+      }
+    ]
+  },
+  "sessions": {
+    "table": {
+      "tableName": "sessions",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "sessions",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "sessions",
+        "columnName": "expires",
+        "comment": ""
+      },
+      {
+        "tableName": "sessions",
+        "columnName": "sessionToken",
+        "comment": ""
+      },
+      {
+        "tableName": "sessions",
+        "columnName": "userId",
+        "comment": ""
+      }
+    ]
+  },
+  "sso_domains": {
+    "table": {
+      "tableName": "sso_domains",
+      "comment": "This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.\nThis model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.\nThis model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info."
+    },
+    "columns": [
+      {
+        "tableName": "sso_domains",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "sso_domains",
+        "columnName": "sso_provider_id",
+        "comment": ""
+      },
+      {
+        "tableName": "sso_domains",
+        "columnName": "domain",
+        "comment": ""
+      },
+      {
+        "tableName": "sso_domains",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "sso_domains",
+        "columnName": "updated_at",
+        "comment": ""
+      }
+    ]
+  },
+  "sso_providers": {
+    "table": {
+      "tableName": "sso_providers",
+      "comment": "This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.\nThis model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.\nThis model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info."
+    },
+    "columns": [
+      {
+        "tableName": "sso_providers",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "sso_providers",
+        "columnName": "resource_id",
+        "comment": ""
+      },
+      {
+        "tableName": "sso_providers",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "sso_providers",
+        "columnName": "updated_at",
+        "comment": ""
+      }
+    ]
+  },
+  "users": {
+    "table": {
+      "tableName": "users",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "users",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "users",
+        "columnName": "name",
+        "comment": ""
+      },
+      {
+        "tableName": "users",
+        "columnName": "email",
+        "comment": ""
+      },
+      {
+        "tableName": "users",
+        "columnName": "emailVerified",
+        "comment": ""
+      },
+      {
+        "tableName": "users",
+        "columnName": "image",
+        "comment": ""
+      }
+    ]
+  },
+  "accounts": {
+    "table": {
+      "tableName": "accounts",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "accounts",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "type",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "provider",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "providerAccountId",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "refresh_token",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "access_token",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "expires_at",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "token_type",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "scope",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "id_token",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "session_state",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "oauth_token_secret",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "oauth_token",
+        "comment": ""
+      },
+      {
+        "tableName": "accounts",
+        "columnName": "userId",
+        "comment": ""
+      }
+    ]
+  },
+  "verification_tokens": {
+    "table": {
+      "tableName": "verification_tokens",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "verification_tokens",
+        "columnName": "identifier",
+        "comment": ""
+      },
+      {
+        "tableName": "verification_tokens",
+        "columnName": "token",
+        "comment": ""
+      },
+      {
+        "tableName": "verification_tokens",
+        "columnName": "expires",
+        "comment": ""
+      }
+    ]
+  },
+  "GeneratedQuestions": {
+    "table": {
+      "tableName": "GeneratedQuestions",
+      "comment": "This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "imported_questions_and_solutions_id",
+        "comment": ""
+      },
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "source",
+        "comment": ""
+      },
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "source_id",
+        "comment": ""
+      },
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "data",
+        "comment": ""
+      },
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "version",
+        "comment": ""
+      },
+      {
+        "tableName": "GeneratedQuestions",
+        "columnName": "version_description",
+        "comment": ""
+      }
+    ]
+  },
+  "ImportedQuestionsAndSolutions": {
+    "table": {
+      "tableName": "ImportedQuestionsAndSolutions",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "ImportedQuestionsAndSolutions",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "ImportedQuestionsAndSolutions",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "ImportedQuestionsAndSolutions",
+        "columnName": "source",
+        "comment": ""
+      },
+      {
+        "tableName": "ImportedQuestionsAndSolutions",
+        "columnName": "source_id",
+        "comment": ""
+      },
+      {
+        "tableName": "ImportedQuestionsAndSolutions",
+        "columnName": "data",
+        "comment": ""
+      }
+    ]
+  },
+  "T3AppStarterPosts": {
+    "table": {
+      "tableName": "T3AppStarterPosts",
+      "comment": "This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "T3AppStarterPosts",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "T3AppStarterPosts",
+        "columnName": "name",
+        "comment": ""
+      },
+      {
+        "tableName": "T3AppStarterPosts",
+        "columnName": "user_id",
+        "comment": ""
+      },
+      {
+        "tableName": "T3AppStarterPosts",
+        "columnName": "created_at",
+        "comment": ""
+      }
+    ]
+  },
+  "[Deprecated]ImportedQuestions": {
+    "table": {
+      "tableName": "[Deprecated]ImportedQuestions",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "[Deprecated]ImportedQuestions",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedQuestions",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedQuestions",
+        "columnName": "source",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedQuestions",
+        "columnName": "source_id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedQuestions",
+        "columnName": "question_data",
+        "comment": ""
+      }
+    ]
+  },
+  "[Deprecated]ImportedSolutions": {
+    "table": {
+      "tableName": "[Deprecated]ImportedSolutions",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "[Deprecated]ImportedSolutions",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedSolutions",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedSolutions",
+        "columnName": "source",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedSolutions",
+        "columnName": "source_id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedSolutions",
+        "columnName": "question_id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]ImportedSolutions",
+        "columnName": "solution_data",
+        "comment": ""
+      }
+    ]
+  },
+  "[Deprecated]UserQuestionDataFromLeetcode": {
+    "table": {
+      "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "created_at",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "leetcode_submission_id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "leetcode_title",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "leetcode_title_slug",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "leetcode_lang",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "leetcode_lang_name",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "leetcode_code",
+        "comment": ""
+      },
+      {
+        "tableName": "[Deprecated]UserQuestionDataFromLeetcode",
+        "columnName": "leetcode_topic_tags",
+        "comment": ""
+      }
+    ]
+  },
+  "[Todo]ImportedQuestionsMetadata": {
+    "table": {
+      "tableName": "[Todo]ImportedQuestionsMetadata",
+      "comment": "This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nThis model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info."
+    },
+    "columns": [
+      {
+        "tableName": "[Todo]ImportedQuestionsMetadata",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "[Todo]ImportedQuestionsMetadata",
+        "columnName": "created_at",
+        "comment": ""
+      }
+    ]
+  }
+}

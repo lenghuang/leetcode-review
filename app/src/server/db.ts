@@ -1,7 +1,17 @@
-import { createClient } from "@supabase/supabase-js";
+import { PrismaClient } from "@prisma/client";
+
 import { env } from "~/env";
 
-const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
+const createPrismaClient = () =>
+  new PrismaClient({
+    log:
+      env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+  });
 
-// TODO: Add ability to go between QA / Prod Database
-export const db = supabase;
+const globalForPrisma = globalThis as unknown as {
+  prisma: ReturnType<typeof createPrismaClient> | undefined;
+};
+
+export const db = globalForPrisma.prisma ?? createPrismaClient();
+
+if (env.NODE_ENV !== "production") globalForPrisma.prisma = db;
