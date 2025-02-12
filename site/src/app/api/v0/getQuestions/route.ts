@@ -1,5 +1,6 @@
 import { GeneratedQuestion } from '@/types/short-db.types';
 import { createClient } from '@/utils/supabase/server';
+import { MultipleChoiceV0 } from '@/zod/multiple_choice_v0';
 import { NextResponse } from 'next/server';
 
 // api/v0/getQuestions
@@ -13,12 +14,28 @@ export async function GET(request: Request) {
 async function getQuestions() {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from('GeneratedQuestions').select('*');
+  const { data: allData, error: allError } = await supabase
+    .from('GeneratedQuestions')
+    .select('*');
 
-  if (error) {
-    console.error(error);
+  if (allError) {
+    console.error(allError);
     return [];
   }
 
-  return data as GeneratedQuestion[];
+  // Example server side JsonValidation
+  const questions: GeneratedQuestion[] = allData;
+
+  for (const q of questions) {
+    const { success, error: mcError } = MultipleChoiceV0.safeParse(q.data);
+
+    if (mcError || !success) {
+      console.error(mcError);
+      return [];
+    }
+  }
+
+  console.log('Dynamic JSON Data Validated');
+
+  return allData as GeneratedQuestion[];
 }
