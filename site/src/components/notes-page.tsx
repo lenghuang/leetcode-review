@@ -1,33 +1,37 @@
 'use client';
 
-import { createClient as createClientClient } from '@/utils/supabase/client';
-import { useEffect, useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Suspense } from 'react';
+import useSwr from 'swr';
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+function LoadingFallback() {
+  return <Skeleton className="h-4 w-[200px]" />;
+}
+
+function NotesComponentData() {
+  const { data, error, isLoading } = useSwr('/api/v0/getQuestions', fetcher);
+
+  if (error) {
+    return <>something went wrong</>;
+  }
+
+  if (isLoading) {
+    return <LoadingFallback />;
+  }
+
+  return <>{JSON.stringify(data, null, 2)}</>;
+}
 
 export default function NotesComponentClient() {
-  const [notes, setNotes] = useState<any[] | null>(null);
-  const supabase = createClientClient();
-
-  useEffect(() => {
-    const getData = async () => {
-      const { data, error } = await supabase
-        .from('GeneratedQuestions')
-        .select();
-
-      if (error) {
-        console.error('Supabase error:', error);
-        return;
-      }
-
-      setNotes(data);
-    };
-    getData();
-  }, []);
-
   return (
     <>
       <h2 className="font-bold text-2xl mb-4">Your SQL (client) response</h2>
       <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
-        {JSON.stringify(notes, null, 2)}
+        <Suspense fallback={<LoadingFallback />}>
+          <NotesComponentData />
+        </Suspense>
       </pre>
     </>
   );
