@@ -11,9 +11,9 @@ const navItems = [
   { name: 'Profile', icon: User, href: '/profile' },
 ];
 
-export function ResponsiveNav() {
+export function ResponsiveHeader() {
   return (
-    <>
+    <div className="w-full max-w-5xl mx-auto py-9 px-5 text-sm">
       {/* Hero Header - Only visible on mobile */}
       <header className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:hidden">
         <Button
@@ -75,6 +75,6 @@ export function ResponsiveNav() {
           </ul>
         </div>
       </nav>
-    </>
+    </div>
   );
 }

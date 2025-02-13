@@ -1,8 +1,8 @@
 import { Funnel_Sans } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import './globals.css';
-import { ResponsiveNav } from '@/components/responsive-nav';
-import { AISlopByLen } from '@/components/ai-slop-by-len';
+import { ResponsiveHeader } from '@/components/responsive-header';
+import { ResponsiveFooter } from '@/components/responsive-footer';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -33,20 +33,18 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="min-h-screen flex flex-col items-center overflow-x-hidden">
-            <div className="flex-1 w-full flex flex-col gap-20 items-center">
-              <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-                <ResponsiveNav />
-              </div>
-              <div className="flex flex-col gap-20 max-w-5xl p-5">
+          <main className="min-h-screen flex flex-col">
+            {/* Navbar */}
+            <ResponsiveHeader />
+
+            {/* Main content */}
+            <div className="flex-1 flex flex-col items-center">
+              <div className="w-full max-w-5xl flex flex-col gap-20 p-5">
                 {children}
               </div>
-
-              {/* Show footer on desktop only */}
-              <footer className="w-full hidden lg:flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                <AISlopByLen />
-              </footer>
             </div>
+
+            <ResponsiveFooter />
           </main>
         </ThemeProvider>
       </body>
