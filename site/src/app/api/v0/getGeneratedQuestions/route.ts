@@ -3,15 +3,15 @@ import { createClient } from '@/utils/supabase/server';
 import { MultipleChoiceV0 } from '@/zod/multiple_choice_v0';
 import { NextResponse } from 'next/server';
 
-// api/v0/getQuestions
+// api/v0/getGeneratedQuestions
 export async function GET(request: Request) {
-  return getQuestions()
+  return getGeneratedQuestions()
     .then((data) => NextResponse.json(data))
-    .catch((err) => console.error('api/v0/getQuestions', err));
+    .catch((err) => console.error('api/v0/getGeneratedQuestions', err));
 }
 
 // Separate logic from network layer
-async function getQuestions() {
+async function getGeneratedQuestions() {
   const supabase = await createClient();
 
   const { data: allData, error: allError } = await supabase
@@ -35,7 +35,7 @@ async function getQuestions() {
     }
   }
 
-  console.log('Dynamic JSON Data Validated');
+  console.log('Dynamic JSON Data Validated as MultipleChoiceV0');
 
   return allData as GeneratedQuestion[];
 }
