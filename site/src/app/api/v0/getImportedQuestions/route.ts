@@ -3,20 +3,28 @@ import { createClient } from '@/utils/supabase/server';
 import { KaggleDatasetQuestionMetadata } from '@/zod/kaggle_dataset_v0';
 import { NextResponse } from 'next/server';
 
+const PAGE_SIZE = 3;
+
 // api/v0/getImportedQuestions
 export async function GET(request: Request) {
-  return getImportedQuestions()
+  const { searchParams } = new URL(request.url);
+  const page = parseInt(searchParams.get('page') ?? '0');
+
+  console.log(page);
+
+  return getImportedQuestions(page)
     .then((data) => NextResponse.json(data))
     .catch((err) => console.error('api/v0/getImportedQuestions', err));
 }
 
 // Separate logic from network layer
-async function getImportedQuestions() {
+async function getImportedQuestions(page: number = 0) {
   const supabase = await createClient();
 
   const { data: allData, error: allError } = await supabase
     .from('ImportedQuestionsAndSolutions')
-    .select('*');
+    .select('*')
+    .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
 
   if (allError) {
     console.error(allError);
