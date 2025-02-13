@@ -5,6 +5,7 @@ import { ImportedQuestion } from '@/types/short-db.types';
 import { KaggleDatasetQuestionMetadata } from '@/zod/kaggle_dataset_v0';
 import { useState } from 'react';
 import useSwr from 'swr';
+import { Button } from '@/components/ui/button';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -61,11 +62,20 @@ function ProblemsRow({ problem }: { problem: ImportedQuestion }) {
 }
 
 export default function ProblemsPageClient() {
-  const [page, setPageNumber] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
 
   return (
     <div className="container mx-auto p-4">
       <DataFetchingComponent page={page} />
+      <div className="flex gap-2 mt-4 justify-center">
+        <Button
+          onClick={() => setPage(Math.max(0, page - 1))}
+          disabled={page === 0}
+        >
+          Previous
+        </Button>
+        <Button onClick={() => setPage(page + 1)}>Next</Button>
+      </div>
     </div>
   );
 }

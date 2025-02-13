@@ -3,10 +3,12 @@ import { createClient } from '@/utils/supabase/server';
 import { KaggleDatasetQuestionMetadata } from '@/zod/kaggle_dataset_v0';
 import { NextResponse } from 'next/server';
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 5;
 
 // api/v0/getImportedQuestions
 export async function GET(request: Request) {
+  // Doing this at BE layer for now, but what if someone refreshes and are on page 20?
+  // They should prob stay so maybe need to add query param or something.
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get('page') ?? '0');
 
