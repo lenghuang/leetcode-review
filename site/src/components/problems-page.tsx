@@ -23,11 +23,37 @@ function TryGetKaggleV0Data({ problem }: { problem: ImportedQuestion }) {
     );
   }
 
+  console.log('Failed to parse kaggle data');
+
   return false;
 }
 
 function LoadingFallback() {
-  return <Skeleton className="h-8 w-[200px]" />;
+  return (
+    <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4">
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-8 w-full w-max-[500px]" />
+          <Skeleton className="h-4 w-full w-max-[300px]" />
+          <Skeleton className="h-4 w-full w-max-[300px]" />
+        </div>
+      </div>
+      <div className="container mx-auto p-4">
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-8 w-full w-max-[500px]" />
+          <Skeleton className="h-4 w-full w-max-[300px]" />
+          <Skeleton className="h-4 w-full w-max-[300px]" />
+        </div>
+      </div>
+      <div className="container mx-auto p-4">
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-8 w-full w-max-[500px]" />
+          <Skeleton className="h-4 w-full w-max-[300px]" />
+          <Skeleton className="h-4 w-full w-max-[300px]" />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function DataFetchingComponent({ page = 0 }: { page: number }) {
@@ -45,7 +71,12 @@ function DataFetchingComponent({ page = 0 }: { page: number }) {
   }
 
   if (error) {
-    return <>something went wrong</>;
+    return (
+      <>
+        <LoadingFallback />
+        something went wrong
+      </>
+    );
   }
 
   return problems
@@ -58,6 +89,7 @@ function ProblemsRow({ problem }: { problem: ImportedQuestion }) {
     return <TryGetKaggleV0Data problem={problem} />;
   }
 
+  console.log('ProblemsRow no match');
   return false;
 }
 
@@ -74,6 +106,8 @@ export default function ProblemsPageClient() {
         >
           Previous
         </Button>
+        {/* Should do this with query params/server actions instead, and */}
+        {/* preload next page to know to disable last button */}
         <Button onClick={() => setPage(page + 1)}>Next</Button>
       </div>
     </div>
