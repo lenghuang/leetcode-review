@@ -1,10 +1,6 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "always",
-    "source.sortImports": "always"
-  },
   "files.exclude": {
     "archive": true, // Specifc to this project
     "**/node_modules": true, // Exclude node_modules
@@ -14,6 +10,7 @@
     "**/temp": true, // Exclude temp folders
     "**/logs": true, // Exclude log files
     "**/__pycache__": true, // Exclude Python pycache
-    "**/*.pyc": true // Exclude Python compiled files
+    "**/*.pyc": true, // Exclude Python compiled files
+    ".aider*": true // specific to Aider
   }
 }

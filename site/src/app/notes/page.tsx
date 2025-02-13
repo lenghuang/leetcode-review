@@ -17,6 +17,7 @@ export default async function NotesPage() {
         <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
           {JSON.stringify(response.data, null, 2)}
         </pre>
+        <h2 className="font-bold text-2xl mb-4">Your SQL (client) response</h2>
         <NotesComponentClient />
       </div>
     </div>
