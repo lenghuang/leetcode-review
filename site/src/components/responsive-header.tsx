@@ -13,17 +13,12 @@ const navItems = [
 
 export function ResponsiveHeader() {
   return (
-    <div className="w-full max-w-5xl mx-auto py-9 px-5 text-sm">
+    <div className="w-full max-w-5xl mx-auto py-8 px-5 text-sm">
       {/* TODO add a back button if its  */}
 
       {/* Hero Header - Only visible on mobile */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-center bg-background lg:hidden">
-        <Button
-          asChild
-          variant="ghost"
-          size="icon"
-          className="h-16 w-16 rounded-none"
-        >
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center bg-background lg:hidden">
+        <Button asChild variant="ghost" size="icon" className=" rounded-none">
           <Link href="/">
             <Zap className="h-8 w-8" />
             <span className="sr-only">Hero</span>
@@ -34,18 +29,18 @@ export function ResponsiveHeader() {
       {/* Navigation - Bottom on mobile, top on desktop */}
       <nav
         className={cn(
-          'fixed left-0 right-0 z-50 flex h-16 items-center bg-background',
+          'fixed left-0 right-0 z-50 flex items-center bg-background',
           'bottom-0 lg:top-0 lg:bottom-auto'
         )}
       >
-        <div className="flex w-full items-center px-4">
+        <div className="flex w-full items-center py-2 px-4">
           {/* Hero Icon - Only visible on desktop */}
           <div className="hidden lg:block lg:pr-4">
             <Button
               asChild
               variant="ghost"
               size="icon"
-              className="h-12 w-12 rounded-full"
+              className="rounded-full"
             >
               <Link href="/">
                 <Zap className="h-6 w-6" />
