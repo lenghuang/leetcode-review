@@ -38,7 +38,7 @@ export function ResponsiveHeader() {
           'bottom-0 lg:top-0 lg:bottom-auto'
         )}
       >
-        <div className="flex w-full max-w-screen-xl items-center px-4">
+        <div className="flex w-full items-center px-4">
           {/* Hero Icon - Only visible on desktop */}
           <div className="hidden lg:block lg:pr-4">
             <Button

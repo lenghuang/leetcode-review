@@ -39,7 +39,7 @@ export default function RootLayout({
 
             {/* Main content */}
             <div className="flex-1 flex flex-col items-center">
-              <div className="w-full max-w-5xl flex flex-col gap-20 p-5">
+              <div className="w-full max-w-7xl flex flex-col gap-20 p-5">
                 {children}
               </div>
             </div>

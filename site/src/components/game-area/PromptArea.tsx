@@ -13,7 +13,7 @@ export default function PromptArea() {
   }, []);
 
   return (
-    <div className="md:w-1/3 lg:w-1/4 bg-white p-4 md:p-6 shadow-md">
+    <div className="w-full lg:w-1/2 bg-white">
       <h2 className="text-xl font-bold mb-4">Instructions</h2>
       <p className="text-gray-700">{prompt}</p>
       <div className="mt-6">
