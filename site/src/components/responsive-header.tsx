@@ -17,7 +17,7 @@ export function ResponsiveHeader() {
       {/* TODO add a back button if its  */}
 
       {/* Hero Header - Only visible on mobile */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:hidden">
+      <header className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-center bg-background lg:hidden">
         <Button
           asChild
           variant="ghost"
@@ -34,7 +34,7 @@ export function ResponsiveHeader() {
       {/* Navigation - Bottom on mobile, top on desktop */}
       <nav
         className={cn(
-          'fixed left-0 right-0 z-50 flex h-16 items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60',
+          'fixed left-0 right-0 z-50 flex h-16 items-center bg-background',
           'bottom-0 lg:top-0 lg:bottom-auto'
         )}
       >
