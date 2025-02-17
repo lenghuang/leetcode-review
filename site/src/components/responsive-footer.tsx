@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 export const ResponsiveFooter = () => (
@@ -12,7 +13,7 @@ export const ResponsiveFooter = () => (
       >
         lendevelops
       </a>
-      <img className="w-[16px] h-[16px]" src="/pika-wave.gif" />
+      <Image width={16} height={16} src="/pika-wave.gif" alt="pika-wave" />
     </div>
   </footer>
 );

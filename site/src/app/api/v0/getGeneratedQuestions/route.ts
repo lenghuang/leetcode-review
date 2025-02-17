@@ -4,7 +4,7 @@ import { MultipleChoiceV0 } from '@/zod/multiple_choice_v0';
 import { NextResponse } from 'next/server';
 
 // api/v0/getGeneratedQuestions
-export async function GET(request: Request) {
+export async function GET() {
   return getGeneratedQuestions()
     .then((data) => NextResponse.json(data))
     .catch((err) => console.error('api/v0/getGeneratedQuestions', err));
