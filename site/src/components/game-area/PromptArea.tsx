@@ -1,32 +1,30 @@
 'use client';
 
+import { ImportedQuestion } from '@/types/short-db.types';
 import { useState, useEffect } from 'react';
+import useSWR from 'swr';
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function PromptArea() {
-  const [prompt, setPrompt] = useState('');
+  const { data, error, isLoading } = useSWR<ImportedQuestion>(
+    '/api/v0/getSingleImportedQuestion',
+    fetcher
+  );
 
-  useEffect(() => {
-    // In a real app, you'd fetch this from an API based on the current question
-    setPrompt(
-      'Translate the following sentence to Spanish. Pay attention to the verb conjugation and noun gender.'
-    );
-  }, []);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !data) {
+    return <div>Error loading data</div>;
+  }
 
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Instructions</h2>
-      <p className="text-gray-700">{prompt}</p>
-      <div className="mt-6">
-        <h3 className="font-bold mb-2">Tips:</h3>
-        <ul className="list-disc list-inside text-sm text-gray-600">
-          <li>
-            Remember to use "el" for masculine nouns and "la" for feminine
-            nouns.
-          </li>
-          <li>The verb ending changes based on the subject of the sentence.</li>
-          <li>Pay attention to any irregular verbs in the sentence.</li>
-        </ul>
-      </div>
+      <p className="text-gray-700">{data.id}</p>{' '}
+      <p className="text-gray-700">{JSON.stringify(data.data)}</p>{' '}
     </div>
   );
 }
