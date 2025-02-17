@@ -6,15 +6,5 @@ export default function StudySessionLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <main className="min-h-screen flex flex-col">
-      {/* Navbar */}
-      <ResponsiveHeader />
-
-      {/* Main content */}
-      <div className="flex-1 flex flex-col items-center">{children}</div>
-
-      <ResponsiveFooter />
-    </main>
-  );
+  return <main>{children}</main>;
 }
