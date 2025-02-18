@@ -13,7 +13,7 @@ import { z } from 'zod';
 //     isCorrect bool
 //   }
 
-const MultipleChoiceV0Answer = z.object({
+export const MultipleChoiceV0Answer = z.object({
   displayChoice: z.string(),
   feedback: z.string(),
   isCorrect: z.boolean(),

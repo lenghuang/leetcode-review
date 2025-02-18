@@ -1,5 +1,8 @@
 import { Json } from './database.types';
-import { KaggleDatasetQuestionMetadataType } from './zod.types';
+import {
+  KaggleDatasetQuestionMetadataType,
+  MultipleChoiceV0Type,
+} from './zod.types';
 
 export interface StudySessionDataObject {
   prompt: {
@@ -28,4 +31,16 @@ export interface DescriptionTabProps {
 
 export interface DescriptionTabDisplayProps {
   data: KaggleDatasetQuestionMetadataType;
+}
+
+export interface ActivityProps {
+  data: {
+    answerKey: number;
+    answerKind: string;
+    answerData: Json;
+  };
+}
+
+export interface ActivityDisplayProps {
+  data: MultipleChoiceV0Type;
 }
