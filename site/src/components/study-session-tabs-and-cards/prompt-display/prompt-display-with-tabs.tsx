@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DescriptionTabDisplayProps } from '@/types/study-session.types';
 import { ExternalLink } from 'lucide-react';
 import { CodeHighlighter } from './code-highlighter';
+import { MarkdownDisplay } from './markdown-display';
 
 export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
   <div>
@@ -32,7 +33,9 @@ export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
       </TabsList>
       <TabsContent value={'description'}>
         <Card>
-          <CardContent>{data.content}</CardContent>
+          <CardContent>
+            <MarkdownDisplay markdown={data.content} />
+          </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value={'explanation'}>
