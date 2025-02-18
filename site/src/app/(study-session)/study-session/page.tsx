@@ -1,10 +1,22 @@
 import { StudySessionClient } from '@/components/study-session-tabs-and-cards/study-session';
+import { createClient } from '@/utils/supabase/server';
 
-export default function StudySession() {
+export default async function StudySession() {
   // This page does not need to be SEO performant and rather should be
   // optimized for PWA, so we make everything a big client component.
 
-  // Here, we might add server side logic to load in the study session.
+  // TODO: Move this to a standalone API endpoint and use SWR to fetch it.
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc(
+    'get_study_session_test_function_v0'
+  );
+
+  console.log(data);
+
+  if (error) {
+    console.error(error);
+    return <div> sum thing wrong</div>;
+  }
 
   return <StudySessionClient />;
 }

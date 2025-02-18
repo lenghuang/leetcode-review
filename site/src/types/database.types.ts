@@ -104,7 +104,15 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_study_session_test_function_v0: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          gq_id: number;
+          iqs_id: number;
+          gq_data: Json;
+          iqs_data: Json;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;
