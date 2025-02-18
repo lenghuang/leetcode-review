@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DescriptionTabDisplayProps } from '@/types/study-session.types';
 import { ExternalLink } from 'lucide-react';
@@ -33,14 +33,16 @@ export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
       </TabsList>
       <TabsContent value={'description'}>
         <Card>
-          <CardContent>
+          <CardContent className="mt-4">
             <MarkdownDisplay markdown={data.content} />
           </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value={'explanation'}>
         <Card>
-          <CardContent>{data.explanation}</CardContent>
+          <CardContent className="mt-4">
+            <MarkdownDisplay markdown={data.explanation} />
+          </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value={'solution'}>
