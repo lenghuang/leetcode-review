@@ -1,14 +1,9 @@
 import { FC, ReactNode } from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DescriptionTabDisplayProps } from '@/types/study-session.types';
 import { ExternalLink } from 'lucide-react';
+import { Highlight } from 'prism-react-renderer';
 
 export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
   <div>
@@ -30,29 +25,52 @@ export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
       </CustomBadgeContainer>
     </div>
     <Tabs defaultValue={'description'}>
-      <TabsList className="grid w-full grid-cols-2">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value={'description'}>Description</TabsTrigger>
-        <TabsTrigger value={'solution'}>Solution</TabsTrigger>
+        <TabsTrigger value={'explanation'}>Explanation</TabsTrigger>
+        <TabsTrigger value={'solution'}>Code Solution</TabsTrigger>
       </TabsList>
       <TabsContent value={'description'}>
         <Card>
-          <CardContent className="space-y-2">{data.content}</CardContent>
+          <CardContent>{data.content}</CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value={'explanation'}>
+        <Card>
+          <CardContent>{data.explanation}</CardContent>
         </Card>
       </TabsContent>
       <TabsContent value={'solution'}>
         <Card>
-          <CardHeader>
-            <CardTitle>Description</CardTitle>
-            <CardDescription>
-              Read up on the original question before reviewing.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">{data.answer}</CardContent>
+          <CardContent>
+            <Highlight code={extractCode(data.answer)} language={data.language}>
+              {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                <pre style={style}>
+                  {tokens.map((line, i) => (
+                    <div key={i} {...getLineProps({ line })}>
+                      <span>{i + 1}</span>
+                      {line.map((token, key) => (
+                        <span key={key} {...getTokenProps({ token })} />
+                      ))}
+                    </div>
+                  ))}
+                </pre>
+              )}
+            </Highlight>
+          </CardContent>
         </Card>
       </TabsContent>
     </Tabs>
   </div>
 );
+
+const extractCode = (markdown: string) => {
+  console.log(markdown);
+  const lines = markdown.trim().split('\\n');
+  if (lines.length < 2) return ''; // Handle cases with no code fences or just language specifier.
+  const codeLines = lines.slice(1, -2); // Remove the first and last lines (fences).
+  return codeLines.join('\n');
+};
 
 const CustomBadgeContainer: FC<{ children: ReactNode }> = ({ children }) => (
   <div className="text-sm flex gap-2 mb-4">{children}</div>
