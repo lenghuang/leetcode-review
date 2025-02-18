@@ -1,20 +1,31 @@
 import { Fragment } from 'react';
 
 const renderTextWithInlineCode = (text: string) => {
-  const parts = text.split(/(`[^`]+`)|(\*\*[^`]+?\*\*)/);
+  const parts = text.split(/(`[^`]+`)|(\*\*[^`]+?\*\*)|(_[^_]+_)|(\\[|\]])/);
   return parts.map((part, index) => {
     if (!part) return null; // Handle empty parts
 
     if (part?.startsWith('`') && part?.endsWith('`')) {
       const code = part.slice(1, -1);
       return (
-        <code key={index} className="bg-gray-100 px-2 py-1 rounded">
+        <code key={index} className="text-sm bg-gray-100 px-1 py-[2px] rounded">
           {code}
         </code>
       );
     } else if (part?.startsWith('**') && part?.endsWith('**')) {
       const boldText = part.slice(2, -2);
       return <strong key={index}>{boldText}</strong>;
+    } else if (part?.startsWith('_') && part?.endsWith('_')) {
+      const italicText = part.slice(1, -1);
+      return (
+        <i className="italic" key={index}>
+          {italicText}
+        </i>
+      );
+    } else if (part === '\\[') {
+      return '[';
+    } else if (part === '\\]') {
+      return ']';
     } else if (part?.startsWith('* ')) {
       const itemText = part.trim().slice(2);
       return `\u2022\t\t${itemText}`;
