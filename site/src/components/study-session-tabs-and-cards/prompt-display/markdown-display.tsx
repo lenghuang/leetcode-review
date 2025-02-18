@@ -3,6 +3,8 @@ import { Fragment } from 'react';
 const renderTextWithInlineCode = (text: string) => {
   const parts = text.split(/(`[^`]+`)|(\*\*[^`]+?\*\*)/);
   return parts.map((part, index) => {
+    if (!part) return null; // Handle empty parts
+
     if (part?.startsWith('`') && part?.endsWith('`')) {
       const code = part.slice(1, -1);
       return (
@@ -14,8 +16,8 @@ const renderTextWithInlineCode = (text: string) => {
       const boldText = part.slice(2, -2);
       return <strong key={index}>{boldText}</strong>;
     } else if (part?.startsWith('* ')) {
-      const itemText = part.trim().slice(2); // Remove '* '
-      return `\u2022\t\t${itemText}`; // Bullet point + 2 tabs + text
+      const itemText = part.trim().slice(2);
+      return `\u2022\t\t${itemText}`;
     }
 
     return part;
@@ -33,8 +35,11 @@ export const MarkdownDisplay = ({ markdown }: { markdown: string }) => {
     return (
       <p key={index}>
         {renderTextWithInlineCode(paragraph)}
-        {index < paragraphs.length - 1 && <br />}{' '}
-        {/* Keep line breaks within paragraphs */}
+        {index < paragraphs.length - 1 && (
+          <Fragment>
+            <br />
+          </Fragment>
+        )}
       </p>
     );
   };
