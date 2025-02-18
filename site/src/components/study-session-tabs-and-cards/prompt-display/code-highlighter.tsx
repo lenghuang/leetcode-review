@@ -1,8 +1,3 @@
-import { FC, ReactNode } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { DescriptionTabDisplayProps } from '@/types/study-session.types';
-import { ExternalLink } from 'lucide-react';
 import { Highlight, themes } from 'prism-react-renderer';
 
 const extractCode = (markdown: string) => {

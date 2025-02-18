@@ -1,63 +1,27 @@
 import { Fragment } from 'react';
-
-const renderTextWithInlineCode = (text: string) => {
-  const parts = text.split(/(`[^`]+`)|(\*\*[^`]+?\*\*)|(_[^_]+_)|(\\[|\]])/);
-  return parts.map((part, index) => {
-    if (!part) return null; // Handle empty parts
-
-    if (part?.startsWith('`') && part?.endsWith('`')) {
-      const code = part.slice(1, -1);
-      return (
-        <code key={index} className="text-sm bg-gray-100 px-1 py-[2px] rounded">
-          {code}
-        </code>
-      );
-    } else if (part?.startsWith('**') && part?.endsWith('**')) {
-      const boldText = part.slice(2, -2);
-      return <strong key={index}>{boldText}</strong>;
-    } else if (part?.startsWith('_') && part?.endsWith('_')) {
-      const italicText = part.slice(1, -1);
-      return (
-        <i className="italic" key={index}>
-          {italicText}
-        </i>
-      );
-    } else if (part === '\\[') {
-      return '[';
-    } else if (part === '\\]') {
-      return ']';
-    } else if (part?.startsWith('* ')) {
-      const itemText = part.trim().slice(2);
-      return `\u2022\t\t${itemText}`;
-    }
-
-    return part;
-  });
-};
+import Markdown from 'react-markdown';
 
 export const MarkdownDisplay = ({ markdown }: { markdown: string }) => {
-  const paragraphs = markdown.split('\\n');
+  console.log(formatMarkdown(markdown));
+  console.log(formatMarkdown(markdown).split('\\n'));
+  console.log(formatMarkdown(markdown).split('\\n\\n'));
 
-  const renderParagraph = (paragraph: string, index: number) => {
-    if (paragraph === '') {
-      return <br key={index} />;
-    }
-
-    return (
-      <p key={index}>
-        {renderTextWithInlineCode(paragraph)}
-        {index < paragraphs.length - 1 && (
-          <Fragment>
-            <br />
-          </Fragment>
-        )}
-      </p>
-    );
-  };
-
-  return (
-    <div className="prose lg:prose-xl">
-      {paragraphs.map((paragraph, index) => renderParagraph(paragraph, index))}
-    </div>
-  );
+  return formatMarkdown(markdown)
+    .split('\\n\\n')
+    .map((p, pi) => (
+      <Fragment key={`Paragraph_Index_${pi}`}>
+        {p.split('\\n').map((l, li) => (
+          <Markdown key={`Line_Index_${li}`}>{l}</Markdown>
+        ))}
+        <br />
+      </Fragment>
+    ));
 };
+
+function formatMarkdown(markdown: string) {
+  const formatted = markdown
+    .replace(/\\\[/g, '[') // Replace \[ with [
+    .replace(/\\]/g, ']'); // Replace \] with ]
+
+  return formatted;
+}

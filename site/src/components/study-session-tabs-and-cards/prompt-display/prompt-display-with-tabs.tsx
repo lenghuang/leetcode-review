@@ -54,13 +54,6 @@ export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
   </div>
 );
 
-const extractCode = (markdown: string) => {
-  const lines = markdown.trim().split('\\n');
-  if (lines.length < 2) return ''; // Handle cases with no code fences or just language specifier.
-  const codeLines = lines.slice(1, -2); // Remove the first and last lines (fences).
-  return codeLines.join('\n');
-};
-
 const CustomBadgeContainer: FC<{ children: ReactNode }> = ({ children }) => (
   <div className="text-sm flex gap-2 mb-4">{children}</div>
 );
