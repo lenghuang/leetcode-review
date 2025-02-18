@@ -11,12 +11,17 @@ export default async function StudySession() {
     'get_study_session_test_function_v0'
   );
 
-  console.log(data);
-
   if (error) {
     console.error(error);
     return <div> sum thing wrong</div>;
   }
 
-  return <StudySessionClient />;
+  const clientData = data.map((row) => ({
+    promptKey: row.iqs_id, // To determine if rerender is needed
+    promptData: row.iqs_data,
+    answerKey: row.gq_id, // To determine if rerender is needed
+    answerData: row.gq_data,
+  }));
+
+  return <StudySessionClient data={clientData} />;
 }
