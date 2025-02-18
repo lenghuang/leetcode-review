@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Drawer from './Drawer';
+import Drawer from './drawer';
 
 export default function GameArea() {
   const [currentQuestion, setCurrentQuestion] = useState(0);

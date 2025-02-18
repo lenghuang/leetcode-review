@@ -1,5 +1,5 @@
-import GameArea from '@/components/game-area/GameArea';
-import PromptArea from '@/components/game-area/PromptArea';
+import GameArea from '@/components/game-area/game-area';
+import PromptArea from '@/components/game-area/prompt-area';
 
 export default function StudySession() {
   return (
