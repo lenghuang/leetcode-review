@@ -8,7 +8,7 @@ export default async function StudySession() {
   // TODO: Move this to a standalone API endpoint and use SWR to fetch it.
   const supabase = await createClient();
   const { data, error } = await supabase.rpc(
-    'get_study_session_test_function_v0'
+    'get_study_session_test_function_v1'
   );
 
   if (error) {
@@ -17,10 +17,16 @@ export default async function StudySession() {
   }
 
   const clientData = data.map((row) => ({
-    promptKey: row.iqs_id, // To determine if rerender is needed
-    promptData: row.iqs_data,
-    answerKey: row.gq_id, // To determine if rerender is needed
-    answerData: row.gq_data,
+    prompt: {
+      promptKey: row.iqs_id, // To determine if rerender is needed
+      promptData: row.iqs_data,
+      promptKind: row.iqs_source, // To determine what UI to show
+    },
+    answer: {
+      answerKey: row.gq_id, // To determine if rerender is needed
+      answerData: row.gq_data,
+      answerKind: row.gqs_source, // To determine what UI to show
+    },
   }));
 
   return <StudySessionClient data={clientData} />;

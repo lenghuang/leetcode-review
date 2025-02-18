@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Json } from '@/types/database.types';
+import { KaggleDatasetQuestionMetadata } from '@/zod/kaggle_dataset_v0';
 
 export const PromptTab = () => (
   <Card>
@@ -57,3 +59,46 @@ export const GameTab = () => (
     </CardFooter>
   </Card>
 );
+
+interface DescriptionTabProps {
+  data: {
+    promptKey: number;
+    promptKind: string;
+    promptData: Json;
+  };
+}
+
+export const DescriptionTab = ({ data }: DescriptionTabProps) => (
+  <Card>
+    <CardHeader>
+      <CardTitle>Description</CardTitle>
+      <CardDescription>
+        Read up on the original question before reviewing.
+      </CardDescription>
+    </CardHeader>
+    <DescriptionTabVersionControl data={data} />
+  </Card>
+);
+
+const DescriptionTabVersionControl = ({ data }: DescriptionTabProps) => {
+  if (data.promptKind === 'kaggle/erichartford/leetcode-solutions-combined') {
+    return <DescriptionTabForKaggleDataset data={data} />;
+  }
+
+  return <div>Unable to match prompt kind against any UI components</div>;
+};
+
+const DescriptionTabForKaggleDataset = ({ data }: DescriptionTabProps) => {
+  const {
+    data: parsedData,
+    success: parseSuccess,
+    error: parseError,
+  } = KaggleDatasetQuestionMetadata.safeParse(data.promptData);
+
+  if (parseError || !parseSuccess) {
+    console.error(parseError);
+    return <div>Something went wrong parsing DescriptionTab</div>;
+  }
+
+  return <CardContent className="space-y-2">{parsedData.content}</CardContent>;
+};
