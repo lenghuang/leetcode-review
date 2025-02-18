@@ -5,11 +5,6 @@ export default function StudySession() {
   return (
     <div className="flex flex-col min-h-screen">
       <IndicatorBlock />
-      {/* Mobile: Full-width top section */}
-      <div className="lg:hidden w-full bg-gray-200 p-4 border-2 border-pink-500">
-        <h2 className="text-xl font-bold mb-4">Instructions (Mobile Top)</h2>
-        <PromptArea />
-      </div>
       {/* Desktop: 25/75 split */}
       <div className="flex flex-1 flex-col lg:flex-row">
         {/* Left side: 25% width on desktop, full width on mobile */}
@@ -37,11 +32,6 @@ export default function StudySession() {
             <GameArea />
           </div>
         </div>
-      </div>
-      {/* Mobile: Full-width bottom section */}
-      <div className="lg:hidden w-full bg-gray-200 p-4 border-2 border-pink-500">
-        <h2 className="text-xl font-bold mb-4">Mobile Bottom Section</h2>
-        <p>This text is at the bottom, can you see it?</p>
       </div>
     </div>
   );

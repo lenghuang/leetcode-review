@@ -1,7 +1,7 @@
 'use client';
 
 import { ImportedQuestion } from '@/types/short-db.types';
-import { useState, useEffect } from 'react';
+
 import useSWR from 'swr';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
