@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DescriptionTabDisplayProps } from '@/types/study-session.types';
 import { ExternalLink } from 'lucide-react';
 import { Highlight, themes } from 'prism-react-renderer';
+import { CodeHighlighter } from './code-highlighter';
 
 export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
   <div>
@@ -43,28 +44,7 @@ export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
       <TabsContent value={'solution'}>
         <Card>
           <CardContent>
-            <div className="overflow-auto">
-              <Highlight
-                theme={themes.oneLight}
-                code={extractCode(data.answer)}
-                language={data.language}
-              >
-                {({ style, tokens, getLineProps, getTokenProps }) => (
-                  <pre
-                    className="overflow-x-auto rounded-xl px-4 py-2"
-                    style={style}
-                  >
-                    {tokens.map((line, i) => (
-                      <div key={i} {...getLineProps({ line })}>
-                        {line.map((token, key) => (
-                          <span key={key} {...getTokenProps({ token })} />
-                        ))}
-                      </div>
-                    ))}
-                  </pre>
-                )}
-              </Highlight>
-            </div>
+            <CodeHighlighter markdown={data.answer} language={data.language} />
           </CardContent>
         </Card>
       </TabsContent>
