@@ -3,7 +3,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DescriptionTabDisplayProps } from '@/types/study-session.types';
 import { ExternalLink } from 'lucide-react';
-import { Highlight, themes } from 'prism-react-renderer';
 import { CodeHighlighter } from './code-highlighter';
 
 export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
@@ -43,9 +42,7 @@ export const PromptDisplayWithTabs = ({ data }: DescriptionTabDisplayProps) => (
       </TabsContent>
       <TabsContent value={'solution'}>
         <Card>
-          <CardContent>
-            <CodeHighlighter markdown={data.answer} language={data.language} />
-          </CardContent>
+          <CodeHighlighter markdown={data.answer} language={data.language} />
         </Card>
       </TabsContent>
     </Tabs>
