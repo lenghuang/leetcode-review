@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowLeft, NotebookPen } from 'lucide-react';
 
 const AccountTab = () => (
   <Card>
@@ -61,24 +62,35 @@ const PasswordTab = () => (
 );
 
 const TabComponents = {
-  account: { title: 'Account', component: AccountTab },
-  password: { title: 'Password', component: PasswordTab },
+  account: { title: () => 'Account', component: AccountTab },
+  password: { title: () => 'Password', component: PasswordTab },
+  whiteboard: {
+    title: () => (
+      <div className="flex flex-col justify-center h-[1.25rem]">
+        <NotebookPen size={'14px'} />
+      </div>
+    ),
+    component: () => null,
+  },
 };
 
 export default function StudySession() {
   return (
-    <div className="w-full w-max-md p-4">
-      <Progress value={20} className="mb-4" />
+    <>
+      <div className="flex gap-2 items-center mb-4">
+        <ArrowLeft />
+        <Progress value={20} />
+      </div>
       <Tabs defaultValue="account">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-[3fr_3fr_1fr]">
           {Object.entries(TabComponents).map(([key, value]) => (
-            <TabsTrigger value={key}>{value.title}</TabsTrigger>
+            <TabsTrigger value={key}>{value.title()}</TabsTrigger>
           ))}
         </TabsList>
         {Object.entries(TabComponents).map(([key, value]) => (
           <TabsContent value={key}>{value.component()}</TabsContent>
         ))}
       </Tabs>
-    </div>
+    </>
   );
 }
