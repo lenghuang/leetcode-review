@@ -2,20 +2,20 @@ import { Fragment } from 'react';
 import Markdown from 'react-markdown';
 
 export const MarkdownDisplay = ({ markdown }: { markdown: string }) => {
-  console.log(formatMarkdown(markdown));
-  console.log(formatMarkdown(markdown).split('\\n'));
-  console.log(formatMarkdown(markdown).split('\\n\\n'));
+  const paragraphs = formatMarkdown(markdown).split('\\n\\n'); // Split by \n\n
 
-  return formatMarkdown(markdown)
-    .split('\\n\\n')
-    .map((p, pi) => (
-      <Fragment key={`Paragraph_Index_${pi}`}>
-        {p.split('\\n').map((l, li) => (
-          <Markdown key={`Line_Index_${li}`}>{l}</Markdown>
-        ))}
-        <br />
-      </Fragment>
-    ));
+  return (
+    <>
+      {paragraphs.map((p, pi) => (
+        <Fragment key={`Paragraph_Index_${pi}`}>
+          {p.split('\\n').map((l, li) => (
+            <Markdown key={`Line_Index_${li}`}>{l}</Markdown>
+          ))}
+          {pi < paragraphs.length - 1 && <br />}
+        </Fragment>
+      ))}
+    </>
+  );
 };
 
 function formatMarkdown(markdown: string) {
