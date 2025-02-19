@@ -1,15 +1,19 @@
 # leetcode-review
 
-Review leetcode questions you've done before
+This is my attempt at making a Duolingo-esque website for Leetcode style questions. At first, the questions will be simple and the data will be hardcoded. But slowly, I'll grow this to become a more personalized and engaging experience so you can prepare for interviews anywhere anytime.
 
-### Attribution and Disclaimer
+## Project Structure
 
-This application utilizes content from LeetCode, LLC. All rights to the original questions and content are owned by LeetCode, LLC. This app is not affiliated with, endorsed by, or sponsored by LeetCode in any way.
+- `archive` contains some old code that I gave up on but want to keep to look back on
+- `scripts` contains Python scripts that I used to create questions
+- `site` contains NextJS application to create the frontend
 
-We do not store your LEETCODE_SESSION. Your session data is used temporarily to retrieve your LeetCode data and is discarded immediately after use.
+Tech stack includes tools like:
 
-### Non-Commercial Use
+- Frontend: NextJS, Supabase, Zod, Shadcn
+- Backend: Python, Baml, Openrouter
+- Misc: Reading from Leetcode's GraphQL
 
-This application is provided free of charge. We do not profit from the use of LeetCode content. We accept voluntary donations to support the development and maintenance of this application. Donations are not required to access any features.
+## Setup / Contribution
 
-By using this application, you agree that you understand and acknowledge the above statements and agree to the terms of use.
+- TODO. Would be nice to make this open source so people can self host / contribute, but will do that when this is a bit more organized / maintainable / actually has users.
