@@ -23,6 +23,7 @@ const EMPTY_DRAWER_DATA = {
 
 export function ActivityDisplayForMultipleChoiceV0({
   data,
+  onActivityCompleted,
 }: ActivityDisplayProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -48,10 +49,7 @@ export function ActivityDisplayForMultipleChoiceV0({
         if (currentQuestion < data.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
         } else {
-          // Game completed logic here
-          alert(
-            `Congratulations! You completed all questions. Your score: ${score + 1}/${data.length}`
-          );
+          onActivityCompleted();
         }
       }
 

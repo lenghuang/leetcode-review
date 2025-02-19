@@ -3,12 +3,11 @@
 import { Progress } from '@/components/ui/progress';
 
 import {
-  ActivityDisplayProps,
   ActivityProps,
   StudySessionClientProps,
 } from '@/types/study-session.types';
 import { ArrowLeft } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { PromptDisplay } from './prompt-display/prompt-display';
 import { MultipleChoiceV0 } from '@/zod/multiple_choice_v0';
 import { ActivityDisplayForMultipleChoiceV0 } from './answer-display/activity-display';
@@ -32,12 +31,15 @@ export function StudySessionClient({ data }: StudySessionClientProps) {
         <Progress value={progressValue} />
       </div>
       <PromptDisplay data={data[promptIndex].prompt} />
-      <ActivityDisplay data={data[promptIndex].answer} />
+      <ActivityDisplay
+        data={data[promptIndex].answer}
+        onActivityCompleted={() => setPromptIndex((i) => i + 1)}
+      />
     </>
   );
 }
 
-const ActivityDisplay = ({ data }: ActivityProps) => {
+const ActivityDisplay = ({ data, onActivityCompleted }: ActivityProps) => {
   // Handle version control and data schema validation here
   if (data.answerKind === 'lh_manual_upload_multiplechoicev0') {
     const {
@@ -51,7 +53,12 @@ const ActivityDisplay = ({ data }: ActivityProps) => {
       return <div>Something went wrong parsing ActivityDisplay</div>;
     }
 
-    return <ActivityDisplayForMultipleChoiceV0 data={parsedData} />;
+    return (
+      <ActivityDisplayForMultipleChoiceV0
+        data={parsedData}
+        onActivityCompleted={onActivityCompleted}
+      />
+    );
   }
 
   return <div>Version match failed</div>;

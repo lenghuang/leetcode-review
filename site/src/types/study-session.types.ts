@@ -39,8 +39,10 @@ export interface ActivityProps {
     answerKind: string;
     answerData: Json;
   };
+  onActivityCompleted: () => void;
 }
 
 export interface ActivityDisplayProps {
   data: MultipleChoiceV0Type;
+  onActivityCompleted: () => void;
 }

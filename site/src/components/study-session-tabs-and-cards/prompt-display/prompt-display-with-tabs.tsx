@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DescriptionTabDisplayProps } from '@/types/study-session.types';
 import { ExternalLink } from 'lucide-react';
