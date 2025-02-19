@@ -14,6 +14,7 @@ import {
 import { ActivityDisplayProps } from '@/types/study-session.types';
 import { MultipleChoiceV0AnswerType } from '@/types/zod.types';
 import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 const EMPTY_DRAWER_DATA = {
   displayChoice: '',
@@ -70,14 +71,7 @@ export function ActivityDisplayForMultipleChoiceV0({
               Score: {score}/{data.length}
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-green-500 h-2.5 rounded-full"
-              style={{
-                width: `${((currentQuestion + 1) / data.length) * 100}%`,
-              }}
-            ></div>
-          </div>
+          <Progress value={((currentQuestion + 1) / data.length) * 100} />
         </div>
         <motion.div
           key={currentQuestion}
@@ -93,9 +87,8 @@ export function ActivityDisplayForMultipleChoiceV0({
             {data[currentQuestion].displayAnswers.map((option, index) => (
               <motion.button
                 key={index}
-                className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg text-lg
-                  font-semibold shadow-md transition duration-200 ease-in-out transform
-                  hover:scale-105"
+                className="text-secondary-foreground bg-primary/10 py-3 px-6 rounded-lg text-lg
+                  font-semibold transition shadow-sm duration-200 ease-in-out transform"
                 onClick={() => handleAnswer(option)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
