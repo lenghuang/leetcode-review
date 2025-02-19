@@ -9,6 +9,7 @@
     "pre-commit": "next lint --fix && git add -A .",
     "check-types": "tsc --noemit --skipLibCheck",
     "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "prettier:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
     "db:setup": "supabase init && supabase login",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
