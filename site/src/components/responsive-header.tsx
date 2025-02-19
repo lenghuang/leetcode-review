@@ -17,8 +17,11 @@ export function ResponsiveHeader() {
       {/* TODO add a back button if its  */}
 
       {/* Hero Header - Only visible on mobile */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center bg-background lg:hidden">
-        <Button asChild variant="ghost" size="icon" className=" rounded-none">
+      <header
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center bg-background
+          lg:hidden"
+      >
+        <Button asChild variant="ghost" size="icon" className="rounded-none">
           <Link href="/">
             <Zap className="h-8 w-8" />
             <span className="sr-only">Hero</span>
@@ -62,7 +65,7 @@ export function ResponsiveHeader() {
                 >
                   <Link className="lg:w-auto" href={item.href}>
                     <item.icon className="h-5 w-5 lg:hidden" />
-                    <span className="sr-only lg:not-sr-only lg:inline-block ">
+                    <span className="sr-only lg:not-sr-only lg:inline-block">
                       {item.name}
                     </span>
                   </Link>
