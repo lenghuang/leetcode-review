@@ -1,9 +1,11 @@
-name: PR Checks
+name: Site PR Checks
 
 on:
   pull_request:
     branches:
       - main
+    paths:
+      - "site/**" # Only run if files in /site/ change
 
 jobs:
   pr-checks:
@@ -18,18 +20,24 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
+          cache-dependency-path: site/package-lock.json # Cache dependencies only for /site/
 
       - name: Install Dependencies
+        working-directory: site
         run: npm ci # Ensures clean install using package-lock.json
 
       - name: Run Lint
+        working-directory: site
         run: npm run lint # Run linting if your project has it
 
       - name: Run Check Types
+        working-directory: site
         run: npm run check-types # Check typescript types work
 
       - name: Run Prettier Check
+        working-directory: site
         run: npm run prettier:check # Check prettier formatted well
 
       - name: Run Build
+        working-directory: site
         run: npm run build # Ensures the project builds successfully
