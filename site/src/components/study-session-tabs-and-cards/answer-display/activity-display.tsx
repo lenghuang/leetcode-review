@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
@@ -12,26 +13,38 @@ import {
 } from '@/components/ui/drawer';
 import { ActivityDisplayProps } from '@/types/study-session.types';
 import { MultipleChoiceV0AnswerType } from '@/types/zod.types';
+import { Button } from '@/components/ui/button';
+
+const EMPTY_DRAWER_DATA = {
+  displayChoice: '',
+  feedback: '',
+  isCorrect: false,
+};
 
 export function ActivityDisplayForMultipleChoiceV0({
   data,
 }: ActivityDisplayProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [isFirstAttempt, setIsFirstAttempt] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerData, setDrawerData] =
+    useState<MultipleChoiceV0AnswerType>(EMPTY_DRAWER_DATA);
 
   const handleAnswer = (answerData: MultipleChoiceV0AnswerType) => {
-    const correct = answerData.isCorrect;
-
     setIsDrawerOpen(true);
+    setDrawerData(answerData);
+  };
 
-    if (correct) {
-      setScore(score + 1);
-    }
+  const handleDrawerClose = (open: boolean) => {
+    if (!open) {
+      if (isFirstAttempt && drawerData.isCorrect) {
+        setScore((score) => score + 1);
+      } else {
+        setIsFirstAttempt(false);
+      }
 
-    setTimeout(() => {
-      setIsDrawerOpen(false);
-      if (correct) {
+      if (drawerData.isCorrect) {
         if (currentQuestion < data.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
         } else {
@@ -39,11 +52,12 @@ export function ActivityDisplayForMultipleChoiceV0({
           alert(
             `Congratulations! You completed all questions. Your score: ${score + 1}/${data.length}`
           );
-          setCurrentQuestion(0);
-          setScore(0);
         }
       }
-    }, 2000); // Close drawer after 2 seconds
+
+      setIsDrawerOpen(false);
+      setDrawerData(EMPTY_DRAWER_DATA);
+    }
   };
 
   return (
@@ -92,20 +106,26 @@ export function ActivityDisplayForMultipleChoiceV0({
           </div>
         </motion.div>
       </div>
-      {isDrawerOpen ? (
-        <Drawer onClose={() => setIsDrawerOpen(false)}>
-          <DrawerContent>
-            <div className="mx-auto w-full max-w-sm">
-              <DrawerHeader>
-                <DrawerTitle>Move Goal</DrawerTitle>
-                <DrawerDescription>
-                  Set your daily activity goal.
-                </DrawerDescription>
-              </DrawerHeader>
-            </div>
-          </DrawerContent>
-        </Drawer>
-      ) : null}
+
+      <Drawer open={isDrawerOpen} onOpenChange={handleDrawerClose}>
+        <DrawerContent>
+          <div className="mx-auto w-full max-w-sm">
+            <DrawerHeader>
+              <DrawerTitle>
+                {drawerData.isCorrect ? 'Correct!' : 'Not quite...'}
+              </DrawerTitle>
+              <DrawerDescription>{drawerData.feedback}</DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <Button variant="outline">
+                  {drawerData.isCorrect ? 'Continue' : 'Try Again'}
+                </Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }
