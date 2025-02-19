@@ -8,7 +8,10 @@ export default function StudySession() {
       {/* Desktop: 25/75 split */}
       <div className="flex flex-1 flex-col lg:flex-row">
         {/* Left side: 25% width on desktop, full width on mobile */}
-        <div className="w-full lg:w-1/4 bg-gray-200 lg:fixed lg:top-0 lg:bottom-0 lg:left-0 lg:overflow-y-auto border-2 border-blue-500 lg:border-r-0">
+        <div
+          className="w-full lg:w-1/4 bg-gray-200 lg:fixed lg:top-0 lg:bottom-0 lg:left-0
+            lg:overflow-y-auto border-2 border-blue-500 lg:border-r-0"
+        >
           <div className="p-4">
             <div className="hidden lg:block">
               <h2 className="text-xl font-bold mb-4">

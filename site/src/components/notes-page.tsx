@@ -29,7 +29,10 @@ function DataFetchingComponent() {
 
 export default function NotesComponentClient() {
   return (
-    <pre className="text-xs font-mono p-3 rounded border max-h-[40vh] w-full max-w-[80vw] overflow-auto">
+    <pre
+      className="text-xs font-mono p-3 rounded border max-h-[40vh] w-full max-w-[80vw]
+        overflow-auto"
+    >
       <DataFetchingComponent />
     </pre>
   );

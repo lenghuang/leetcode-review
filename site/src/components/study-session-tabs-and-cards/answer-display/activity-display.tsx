@@ -93,7 +93,9 @@ export function ActivityDisplayForMultipleChoiceV0({
             {data[currentQuestion].displayAnswers.map((option, index) => (
               <motion.button
                 key={index}
-                className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-md transition duration-200 ease-in-out transform hover:scale-105"
+                className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg text-lg
+                  font-semibold shadow-md transition duration-200 ease-in-out transform
+                  hover:scale-105"
                 onClick={() => handleAnswer(option)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
