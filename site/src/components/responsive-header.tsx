@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Home, Search, Bell, User, Zap } from 'lucide-react';
+import { Home, Search, Bell, User } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
