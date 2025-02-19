@@ -60,14 +60,14 @@ export function ActivityDisplayForMultipleChoiceV0({
   };
 
   return (
-    <div className="flex-1 bg-white p-4 md:p-8 flex flex-col justify-center items-center">
+    <div className="flex-1 p-4 md:p-8 flex flex-col justify-center items-center">
       <div className="w-full max-w-2xl">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-semibold text-gray-600">
+            <span className="text-sm font-semibold">
               Question {currentQuestion + 1} of {data.length}
             </span>
-            <span className="text-sm font-semibold text-gray-600">
+            <span className="text-sm font-semibold">
               Score: {score}/{data.length}
             </span>
           </div>
@@ -87,7 +87,7 @@ export function ActivityDisplayForMultipleChoiceV0({
             {data[currentQuestion].displayAnswers.map((option, index) => (
               <motion.button
                 key={index}
-                className="text-secondary-foreground bg-primary/10 py-3 px-6 rounded-lg text-lg
+                className="text-secondary-foreground bg-primary/30 py-3 px-6 rounded-lg text-lg
                   font-semibold transition shadow-sm duration-200 ease-in-out transform"
                 onClick={() => handleAnswer(option)}
                 whileHover={{ scale: 1.05 }}
