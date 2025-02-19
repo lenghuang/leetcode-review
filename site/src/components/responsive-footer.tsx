@@ -13,7 +13,7 @@ export const ResponsiveFooter = () => (
       >
         lendevelops
       </a>
-      <Image width={16} height={16} src="/pika-wave.gif" alt="pika-wave" />
+      <Image width={16} height={16} src="/gengarheheq.png" alt="gengarheheq" />
     </div>
   </footer>
 );
