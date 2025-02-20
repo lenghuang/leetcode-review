@@ -13,8 +13,6 @@ function fisherYatesShuffle<T>(array: readonly T[]): T[] {
     ];
   }
 
-  console.log(array, shuffled);
-
   return shuffled;
 }
 
