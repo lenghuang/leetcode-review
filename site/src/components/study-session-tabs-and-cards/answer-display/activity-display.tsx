@@ -60,7 +60,7 @@ export function ActivityDisplayForMultipleChoiceV0({
   };
 
   return (
-    <div className="flex-1 p-4 md:p-8 flex flex-col justify-center items-center">
+    <div className="p-4 md:p-8 flex flex-col justify-center items-center">
       <div className="w-full max-w-2xl">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
