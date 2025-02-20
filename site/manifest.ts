@@ -4,23 +4,16 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Next.js PWA',
-    short_name: 'NextPWA',
-    description: 'A Progressive Web App built with Next.js',
+    name: 'Leetcode Review',
+    short_name: 'LeetReview',
+    description: 'Review Leetcode questions on the go',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
-    theme_color: '#000000',
+    theme_color: '#7550A6',
     icons: [
       {
-        src: '/icon-192x192.png',
-        sizes: '192x192',
-        type: 'image/png',
-      },
-      {
-        src: '/icon-512x512.png',
-        sizes: '512x512',
-        type: 'image/png',
+        src: '/gengar-happy-large-512.jpeg',
       },
     ],
   };
