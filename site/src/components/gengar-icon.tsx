@@ -2,9 +2,10 @@ export const GengarIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.0"
-    width="32px"
-    height="32px"
-    viewBox="0 0 300.000000 300.000000"
+    width="40px"
+    height="40px"
+    viewBox="50 25 200 250"
+    // viewBox="0 0 300 300"
     preserveAspectRatio="xMidYMid meet"
   >
     <g

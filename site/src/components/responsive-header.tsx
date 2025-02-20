@@ -13,10 +13,10 @@ const navItems = [
 ];
 
 const HeroIcon = () => (
-  <Button asChild variant="ghost" size="icon" className="rounded-none">
+  <Button asChild variant="ghost">
     <Link href="/">
       <GengarIcon />
-      <span className="sr-only">Hero</span>
+      <h1 className="text-xl lg:text-lg font-medium pr-2">Leetcode Review</h1>
     </Link>
   </Button>
 );
@@ -24,12 +24,10 @@ const HeroIcon = () => (
 export function ResponsiveHeader() {
   return (
     <div className="w-full max-w-5xl mx-auto py-8 px-5 text-sm">
-      {/* TODO add a back button if its  */}
-
       {/* Hero Header - Only visible on mobile */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center bg-background
-          lg:hidden"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1
+          bg-background lg:hidden pt-2"
       >
         <HeroIcon />
       </header>
@@ -43,7 +41,7 @@ export function ResponsiveHeader() {
       >
         <div className="flex w-full items-center py-2 px-4">
           {/* Hero Icon - Only visible on desktop */}
-          <div className="hidden lg:block lg:pr-4">
+          <div className="hidden lg:flex items-center justify-center gap-1">
             <HeroIcon />
           </div>
 
