@@ -1,5 +1,5 @@
 import NotesComponentClient from '@/components/notes-page';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+import { ThemeSwitcher } from '@/components/theme-switcher/theme-switcher';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function NotesPage() {
