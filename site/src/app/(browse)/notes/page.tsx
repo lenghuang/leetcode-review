@@ -1,4 +1,4 @@
-import NotesComponentClient from '@/components/notes-page';
+import NotesComponentClient from '@/components/layout/notes-page';
 import { ThemeSwitcher } from '@/components/theme-switcher/theme-switcher';
 import { createClient } from '@/utils/supabase/server';
 

@@ -1,5 +1,5 @@
-import { ResponsiveHeader } from '@/components/responsive-header';
-import { ResponsiveFooter } from '@/components/responsive-footer';
+import { ResponsiveHeader } from '@/components/layout/responsive-header';
+import { ResponsiveFooter } from '@/components/layout/responsive-footer';
 
 export default function NonFullScreenLayout({
   children,

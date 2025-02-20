@@ -26,6 +26,23 @@ export default async function Home() {
         <div className="text-center text-xs italic">
           (get started has no loading animation, might take a bit)
         </div>
+        <div className="w-4/5 justify-center flex gap-1 border-t text-xs mt-24 py-6">
+          AI slop by
+          <a
+            href="https://github.com/lenghuang/leetcode-review"
+            target="_blank"
+            className="font-bold hover:underline"
+            rel="noreferrer"
+          >
+            lendevelops
+          </a>
+          <Image
+            width={16}
+            height={16}
+            src="/gengarheheq.png"
+            alt="gengarheheq"
+          />
+        </div>
       </div>
     </div>
   );

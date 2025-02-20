@@ -3,7 +3,7 @@ import { Home, Search, Bell, User } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { GengarIcon } from '@/components/gengar-icon';
+import { GengarIcon } from '@/components/icons/gengar-icon';
 
 const navItems = [
   { name: 'Home', icon: Home, href: '/' },
