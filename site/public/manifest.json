@@ -1,0 +1,16 @@
+{
+  "name": "Leetcode Review",
+  "short_name": "Review",
+  "icons": [
+    {
+      "src": "/gengar-happy-large-512.png",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ],
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
