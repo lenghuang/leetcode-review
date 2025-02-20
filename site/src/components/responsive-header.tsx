@@ -16,7 +16,7 @@ const HeroIcon = () => (
   <Button asChild variant="ghost">
     <Link href="/">
       <GengarIcon />
-      <h1 className="text-xl lg:text-lg font-medium pr-2">Leetcode Review</h1>
+      <h1 className="text-lg font-medium pr-2">Leetcode Review</h1>
     </Link>
   </Button>
 );
