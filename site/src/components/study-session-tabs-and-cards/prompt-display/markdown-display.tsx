@@ -8,7 +8,7 @@ export const MarkdownDisplay = ({ markdown }: { markdown: string }) => {
     <>
       {paragraphs.map((p, pi) => (
         <Fragment key={`Paragraph_Index_${pi}`}>
-          {p.split('\\n').map((l, li) => (
+          {p.split('\n').map((l, li) => (
             <Markdown key={`Line_Index_${li}`}>{l}</Markdown>
           ))}
           {pi < paragraphs.length - 1 && <br />}
@@ -20,8 +20,8 @@ export const MarkdownDisplay = ({ markdown }: { markdown: string }) => {
 
 function formatMarkdown(markdown: string) {
   const formatted = markdown
-    .replace(/\\\[/g, '[') // Replace \[ with [
-    .replace(/\\]/g, ']'); // Replace \] with ]
+    .replace(/\[/g, '[') // Replace \[ with [
+    .replace(/\]/g, ']'); // Replace \] with ]
 
   return formatted;
 }
