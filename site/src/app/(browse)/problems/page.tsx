@@ -1,4 +1,4 @@
-import ProblemsPageClient from '@/components/problems-page';
+import ProblemsPageClient from '@/components/layout/problems-page';
 
 export default async function ProblemsPage() {
   return (
