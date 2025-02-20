@@ -50,6 +50,7 @@ export function ActivityDisplayForMultipleChoiceV0({
         if (currentQuestion < data.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
         } else {
+          setCurrentQuestion(0);
           onActivityCompleted();
         }
       }
