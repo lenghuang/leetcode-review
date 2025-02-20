@@ -59,7 +59,7 @@ const CustomBadgeContainer: FC<{ children: ReactNode }> = ({ children }) => (
 );
 
 const CustomBadge: FC<{ children: ReactNode }> = ({ children }) => (
-  <div className="flex justify-center gap-1 items-center bg-slate-200 rounded px-1">
+  <div className="flex justify-center gap-1 items-center bg-secondary rounded px-1">
     {children}
   </div>
 );

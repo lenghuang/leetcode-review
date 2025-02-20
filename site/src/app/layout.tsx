@@ -10,6 +10,9 @@ export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: 'Leetcode Review',
   description: 'Quickly refresh yourself on many leetcode questions.',
+  openGraph: {
+    images: '/opengraph-image.png',
+  },
 };
 
 const geistSans = Funnel_Sans({

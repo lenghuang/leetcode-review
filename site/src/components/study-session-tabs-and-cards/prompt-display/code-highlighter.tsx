@@ -1,7 +1,7 @@
 import { Highlight, themes } from 'prism-react-renderer';
 
 const extractCode = (markdown: string) => {
-  const lines = markdown.trim().split('\\n');
+  const lines = markdown.trim().split('\n');
   if (lines.length < 2) return ''; // Handle cases with no code fences or just language specifier.
   const codeLines = lines.slice(1, -2); // Remove the first and last lines (fences).
   return codeLines.join('\n');

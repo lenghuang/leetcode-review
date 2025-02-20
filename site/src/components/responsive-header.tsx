@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { Home, Search, Bell, User, Zap } from 'lucide-react';
+import { Home, Search, Bell, User } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { GengarIcon } from '@/components/gengar-icon';
 
 const navItems = [
   { name: 'Home', icon: Home, href: '/' },
@@ -11,22 +12,24 @@ const navItems = [
   { name: 'Profile', icon: User, href: '/profile' },
 ];
 
+const HeroIcon = () => (
+  <Button asChild variant="ghost">
+    <Link href="/">
+      <GengarIcon />
+      <h1 className="text-lg font-medium pr-2">Leetcode Review</h1>
+    </Link>
+  </Button>
+);
+
 export function ResponsiveHeader() {
   return (
     <div className="w-full max-w-5xl mx-auto py-8 px-5 text-sm">
-      {/* TODO add a back button if its  */}
-
       {/* Hero Header - Only visible on mobile */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center bg-background
-          lg:hidden"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1
+          bg-background lg:hidden pt-2"
       >
-        <Button asChild variant="ghost" size="icon" className="rounded-none">
-          <Link href="/">
-            <Zap className="h-8 w-8" />
-            <span className="sr-only">Hero</span>
-          </Link>
-        </Button>
+        <HeroIcon />
       </header>
 
       {/* Navigation - Bottom on mobile, top on desktop */}
@@ -38,18 +41,8 @@ export function ResponsiveHeader() {
       >
         <div className="flex w-full items-center py-2 px-4">
           {/* Hero Icon - Only visible on desktop */}
-          <div className="hidden lg:block lg:pr-4">
-            <Button
-              asChild
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-            >
-              <Link href="/">
-                <Zap className="h-6 w-6" />
-                <span className="sr-only">Hero</span>
-              </Link>
-            </Button>
+          <div className="hidden lg:flex items-center justify-center gap-1">
+            <HeroIcon />
           </div>
 
           {/* Navigation Items */}

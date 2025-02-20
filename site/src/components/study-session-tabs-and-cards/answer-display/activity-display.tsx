@@ -14,6 +14,7 @@ import {
 import { ActivityDisplayProps } from '@/types/study-session.types';
 import { MultipleChoiceV0AnswerType } from '@/types/zod.types';
 import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 const EMPTY_DRAWER_DATA = {
   displayChoice: '',
@@ -49,6 +50,7 @@ export function ActivityDisplayForMultipleChoiceV0({
         if (currentQuestion < data.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
         } else {
+          setCurrentQuestion(0);
           onActivityCompleted();
         }
       }
@@ -59,25 +61,18 @@ export function ActivityDisplayForMultipleChoiceV0({
   };
 
   return (
-    <div className="flex-1 bg-white p-4 md:p-8 flex flex-col justify-center items-center">
+    <div className="p-4 md:p-8 flex flex-col justify-center items-center">
       <div className="w-full max-w-2xl">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-semibold text-gray-600">
+            <span className="text-sm font-semibold">
               Question {currentQuestion + 1} of {data.length}
             </span>
-            <span className="text-sm font-semibold text-gray-600">
+            <span className="text-sm font-semibold">
               Score: {score}/{data.length}
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-green-500 h-2.5 rounded-full"
-              style={{
-                width: `${((currentQuestion + 1) / data.length) * 100}%`,
-              }}
-            ></div>
-          </div>
+          <Progress value={((currentQuestion + 1) / data.length) * 100} />
         </div>
         <motion.div
           key={currentQuestion}
@@ -93,9 +88,8 @@ export function ActivityDisplayForMultipleChoiceV0({
             {data[currentQuestion].displayAnswers.map((option, index) => (
               <motion.button
                 key={index}
-                className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg text-lg
-                  font-semibold shadow-md transition duration-200 ease-in-out transform
-                  hover:scale-105"
+                className="text-secondary-foreground bg-primary/30 py-3 px-6 rounded-lg text-lg
+                  font-semibold transition shadow-sm duration-200 ease-in-out transform"
                 onClick={() => handleAnswer(option)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
