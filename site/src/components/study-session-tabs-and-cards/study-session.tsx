@@ -1,12 +1,10 @@
 'use client';
 
 import { Progress } from '@/components/ui/progress';
-
 import {
   ActivityProps,
   StudySessionClientProps,
 } from '@/types/study-session.types';
-import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { PromptDisplay } from './prompt-display/prompt-display';
 import { MultipleChoiceV0 } from '@/zod/multiple_choice_v0';

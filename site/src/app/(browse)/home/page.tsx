@@ -7,11 +7,9 @@ import {
 } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Brain, Star, Trophy } from 'lucide-react';
+import { Brain, Trophy } from 'lucide-react';
 import { BrowseHeader } from '@/components/typography/browse-header';
 import Image from 'next/image';
-import Link from 'next/link';
 import { LinkButton } from '@/components/buttons/link-button';
 
 export default async function HomePage() {
