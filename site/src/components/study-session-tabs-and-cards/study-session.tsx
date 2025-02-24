@@ -1,16 +1,15 @@
 'use client';
 
 import { Progress } from '@/components/ui/progress';
-
 import {
   ActivityProps,
   StudySessionClientProps,
 } from '@/types/study-session.types';
-import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { PromptDisplay } from './prompt-display/prompt-display';
 import { MultipleChoiceV0 } from '@/zod/multiple_choice_v0';
 import { ActivityDisplayForMultipleChoiceV0 } from './answer-display/activity-display';
+import { BackButton } from '../buttons/back-button';
 
 export function StudySessionClient({ data }: StudySessionClientProps) {
   const [promptIndex, setPromptIndex] = useState<number>(0);
@@ -27,7 +26,7 @@ export function StudySessionClient({ data }: StudySessionClientProps) {
   return (
     <>
       <div className="flex gap-2 items-center mb-4">
-        <ArrowLeft />
+        <BackButton />
         <Progress value={progressValue} />
       </div>
       <PromptDisplay data={data[promptIndex].prompt} />

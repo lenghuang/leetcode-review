@@ -35,7 +35,5 @@ async function getGeneratedQuestions() {
     }
   }
 
-  console.log('Dynamic JSON Data Validated as MultipleChoiceV0');
-
   return allData as GeneratedQuestion[];
 }

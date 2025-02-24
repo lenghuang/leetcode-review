@@ -1,33 +1,32 @@
 import Link from 'next/link';
-import { Home, Search, Bell, User } from 'lucide-react';
+import { Home, List, User } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { GengarIcon } from '@/components/icons/gengar-icon';
 
 const navItems = [
-  { name: 'Home', icon: Home, href: '/' },
-  { name: 'Search', icon: Search, href: '/search' },
-  { name: 'Notifications', icon: Bell, href: '/notifications' },
-  { name: 'Profile', icon: User, href: '/profile' },
+  { name: 'Home', icon: Home, href: '/home' },
+  { name: 'Browse', icon: List, href: '/search' },
+  { name: 'Profile', icon: User, href: '/protected' },
 ];
 
 const HeroIcon = () => (
   <Button asChild variant="ghost">
-    <Link href="/">
+    <Link href="/home">
       <GengarIcon />
-      <h1 className="text-lg font-medium pr-2">Leetcode Review</h1>
+      <h1 className="text-lg font-medium pr-2">Recode.ai</h1>
     </Link>
   </Button>
 );
 
 export function ResponsiveHeader() {
   return (
-    <div className="w-full max-w-5xl mx-auto py-8 px-5 text-sm">
+    <div className="w-full max-w-5xl mx-auto px-5 text-sm">
       {/* Hero Header - Only visible on mobile */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1
-          bg-background lg:hidden pt-2"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1 bg-accent
+          lg:hidden py-2"
       >
         <HeroIcon />
       </header>
@@ -35,7 +34,7 @@ export function ResponsiveHeader() {
       {/* Navigation - Bottom on mobile, top on desktop */}
       <nav
         className={cn(
-          'fixed left-0 right-0 z-50 flex items-center bg-background',
+          'fixed left-0 right-0 z-50 flex items-center bg-accent',
           'bottom-0 lg:top-0 lg:bottom-auto'
         )}
       >

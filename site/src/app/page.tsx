@@ -1,7 +1,6 @@
+import { LinkButton } from '@/components/buttons/link-button';
 import { ThemeSwitcherCta } from '@/components/theme-switcher/theme-switcher-cta';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default async function Home() {
   return (
@@ -18,15 +17,10 @@ export default async function Home() {
           proof of concept, not final product!
         </div>
         <div className="flex gap-4">
-          <Button>
-            <Link href="/study-session">Get started</Link>
-          </Button>
+          <LinkButton href="/home">Get started</LinkButton>
           <ThemeSwitcherCta />
         </div>
-        <div className="text-center text-xs italic">
-          (get started has no loading animation, might take a bit)
-        </div>
-        <div className="w-4/5 justify-center flex gap-1 border-t text-xs mt-24 py-6">
+        <div className="w-4/5 justify-center flex gap-1 border-t text-xs mt-24 py-3">
           AI slop by
           <a
             href="https://github.com/lenghuang/leetcode-review"

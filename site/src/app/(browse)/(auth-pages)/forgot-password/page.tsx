@@ -1,10 +1,14 @@
 import { forgotPasswordAction } from '@/app/actions';
-import { FormMessage, Message } from '@/components/tutorial/form-message';
-import { SubmitButton } from '@/components/tutorial/submit-button';
+import {
+  FormMessage,
+  Message,
+} from '@/components/auth-components/form-message';
+import { SubmitButton } from '@/components/buttons/submit-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { SmtpMessage } from '../smtp-message';
+import { BrowseHeader } from '@/components/typography/browse-header';
 
 export default async function ForgotPassword(props: {
   searchParams: Promise<Message>;
@@ -17,7 +21,7 @@ export default async function ForgotPassword(props: {
           max-w-64 mx-auto"
       >
         <div>
-          <h1 className="text-2xl font-medium">Reset Password</h1>
+          <BrowseHeader>Reset Password</BrowseHeader>
           <p className="text-sm text-secondary-foreground">
             Already have an account?{' '}
             <Link className="text-primary underline" href="/sign-in">

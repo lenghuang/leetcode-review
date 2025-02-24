@@ -8,8 +8,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Leetcode Review',
-  description: 'Quickly refresh yourself on many leetcode questions.',
+  title: 'Recode.ai',
+  description: 'Go gengar mode and quickly review leetcode questions.',
   openGraph: {
     images: '/opengraph-image.png',
   },
