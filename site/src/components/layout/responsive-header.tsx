@@ -22,7 +22,7 @@ const HeroIcon = () => (
 
 export function ResponsiveHeader() {
   return (
-    <div className="w-full max-w-5xl mx-auto py-8 px-5 text-sm">
+    <div className="w-full max-w-5xl mx-auto px-5 text-sm">
       {/* Hero Header - Only visible on mobile */}
       <header
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1
