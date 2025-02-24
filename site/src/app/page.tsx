@@ -19,7 +19,7 @@ export default async function Home() {
           proof of concept, not final product!
         </div>
         <div className="flex gap-4">
-          <LinkButton href="/study-session">Get started</LinkButton>
+          <LinkButton href="/home">Get started</LinkButton>
           <ThemeSwitcherCta />
         </div>
         <div className="w-4/5 justify-center flex gap-1 border-t text-xs mt-24 py-3">
