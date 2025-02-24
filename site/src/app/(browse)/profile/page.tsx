@@ -1,4 +1,5 @@
 import { signOutAction } from '@/app/actions';
+import { ThemeSwitcherCta } from '@/components/theme-switcher/theme-switcher-cta';
 import { SubmitButton } from '@/components/tutorial/submit-button';
 import { createClient } from '@/utils/supabase/server';
 import { InfoIcon } from 'lucide-react';
@@ -16,8 +17,8 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="w-full max-w-7xl flex flex-col gap-20 p-5">
-      <div className="flex-1 w-full flex flex-col gap-12">
+    <div className="w-full max-w-7xl flex flex-col gap-4 p-5">
+      <div className="flex-1 w-full flex flex-col gap-4">
         <div className="w-full">
           <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
             <InfoIcon size="16" strokeWidth={2} />
@@ -34,6 +35,7 @@ export default async function ProfilePage() {
             {JSON.stringify(user, null, 2)}
           </pre>
         </div>
+        <ThemeSwitcherCta />
         <SubmitButton pendingText="Signing Out..." formAction={signOutAction}>
           Sign out
         </SubmitButton>

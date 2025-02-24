@@ -1,6 +1,8 @@
 import NotesComponentClient from '@/components/layout/notes-page';
 import { ThemeSwitcher } from '@/components/theme-switcher/theme-switcher';
+import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/server';
+import Link from 'next/link';
 
 export default async function NotesPage() {
   const supabase = await createClient();
@@ -15,8 +17,11 @@ export default async function NotesPage() {
     <div className="w-full max-w-7xl flex flex-col gap-20 p-5">
       <div className="flex-1 w-full flex flex-col gap-12">
         <div className="flex flex-col gap-2 items-start">
+          <Button>
+            <Link href="/study-session">Get started</Link>
+          </Button>
           <h2 className="font-bold text-2xl mb-4">Theme switcher</h2>
-          <ThemeSwitcher />
+
           <h2 className="font-bold text-2xl mb-4">
             Your sql (server) response
           </h2>
