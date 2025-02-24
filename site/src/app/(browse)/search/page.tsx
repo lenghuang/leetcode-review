@@ -1,5 +1,5 @@
 import ProblemsPageClient from '@/components/layout/problems-page';
-import { BrowseHeader } from '@/components/typography/BrowseHeader';
+import { BrowseHeader } from '@/components/typography/browse-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {

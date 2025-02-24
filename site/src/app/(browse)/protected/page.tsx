@@ -1,4 +1,4 @@
-import { BrowseHeader } from '@/components/typography/BrowseHeader';
+import { BrowseHeader } from '@/components/typography/browse-header';
 import { createClient } from '@/utils/supabase/server';
 import { InfoIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';

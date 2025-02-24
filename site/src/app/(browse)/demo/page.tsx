@@ -1,7 +1,7 @@
 import NotesComponentClient from '@/components/layout/notes-page';
-import { LinkButton } from '@/components/link-button/link-button';
+import { LinkButton } from '@/components/buttons/link-button';
 import { ThemeSwitcher } from '@/components/theme-switcher/theme-switcher';
-import { BrowseHeader } from '@/components/typography/BrowseHeader';
+import { BrowseHeader } from '@/components/typography/browse-header';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/server';
 

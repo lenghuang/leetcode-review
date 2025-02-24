@@ -1,8 +1,6 @@
-import { LinkButton } from '@/components/link-button/link-button';
+import { LinkButton } from '@/components/buttons/link-button';
 import { ThemeSwitcherCta } from '@/components/theme-switcher/theme-switcher-cta';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default async function Home() {
   return (

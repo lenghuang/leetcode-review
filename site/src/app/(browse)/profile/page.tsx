@@ -1,7 +1,7 @@
 import { signOutAction } from '@/app/actions';
 import { ThemeSwitcherCta } from '@/components/theme-switcher/theme-switcher-cta';
-import { SubmitButton } from '@/components/tutorial/submit-button';
-import { BrowseHeader } from '@/components/typography/BrowseHeader';
+import { SubmitButton } from '@/components/buttons/submit-button';
+import { BrowseHeader } from '@/components/typography/browse-header';
 import { createClient } from '@/utils/supabase/server';
 import { InfoIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';

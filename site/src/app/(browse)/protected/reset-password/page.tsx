@@ -1,7 +1,10 @@
 import { resetPasswordAction } from '@/app/actions';
-import { FormMessage, Message } from '@/components/tutorial/form-message';
-import { SubmitButton } from '@/components/tutorial/submit-button';
-import { BrowseHeader } from '@/components/typography/BrowseHeader';
+import {
+  FormMessage,
+  Message,
+} from '@/components/auth-components/form-message';
+import { SubmitButton } from '@/components/buttons/submit-button';
+import { BrowseHeader } from '@/components/typography/browse-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
