@@ -53,16 +53,21 @@ export default async function HomePage() {
 const StatsOrLoginCard = () => (
   <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
     <Card className="flex-shrink-0 w-32 sm:w-40">
+      <div className="text-sm italic muted break-word p-4">
+        Real stats coming soon...
+      </div>
+    </Card>
+    <Card className="flex-shrink-0 w-32 sm:w-40">
       <CardHeader className="py-2">
         <CardTitle className="text-xs text-muted-foreground">Streak</CardTitle>
-        <div className="text-xl font-bold">7 days</div>
+        <div className="text-xl font-bold">0 days</div>
       </CardHeader>
     </Card>
     <Card className="flex-shrink-0 w-32 sm:w-40">
       <CardHeader className="py-2">
         <CardTitle className="text-xs text-muted-foreground">Solved</CardTitle>
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold">124</span>
+          <span className="text-xl font-bold">2</span>
           <Trophy className="h-4 w-4 text-yellow-500" />
         </div>
       </CardHeader>
@@ -71,8 +76,8 @@ const StatsOrLoginCard = () => (
       <CardHeader className="py-2">
         <CardTitle className="text-xs text-muted-foreground">Success</CardTitle>
         <div className="space-y-1">
-          <div className="text-xl font-bold">67%</div>
-          <Progress value={67} className="h-1" />
+          <div className="text-xl font-bold">50%</div>
+          <Progress value={50} className="h-1" />
         </div>
       </CardHeader>
     </Card>
