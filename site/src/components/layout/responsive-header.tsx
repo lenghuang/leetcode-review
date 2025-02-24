@@ -25,8 +25,8 @@ export function ResponsiveHeader() {
     <div className="w-full max-w-5xl mx-auto px-5 text-sm">
       {/* Hero Header - Only visible on mobile */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1
-          bg-background lg:hidden pt-2"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1 bg-accent
+          lg:hidden py-2"
       >
         <HeroIcon />
       </header>
@@ -34,7 +34,7 @@ export function ResponsiveHeader() {
       {/* Navigation - Bottom on mobile, top on desktop */}
       <nav
         className={cn(
-          'fixed left-0 right-0 z-50 flex items-center bg-background',
+          'fixed left-0 right-0 z-50 flex items-center bg-accent',
           'bottom-0 lg:top-0 lg:bottom-auto'
         )}
       >

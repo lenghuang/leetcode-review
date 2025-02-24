@@ -12,7 +12,9 @@ export default function NonFullScreenLayout({
       <ResponsiveHeader />
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col items-center my-12">{children}</div>
+      <div className="flex-1 flex flex-col items-center mt-14 mb-16">
+        {children}
+      </div>
 
       <ResponsiveFooter />
     </main>
