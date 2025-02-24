@@ -8,20 +8,20 @@ def simulate_interview(data):
     current_node = "1"
     while current_node:
         node = data["interactions"][current_node]
-        print(f"\nInterviewer: {node['interviewer']}")
+        print(f"\nInterviewer: {node['a']}")
 
-        if "candidate" in node:
-            print(f"Candidate: {node['candidate']}")
+        if "b" in node:
+            print(f"Candidate: {node['b']}")
 
-        if "candidate_response_options" in node:
+        if "options" in node:
             print("\nCandidate Response Options:")
-            for i, option in enumerate(node["candidate_response_options"]):
+            for i, option in enumerate(node["options"]):
                 print(f"{i + 1}. {option['text']}")
 
             choice = input("Enter your choice (1, 2, ...): ")
             try:
                 choice_index = int(choice) - 1
-                next_node = node["candidate_response_options"][choice_index]["next"]
+                next_node = node["options"][choice_index]["next"]
                 if next_node is None:
                     break
                 current_node = next_node
