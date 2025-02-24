@@ -31,7 +31,7 @@
       "interviewer": "Exactly. Now, how might we improve that?",
       "candidate_response_options": [
         {
-          "text": "Instead of checking every pair, could I store the numbers I've seen so far and check if the complement exists?",
+          "text": "Could I look to see if I can save any of the information that I have already calculated?",
           "next": "5a"
         },
         {
@@ -76,7 +76,7 @@
       ]
     },
     "5a": {
-      "interviewer": "That's a great idea! What data structure could you use to efficiently store and look up numbers?",
+      "interviewer": "That's a great idea. What data structure could you use to efficiently store and look up numbers?",
       "candidate_response_options": [
         {
           "text": "A hash map or dictionary would be perfect.",
@@ -111,7 +111,7 @@
       "candidate_response_options": [
         {
           "text": "Time complexity would be O(n log n) due to sorting, and space would be O(1).",
-          "next": "8"
+          "next": "8b"
         }
       ]
     },
@@ -120,7 +120,7 @@
       "candidate_response_options": [
         {
           "text": "Time complexity would be O(n log n) due to sorting, and space would be O(1).",
-          "next": "8"
+          "next": "8b"
         }
       ]
     },
@@ -129,11 +129,11 @@
       "candidate_response_options": [
         {
           "text": "Time complexity would be O(n) and space complexity would be O(n).",
-          "next": "8"
+          "next": "8a"
         }
       ]
     },
-    "8": {
+    "8a": {
       "interviewer": "Great, lets move on to follow up questions. How would you handle duplicate numbers in the input array?",
       "candidate_response_options": [
         {
@@ -143,6 +143,19 @@
         {
           "text": "I am not sure how to handle duplicate numbers.",
           "next": "9"
+        }
+      ]
+    },
+    "8b": {
+      "interviewer": "While the two-pointer approach works, it can be more complex due to the sorting overhead and handling duplicates. Can we think of a more efficient way to solve it with O(n) time complexity?",
+      "candidate_response_options": [
+        {
+          "text": "Could we use a hashmap?",
+          "next": "6a"
+        },
+        {
+          "text": "I am not sure.",
+          "next": "6a"
         }
       ]
     },
