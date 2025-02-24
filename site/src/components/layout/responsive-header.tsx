@@ -15,7 +15,7 @@ const HeroIcon = () => (
   <Button asChild variant="ghost">
     <Link href="/home">
       <GengarIcon />
-      <h1 className="text-lg font-medium pr-2">Leetcode Review</h1>
+      <h1 className="text-lg font-medium pr-2">Recode.ai</h1>
     </Link>
   </Button>
 );
