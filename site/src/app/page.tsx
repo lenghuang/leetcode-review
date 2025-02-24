@@ -1,3 +1,4 @@
+import { LinkButton } from '@/components/link-button/link-button';
 import { ThemeSwitcherCta } from '@/components/theme-switcher/theme-switcher-cta';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -18,13 +19,8 @@ export default async function Home() {
           proof of concept, not final product!
         </div>
         <div className="flex gap-4">
-          <Button>
-            <Link href="/study-session">Get started</Link>
-          </Button>
+          <LinkButton href="/study-session">Get started</LinkButton>
           <ThemeSwitcherCta />
-        </div>
-        <div className="text-center text-xs italic">
-          (get started has no loading animation, might take a bit)
         </div>
         <div className="w-4/5 justify-center flex gap-1 border-t text-xs mt-24 py-3">
           AI slop by

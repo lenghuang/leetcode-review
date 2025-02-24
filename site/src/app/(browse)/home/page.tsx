@@ -12,6 +12,7 @@ import { ArrowRight, Brain, Star, Trophy } from 'lucide-react';
 import { BrowseHeader } from '@/components/typography/BrowseHeader';
 import Image from 'next/image';
 import Link from 'next/link';
+import { LinkButton } from '@/components/link-button/link-button';
 
 export default async function HomePage() {
   return (
@@ -99,12 +100,7 @@ const FeaturedLesson = () => (
           <Brain className="h-4 w-4" />
           <span>75 Problems • 2 hours</span>
         </div>
-        <Link href="/study-session">
-          <Button className="w-full sm:w-auto">
-            Start Lesson
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
+        <LinkButton href="/study-session">Start Lesson</LinkButton>
       </div>
     </CardContent>
   </Card>
