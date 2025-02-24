@@ -2,23 +2,20 @@
   "interactions": {
     "1": {
       "a": "Okay, so we're going to start with the Two Sum problem. You're given an array of integers and a target number, and you need to return the indices of the two numbers that add up to the target. For example, if the array is [2, 7, 11, 15] and the target is 9, you'd return [0, 1]. Sound good?",
-      "b": "Yeah, I get it. Can I start with a brute-force approach?",
       "options": [
-        { "text": "Sure.", "next": "2" },
-        { "text": "Can you clarify the input?", "next": "1b" }
+        {
+          "text": "Yeah, I get it. Can I start with a brute-force approach?",
+          "next": "2"
+        }
       ]
-    },
-    "1b": {
-      "a": "Of course, the input is an array of integers and a single integer called the target. Do you understand now?",
-      "b": "Yes, go ahead.",
-      "next": "2"
     },
     "2": {
       "a": "Sure, go ahead.",
-      "b": "Okay, so I'd use nested loops. For each number, I'd check if it adds up to the target with every other number in the array.",
       "options": [
-        { "text": "Okay.", "next": "3" },
-        { "text": "Is there a better way?", "next": "4a" }
+        {
+          "text": "Okay, so I'd use nested loops. For each number, I'd check if it adds up to the target with every other number in the array.",
+          "next": "3"
+        }
       ]
     },
     "3": {
