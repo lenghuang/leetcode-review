@@ -1,20 +1,19 @@
 import Link from 'next/link';
-import { Home, Search, Bell, User } from 'lucide-react';
+import { Home, List, User } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { GengarIcon } from '@/components/icons/gengar-icon';
 
 const navItems = [
-  { name: 'Home', icon: Home, href: '/' },
-  { name: 'Search', icon: Search, href: '/search' },
-  { name: 'Notifications', icon: Bell, href: '/notifications' },
+  { name: 'Home', icon: Home, href: '/home' },
+  { name: 'Browse', icon: List, href: '/search' },
   { name: 'Profile', icon: User, href: '/profile' },
 ];
 
 const HeroIcon = () => (
   <Button asChild variant="ghost">
-    <Link href="/">
+    <Link href="/home">
       <GengarIcon />
       <h1 className="text-lg font-medium pr-2">Leetcode Review</h1>
     </Link>

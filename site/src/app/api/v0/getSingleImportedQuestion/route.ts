@@ -46,7 +46,5 @@ async function getSingleImportedQuestion() {
     }
   }
 
-  console.log('Dynamic JSON Data Validated as KaggleDatasetQuestionMetadata');
-
   return q as ImportedQuestion;
 }

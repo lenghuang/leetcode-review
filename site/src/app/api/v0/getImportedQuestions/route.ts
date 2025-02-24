@@ -46,7 +46,5 @@ async function getImportedQuestions(page: number = 0) {
     }
   }
 
-  console.log('Dynamic JSON Data Validated as KaggleDatasetQuestionMetadata');
-
   return allData as ImportedQuestion[];
 }
