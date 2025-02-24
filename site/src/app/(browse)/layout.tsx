@@ -13,7 +13,9 @@ export default function NonFullScreenLayout({
 
       {/* Main content */}
       <div className="flex-1 flex flex-col items-center mt-14 mb-16">
-        {children}
+        <div className="w-full max-w-7xl flex flex-col gap-4 p-4">
+          <div className="flex-1 w-full flex flex-col gap-4">{children}</div>
+        </div>
       </div>
 
       <ResponsiveFooter />
