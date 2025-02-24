@@ -1,151 +1,172 @@
 {
-  "interview": {
-    "problem": {
-      "name": "Two Sum",
-      "description": "Given an array of integers `nums` and an integer `target`, return the indices of the two numbers such that they add up to `target`. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order. For example, `nums = [2, 7, 11, 15]` and `target = 9` should return `[0, 1]`."
+  "interactions": {
+    "1": {
+      "interviewer": "Alright, let's start with a classic: the Two Sum problem. Given an array of integers `nums` and an integer `target`, return the indices of the two numbers such that they add up to `target`. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order. For example, `nums = [2, 7, 11, 15]` and `target = 9` should return `[0, 1]`.",
+      "candidate": "Okay, I understand. Can I start by outlining a brute-force approach?",
+      "next": "2"
     },
-    "interactions": {
-      "1": {
-        "interviewer": "Alright, let's start with a classic: the Two Sum problem. Given an array of integers `nums` and an integer `target`, return the indices of the two numbers such that they add up to `target`. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order. For example, `nums = [2, 7, 11, 15]` and `target = 9` should return `[0, 1]`.",
-        "candidate": "Okay, I understand. Can I start by outlining a brute-force approach?",
-        "next": "2"
-      },
-      "2": {
-        "interviewer": "Sure, go ahead.",
-        "candidate": "Well, the most straightforward way would be to use nested loops. For each number in the array, I'd iterate through the rest of the array and check if their sum equals the target.",
-        "next": "3"
-      },
-      "3": {
-        "interviewer": "That's a valid starting point. Can you tell me about the implications of that approach?",
-        "candidate_response_options": [
-          {
-            "text": "It would have a time complexity of O(n^2) because of the nested loops.",
-            "next": "4a"
-          },
-          {
-            "text": "I'm not sure, it seems pretty efficient.",
-            "next": "4b"
-          },
-          {
-            "text": "The space complexity would be O(1) since we're not using any extra data structures.",
-            "next": "4c"
-          }
-        ]
-      },
-      "4a": {
-        "interviewer": "Exactly. Now, how might we improve that?",
-        "candidate_response_options": [
-          {
-            "text": "Instead of checking every pair, could I store the numbers I've seen so far and check if the complement exists?",
-            "next": "5a"
-          },
-          {
-            "text": "Maybe sorting the array and using two pointers?",
-            "next": "5b"
-          }
-        ]
-      },
-      "4b": {
-        "interviewer": "Think about how many comparisons you're making. How does the number of comparisons scale with the size of the input array?",
-        "candidate_response_options": [
-          {
-            "text": "Oh, right, it's n multiplied by n, so O(n^2).",
-            "next": "4a"
-          },
-          {
-            "text": "I'm still not seeing it.",
-            "next": "4b2"
-          }
-        ]
-      },
-      "4b2": {
-        "interviewer": "If you have an array of 10 elements, you're doing 10 * 10 checks. With 100 elements, 100 * 100. Do you see the pattern?",
-        "candidate_response_options": [
-          {
-            "text": "Yes, I understand now. O(n^2)",
-            "next": "4a"
-          }
-        ]
-      },
-      "4c": {
-        "interviewer": "That's correct. Now, let's focus on time complexity. How can we reduce the number of comparisons?",
-        "candidate_response_options": [
-          {
-            "text": "Maybe use a hash map?",
-            "next": "5a"
-          },
-          {
-            "text": "I'm not sure",
-            "next": "4a"
-          }
-        ]
-      },
-      "5a": {
-        "interviewer": "That's a great idea! What data structure could you use to efficiently store and look up numbers?",
-        "candidate_response_options": [
-          {
-            "text": "A hash map or dictionary would be perfect.",
-            "next": "6a"
-          }
-        ]
-      },
-      "5b": {
-        "interviewer": "That is also a good approach, but how would you handle duplicate numbers in that scenario?",
-        "candidate_response_options": [
-          {
-            "text": "I would have to skip duplicates while moving the pointers.",
-            "next": "6b"
-          },
-          {
-            "text": "I'm not sure how to handle that.",
-            "next": "6c"
-          }
-        ]
-      },
-      "6a": {
-        "interviewer": "Excellent. Explain how you would use a hash map to solve this problem.",
-        "candidate_response_options": [
-          {
-            "text": "I would iterate through the array. For each number, I'd calculate its complement (target - number). Then, I'd check if the complement exists in the hash map. If it does, I've found the solution. If not, I'd store the current number and its index in the hash map.",
-            "next": "7a"
-          }
-        ]
-      },
-      "6b": {
-        "interviewer": "Correct. Now, what would the time and space complexity be?",
-        "next": "7b"
-      },
-      "6c": {
-        "interviewer": "You would need to add extra logic to skip duplicate numbers while moving the pointers. Now, what would the time and space complexity be?",
-        "next": "7b"
-      },
-      "7a": {
-        "interviewer": "Perfect. Now, let's implement that. What would the time and space complexity be?",
-        "next": "8"
-      },
-      "7b": {
-        "interviewer": "What would the time and space complexity be?",
-        "next": "8"
-      },
-      "8": {
-        "interviewer": "Great, lets move on to follow up questions.",
-        "next": "9"
-      },
-      "9": {
-        "interviewer": "How would you handle duplicate numbers in the input array?",
-        "next": "10"
-      },
-      "10": {
-        "interviewer": "What if you needed to find *three* numbers that sum to the target?",
-        "next": null
-      }
+    "2": {
+      "interviewer": "Sure, go ahead.",
+      "candidate": "Well, the most straightforward way would be to use nested loops. For each number in the array, I'd iterate through the rest of the array and check if their sum equals the target.",
+      "next": "3"
     },
-    "follow_up_questions": [
-      "How would you handle duplicate numbers in the input array?",
-      "What if you needed to find *three* numbers that sum to the target?",
-      "How would you modify your solution if the input array was extremely large and couldn't fit into memory?",
-      "What if there were no solutions, how would you handle that case?",
-      "Can you write test cases to prove your code works?"
-    ]
+    "3": {
+      "interviewer": "That's a valid starting point. Can you tell me about the implications of that approach?",
+      "candidate_response_options": [
+        {
+          "text": "It would have a time complexity of O(n^2) because of the nested loops.",
+          "next": "4a"
+        },
+        {
+          "text": "I'm not sure, it seems pretty efficient.",
+          "next": "4b"
+        },
+        {
+          "text": "The space complexity would be O(1) since we're not using any extra data structures.",
+          "next": "4c"
+        }
+      ]
+    },
+    "4a": {
+      "interviewer": "Exactly. Now, how might we improve that?",
+      "candidate_response_options": [
+        {
+          "text": "Instead of checking every pair, could I store the numbers I've seen so far and check if the complement exists?",
+          "next": "5a"
+        },
+        {
+          "text": "Maybe sorting the array and using two pointers?",
+          "next": "5b"
+        }
+      ]
+    },
+    "4b": {
+      "interviewer": "Think about how many comparisons you're making. How does the number of comparisons scale with the size of the input array?",
+      "candidate_response_options": [
+        {
+          "text": "Oh, right, it's n multiplied by n, so O(n^2).",
+          "next": "4a"
+        },
+        {
+          "text": "I'm still not seeing it.",
+          "next": "4b2"
+        }
+      ]
+    },
+    "4b2": {
+      "interviewer": "If you have an array of 10 elements, you're doing 10 * 10 checks. With 100 elements, 100 * 100. Do you see the pattern?",
+      "candidate_response_options": [
+        {
+          "text": "Yes, I understand now. O(n^2)",
+          "next": "4a"
+        }
+      ]
+    },
+    "4c": {
+      "interviewer": "That's correct. Now, let's focus on time complexity. How can we reduce the number of comparisons?",
+      "candidate_response_options": [
+        {
+          "text": "Maybe use a hash map?",
+          "next": "5a"
+        },
+        {
+          "text": "I'm not sure.",
+          "next": "4a"
+        }
+      ]
+    },
+    "5a": {
+      "interviewer": "That's a great idea! What data structure could you use to efficiently store and look up numbers?",
+      "candidate_response_options": [
+        {
+          "text": "A hash map or dictionary would be perfect.",
+          "next": "6a"
+        }
+      ]
+    },
+    "5b": {
+      "interviewer": "That is also a good approach, but how would you handle duplicate numbers in that scenario?",
+      "candidate_response_options": [
+        {
+          "text": "I would have to skip duplicates while moving the pointers.",
+          "next": "6b"
+        },
+        {
+          "text": "I'm not sure how to handle that.",
+          "next": "6c"
+        }
+      ]
+    },
+    "6a": {
+      "interviewer": "Excellent. Explain how you would use a hash map to solve this problem.",
+      "candidate_response_options": [
+        {
+          "text": "I would iterate through the array. For each number, I'd calculate its complement (target - number). Then, I'd check if the complement exists in the hash map. If it does, I've found the solution. If not, I'd store the current number and its index in the hash map.",
+          "next": "7a"
+        }
+      ]
+    },
+    "6b": {
+      "interviewer": "Correct. Now, what would the time and space complexity be?",
+      "candidate_response_options": [
+        {
+          "text": "Time complexity would be O(n log n) due to sorting, and space would be O(1).",
+          "next": "8"
+        }
+      ]
+    },
+    "6c": {
+      "interviewer": "You would need to add extra logic to skip duplicate numbers while moving the pointers. Now, what would the time and space complexity be?",
+      "candidate_response_options": [
+        {
+          "text": "Time complexity would be O(n log n) due to sorting, and space would be O(1).",
+          "next": "8"
+        }
+      ]
+    },
+    "7a": {
+      "interviewer": "Perfect. Now, let's implement that. What would the time and space complexity be?",
+      "candidate_response_options": [
+        {
+          "text": "Time complexity would be O(n) and space complexity would be O(n).",
+          "next": "8"
+        }
+      ]
+    },
+    "8": {
+      "interviewer": "Great, lets move on to follow up questions. How would you handle duplicate numbers in the input array?",
+      "candidate_response_options": [
+        {
+          "text": "I would check if the current number is the same as the previous number, and skip it if it is.",
+          "next": "9"
+        },
+        {
+          "text": "I am not sure how to handle duplicate numbers.",
+          "next": "9"
+        }
+      ]
+    },
+    "9": {
+      "interviewer": "What if you needed to find *three* numbers that sum to the target?",
+      "candidate_response_options": [
+        {
+          "text": "I would use three nested loops, or sort the array and use three pointers.",
+          "next": "10"
+        },
+        {
+          "text": "I am not sure how to approach the 3 sum problem.",
+          "next": "10"
+        }
+      ]
+    },
+    "10": {
+      "interviewer": "Great, thanks for your time",
+      "candidate_response_options": [
+        {
+          "text": "Thank you!",
+          "next": null
+        }
+      ]
+    }
   }
 }

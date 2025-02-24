@@ -7,7 +7,7 @@ def load_interview_data(filename="conversation.json"):
 def simulate_interview(data):
     current_node = "1"
     while current_node:
-        node = data["interview"]["interactions"][current_node]
+        node = data["interactions"][current_node]
         print(f"\nInterviewer: {node['interviewer']}")
 
         if "candidate" in node:
@@ -34,9 +34,9 @@ def simulate_interview(data):
                 break
 
     print("\nInterview Finished.")
-    if "follow_up_questions" in data["interview"]:
+    if "follow_up_questions" in data:
         print("\nFollow-up Questions:")
-        for question in data["interview"]["follow_up_questions"]:
+        for question in data["follow_up_questions"]:
             print(f"- {question}")
 
 if __name__ == "__main__":
