@@ -8,7 +8,7 @@ import { GengarIcon } from '@/components/icons/gengar-icon';
 const navItems = [
   { name: 'Home', icon: Home, href: '/home' },
   { name: 'Browse', icon: List, href: '/search' },
-  { name: 'Profile', icon: User, href: '/profile' },
+  { name: 'Profile', icon: User, href: '/protected' },
 ];
 
 const HeroIcon = () => (
