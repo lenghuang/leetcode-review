@@ -1,5 +1,6 @@
 import NotesComponentClient from '@/components/layout/notes-page';
 import { ThemeSwitcher } from '@/components/theme-switcher/theme-switcher';
+import { BrowseHeader } from '@/components/typography/BrowseHeader';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
@@ -15,20 +16,20 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col gap-2 items-start">
-      <h2 className="font-bold text-2xl mb-4">Demo page of random stuff</h2>
+      <BrowseHeader>Demo page of random stuff</BrowseHeader>
       <Button>
         <Link href="/study-session">Get started</Link>
       </Button>
-      <h2 className="font-bold text-2xl mb-4">Theme switcher</h2>
+      <BrowseHeader>Theme switcher</BrowseHeader>
       <ThemeSwitcher />
-      <h2 className="font-bold text-2xl mb-4">Your sql (server) response</h2>
+      <BrowseHeader>Your sql (server) response</BrowseHeader>
       <pre
         className="text-xs font-mono p-3 rounded border max-h-[40vh] w-full max-w-[80vw]
           overflow-auto"
       >
         {JSON.stringify(response.data, null, 2)}
       </pre>
-      <h2 className="font-bold text-2xl mb-4">Your SQL (client) response</h2>
+      <BrowseHeader>Your SQL (client) response</BrowseHeader>
       <NotesComponentClient />
     </div>
   );

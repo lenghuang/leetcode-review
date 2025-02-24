@@ -1,6 +1,7 @@
 import { signOutAction } from '@/app/actions';
 import { ThemeSwitcherCta } from '@/components/theme-switcher/theme-switcher-cta';
 import { SubmitButton } from '@/components/tutorial/submit-button';
+import { BrowseHeader } from '@/components/typography/BrowseHeader';
 import { createClient } from '@/utils/supabase/server';
 import { InfoIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';
@@ -23,7 +24,7 @@ export default async function ProfilePage() {
         This is a protected page that you can only see as an authenticated user
       </div>
       <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your user details</h2>
+        <BrowseHeader>Your user details</BrowseHeader>
         <pre
           className="text-xs font-mono p-3 rounded border max-h-[40vh] w-full max-w-[80vw]
             overflow-auto"
