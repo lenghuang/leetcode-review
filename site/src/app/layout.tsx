@@ -9,7 +9,7 @@ const defaultUrl = process.env.VERCEL_URL
   : 'http://localhost:3000';
 
 const APP_NAME = 'Recode.ai';
-const APP_DEFAULT_TITLE = 'Leetcode Review with Recode.ai';
+const APP_DEFAULT_TITLE = 'Recode - Leetcode Review';
 const APP_TITLE_TEMPLATE = '%s - Recode.ai';
 const APP_DESCRIPTION = 'Go gengar mode and quickly review leetcode questions.';
 
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#2196f3',
+  themeColor: '#292c32',
 };
 
 const geistSans = Funnel_Sans({
