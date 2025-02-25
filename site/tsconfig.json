@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "webworker" // Add this! Doing so adds WebWorker and ServiceWorker types to the global.
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -23,8 +28,11 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": []
+    "types": [
+      // This allows Serwist to type `window.serwist`.
+      "@serwist/next/typings"
+    ]
   },
   "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["**/node_modules/*", "**/.next/*"]
+  "exclude": ["**/node_modules/*", "**/.next/*", "**/public/sw.js"]
 }
