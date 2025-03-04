@@ -1,135 +1,89 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Get DOM elements
-  const targetUrlInput = document.getElementById("targetUrl");
-  const saveUrlButton = document.getElementById("saveUrl");
-  const enableFetchingCheckbox = document.getElementById("enableFetching");
-  const fetchNowButton = document.getElementById("fetchNow");
-  const lastFetchTimeSpan = document.getElementById("lastFetchTime");
-  const fetchLogsDiv = document.getElementById("fetchLogs");
+  const fetchButton = document.getElementById("fetchData");
+  const endpointInput = document.getElementById("endpoint");
+  const statusDiv = document.getElementById("status");
 
-  // Load current settings
-  loadStatus();
+  fetchButton.addEventListener("click", async () => {
+    // Get the endpoint from the input
+    const endpoint = endpointInput.value.trim();
 
-  // Set up event listeners
-  saveUrlButton.addEventListener("click", saveUrl);
-  enableFetchingCheckbox.addEventListener("change", toggleFetching);
-  fetchNowButton.addEventListener("click", fetchNow);
-
-  // Function to load current status
-  function loadStatus() {
-    chrome.runtime.sendMessage({ action: "getStatus" }, (response) => {
-      if (response) {
-        // Update URL input
-        targetUrlInput.value = response.targetUrl || "";
-
-        // Update toggle
-        enableFetchingCheckbox.checked = response.isEnabled !== false;
-
-        // Update last fetch time
-        if (response.lastFetchTime) {
-          const date = new Date(response.lastFetchTime);
-          lastFetchTimeSpan.textContent = date.toLocaleString();
-        } else {
-          lastFetchTimeSpan.textContent = "Never";
-        }
-
-        // Update logs
-        updateLogs(response.fetchLogs || []);
-      }
-    });
-  }
-
-  // Function to save URL
-  function saveUrl() {
-    const url = targetUrlInput.value.trim();
-    if (!url) {
-      alert("Please enter a valid URL");
+    if (!endpoint) {
+      showStatus("Please enter an API endpoint", "error");
       return;
     }
 
-    // Validate URL format
     try {
-      new URL(url);
-    } catch (e) {
-      alert("Please enter a valid URL including http:// or https://");
-      return;
+      // Get the active tab
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+
+      // Execute script in the context of the page
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        args: [endpoint],
+        func: fetchDataFromPage,
+      });
+
+      showStatus(
+        "Request sent! Check the console for response data.",
+        "success"
+      );
+    } catch (error) {
+      showStatus(`Error: ${error.message}`, "error");
+      console.error("Extension error:", error);
     }
+  });
 
-    chrome.runtime.sendMessage(
-      {
-        action: "updateUrl",
-        url: url,
-      },
-      (response) => {
-        if (response && response.status) {
-          // Show success indicator
-          saveUrlButton.textContent = "✓";
-          saveUrlButton.disabled = true;
-
-          setTimeout(() => {
-            saveUrlButton.textContent = "Save";
-            saveUrlButton.disabled = false;
-          }, 1500);
-        }
-      }
-    );
-  }
-
-  // Function to toggle fetching
-  function toggleFetching() {
-    const isEnabled = enableFetchingCheckbox.checked;
-
-    chrome.runtime.sendMessage({
-      action: "toggleFetching",
-      isEnabled: isEnabled,
-    });
-  }
-
-  // Function to trigger immediate fetch
-  function fetchNow() {
-    fetchNowButton.textContent = "Fetching...";
-    fetchNowButton.disabled = true;
-
-    chrome.runtime.sendMessage({ action: "fetchNow" }, (response) => {
-      if (response) {
-        fetchNowButton.textContent =
-          response.status === "Manual fetch completed" ? "Success!" : "Error";
-
-        setTimeout(() => {
-          fetchNowButton.textContent = "Fetch Now";
-          fetchNowButton.disabled = false;
-
-          // Reload status to update the UI
-          loadStatus();
-        }, 1500);
-      }
-    });
-  }
-
-  // Function to update logs display
-  function updateLogs(logs) {
-    if (!logs || logs.length === 0) {
-      fetchLogsDiv.innerHTML = '<p class="empty-logs">No logs yet</p>';
-      return;
-    }
-
-    fetchLogsDiv.innerHTML = "";
-
-    logs.forEach((log) => {
-      const logEntry = document.createElement("div");
-      logEntry.className = `log-entry ${log.status}`;
-
-      const date = new Date(log.time);
-      const formattedTime = date.toLocaleString();
-
-      logEntry.innerHTML = `
-          <div><strong>${formattedTime}</strong></div>
-          <div>URL: ${log.url}</div>
-          <div>Status: ${log.status}</div>
-          ${log.error ? `<div>Error: ${log.error}</div>` : ""}
-        `;
-
-      fetchLogsDiv.appendChild(logEntry);
-    });
+  function showStatus(message, type) {
+    statusDiv.textContent = message;
+    statusDiv.className = `status ${type}`;
+    statusDiv.style.display = "block";
   }
 });
+
+// This function runs in the context of the web page
+function fetchDataFromPage(endpoint) {
+  console.log(`Fetching data from: ${endpoint}`);
+
+  // Determine the full URL (handle both absolute and relative paths)
+  let url = endpoint;
+  if (endpoint.startsWith("/")) {
+    url = `${window.location.origin}${endpoint}`;
+  } else if (!endpoint.startsWith("http")) {
+    url = `${window.location.origin}/${endpoint}`;
+  }
+
+  // Make the fetch request with credentials to include cookies
+  fetch(url, {
+    method: "GET",
+    credentials: "same-origin", // Include cookies for same-origin requests
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      console.log("Response status:", response.status);
+      console.log("Response headers:", response.headers);
+
+      // Check if the response is JSON
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        return response.json().then((data) => {
+          console.log("Response data:", data);
+          return { success: true, data };
+        });
+      } else {
+        return response.text().then((text) => {
+          console.log("Response text:", text);
+          return { success: true, text };
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+      return { success: false, error: error.message };
+    });
+}
