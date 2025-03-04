@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Page Fetcher</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Daily Page Fetcher</h1>
+
+      <div class="form-group">
+        <label for="targetUrl">Target URL:</label>
+        <div class="input-with-button">
+          <input type="url" id="targetUrl" placeholder="https://example.com" />
+          <button id="saveUrl" class="button primary">Save</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="switch-container">
+          <label for="enableFetching">Enable daily fetching:</label>
+          <label class="switch">
+            <input type="checkbox" id="enableFetching" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button id="fetchNow" class="button secondary">Fetch Now</button>
+      </div>
+
+      <div class="status-container">
+        <p>Last fetch: <span id="lastFetchTime">Never</span></p>
+      </div>
+
+      <div class="logs-container">
+        <h2>Recent Logs</h2>
+        <div id="fetchLogs" class="logs">
+          <p class="empty-logs">No logs yet</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
