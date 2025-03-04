@@ -8,7 +8,7 @@
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-        width: 300px;
+        width: 250px;
         padding: 16px;
       }
 
@@ -18,22 +18,10 @@
         margin-bottom: 16px;
       }
 
-      .form-group {
+      p {
+        font-size: 14px;
+        color: #64748b;
         margin-bottom: 16px;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-      }
-
-      input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
       }
 
       button {
@@ -44,6 +32,7 @@
         border-radius: 4px;
         cursor: pointer;
         font-weight: 500;
+        width: 100%;
       }
 
       button:hover {
@@ -71,15 +60,7 @@
   <body>
     <h1>Site Data Viewer</h1>
 
-    <div class="form-group">
-      <label for="endpoint">API Endpoint (relative path):</label>
-      <input
-        type="text"
-        id="endpoint"
-        placeholder="/api/user"
-        value="/api/user"
-      />
-    </div>
+    <p>Fetch data from <strong>/api/submission</strong></p>
 
     <button id="fetchData">Fetch Data</button>
 

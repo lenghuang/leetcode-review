@@ -1,17 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const fetchButton = document.getElementById("fetchData");
-  const endpointInput = document.getElementById("endpoint");
   const statusDiv = document.getElementById("status");
 
+  // Do I need &lastKey=?
+  const ENDPOINT = "/api/submissions/?offset=0&limit=20";
+
   fetchButton.addEventListener("click", async () => {
-    // Get the endpoint from the input
-    const endpoint = endpointInput.value.trim();
-
-    if (!endpoint) {
-      showStatus("Please enter an API endpoint", "error");
-      return;
-    }
-
     try {
       // Get the active tab
       const [tab] = await chrome.tabs.query({
@@ -22,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Execute script in the context of the page
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        args: [endpoint],
+        args: [ENDPOINT],
         func: fetchDataFromPage,
       });
 
@@ -56,7 +50,7 @@ function fetchDataFromPage(endpoint) {
   }
 
   // Make the fetch request with credentials to include cookies
-  fetch(url, {
+  return fetch(url, {
     method: "GET",
     credentials: "same-origin", // Include cookies for same-origin requests
     headers: {
