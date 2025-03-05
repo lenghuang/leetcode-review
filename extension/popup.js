@@ -1,60 +1,68 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // TODO: Disable button if non-leetcode domain
-
+document.addEventListener("DOMContentLoaded", async () => {
   const fetchButton = document.getElementById("fetchData");
   const statusDiv = document.getElementById("status");
+  const API_ENDPOINT = "/api/submissions/";
+
+  // Disable button if not on LeetCode
+  const isLeetCodeDomain = (await getActiveTabUrl()).includes("leetcode.com");
+  if (!isLeetCodeDomain) {
+    fetchButton.disabled = true;
+    showStatus("This extension only works on LeetCode.", "error");
+    return;
+  }
 
   fetchButton.addEventListener("click", async () => {
     try {
-      console.log("click received");
-
       const [tab] = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
 
-      console.log("current tab", tab);
+      showStatus("Loading...", "Secondary");
 
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        args: ["/api/submissions/"], // TODO: Move to consts
+        args: [API_ENDPOINT],
         func: fetchSubmissions,
       });
 
-      console.log("done running script");
-
       showStatus(
-        "Request sent! Check the console for response data.",
+        "Request loaded! Check the console for response data.",
         "success"
       );
     } catch (error) {
-      showStatus(`Error: ${error.message}`, "error");
       console.error("Extension error:", error);
+      showStatus(`Error: ${error.message}`, "error");
     }
   });
 
-  // Inline function to display styling
   function showStatus(message, type) {
     statusDiv.textContent = message;
     statusDiv.className = `status ${type}`;
     statusDiv.style.display = "block";
   }
+
+  async function getActiveTabUrl() {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    return tab?.url || "";
+  }
 });
 
-// This function runs inside the webpage to fetch paginated submissions
+// Function to fetch paginated submissions
 async function fetchSubmissions(endpoint) {
-  let url = endpoint.startsWith("/")
-    ? `${window.location.origin}${endpoint}`
-    : endpoint;
   let hasMore = true,
     offset = 0,
     lastKey = null;
 
   while (hasMore) {
-    let paginatedUrl = `${url}?offset=${offset}&limit=${20}`;
+    let paginatedUrl = `${endpoint}?offset=${offset}&limit=20`;
     if (lastKey) {
       paginatedUrl += `&lastkey=${encodeURIComponent(JSON.stringify(lastKey))}`;
     }
+
     try {
       const response = await fetch(paginatedUrl, {
         method: "GET",
@@ -66,18 +74,25 @@ async function fetchSubmissions(endpoint) {
       });
 
       if (!response.ok) {
-        console.error("Error fetching data:", response.statusText);
+        console.error("Fetch failed:", response.statusText);
         break;
       }
 
       const data = await response.json();
+      console.log("Fetched data:", data);
 
-      if (!data.submissions_dump.length || !data.has_next) {
+      if (
+        !data.submissions_dump ||
+        !data.submissions_dump.length ||
+        !data.has_next
+      ) {
         hasMore = false;
       } else {
         lastKey = data.last_key;
         offset += 20;
       }
+
+      hasMore = false;
     } catch (error) {
       console.error("Fetch error:", error);
       break;
