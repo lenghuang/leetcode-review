@@ -59,13 +59,11 @@ async function fetchSubmissions(endpoint, pageSize, maxPages) {
   let hasMore = true;
   let pageCount = 0;
 
-  let params = new URLSearchParams();
-  params.set("offset", 0);
-  params.set("limit", pageSize);
-  params.set("lastkey", "");
+  let offset = 0;
+  let lastKey = "";
 
   while (hasMore && pageCount < maxPages) {
-    const paginatedUrl = `${endpoint}?${params.toString()}`;
+    const paginatedUrl = `${endpoint}?offset=${offset}&limit=${pageSize}&lastkey=${lastKey}`;
 
     try {
       const response = await fetch(paginatedUrl, {
@@ -90,9 +88,9 @@ async function fetchSubmissions(endpoint, pageSize, maxPages) {
         data.submissions_dump.length &&
         data.has_next
       ) {
-        if (data.last_key) params.set("lastkey", data.last_key);
         pageCount++;
-        params.set("offset", pageCount * pageSize);
+        offset += pageSize;
+        lastKey = data.last_key ?? "";
       } else {
         hasMore = false;
       }
