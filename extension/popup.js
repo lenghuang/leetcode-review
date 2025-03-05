@@ -2,9 +2,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const fetchButton = document.getElementById("fetchData");
   const statusDiv = document.getElementById("status");
   const API_ENDPOINT = "/api/submissions/";
+  const PAGE_SIZE = 20;
+  const MAX_PAGES = 3;
+  const LEETCODE_DOMAIN = "leetcode.com";
 
   // Disable button if not on LeetCode
-  const isLeetCodeDomain = (await getActiveTabUrl()).includes("leetcode.com");
+  const isLeetCodeDomain = (await getActiveTabUrl()).includes(LEETCODE_DOMAIN);
   if (!isLeetCodeDomain) {
     fetchButton.disabled = true;
     showStatus("This extension only works on LeetCode.", "error");
@@ -18,11 +21,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         currentWindow: true,
       });
 
-      showStatus("Loading...", "Secondary");
+      showStatus("Loading...", "secondary");
 
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        args: [API_ENDPOINT],
+        args: [API_ENDPOINT, PAGE_SIZE, MAX_PAGES],
         func: fetchSubmissions,
       });
 
@@ -52,16 +55,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // Function to fetch paginated submissions
-async function fetchSubmissions(endpoint) {
-  let hasMore = true,
-    offset = 0,
-    lastKey = null;
+async function fetchSubmissions(endpoint, pageSize, maxPages) {
+  let hasMore = true;
+  let pageCount = 0;
 
-  while (hasMore) {
-    let paginatedUrl = `${endpoint}?offset=${offset}&limit=20`;
-    if (lastKey) {
-      paginatedUrl += `&lastkey=${encodeURIComponent(JSON.stringify(lastKey))}`;
-    }
+  let params = new URLSearchParams();
+  params.set("offset", 0);
+  params.set("limit", pageSize);
+  params.set("lastkey", "");
+
+  while (hasMore && pageCount < maxPages) {
+    const paginatedUrl = `${endpoint}?${params.toString()}`;
 
     try {
       const response = await fetch(paginatedUrl, {
@@ -82,17 +86,16 @@ async function fetchSubmissions(endpoint) {
       console.log("Fetched data:", data);
 
       if (
-        !data.submissions_dump ||
-        !data.submissions_dump.length ||
-        !data.has_next
+        data.submissions_dump &&
+        data.submissions_dump.length &&
+        data.has_next
       ) {
-        hasMore = false;
+        if (data.last_key) params.set("lastkey", data.last_key);
+        pageCount++;
+        params.set("offset", pageCount * pageSize);
       } else {
-        lastKey = data.last_key;
-        offset += 20;
+        hasMore = false;
       }
-
-      hasMore = false;
     } catch (error) {
       console.error("Fetch error:", error);
       break;
