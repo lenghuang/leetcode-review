@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const statusDiv = document.getElementById("status");
   const API_ENDPOINT = "/api/submissions/";
   const PAGE_SIZE = 20;
-  const MAX_PAGES = 3;
+  const MAX_PAGES = 10;
   const LEETCODE_DOMAIN = "leetcode.com";
 
   // Disable button if not on LeetCode
@@ -94,6 +94,8 @@ async function fetchSubmissions(endpoint, pageSize, maxPages) {
       } else {
         hasMore = false;
       }
+
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Avoid rate limiting
     } catch (error) {
       console.error("Fetch error:", error);
       break;
