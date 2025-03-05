@@ -1,21 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // TODO: Disable button if non-leetcode domain
+
   const fetchButton = document.getElementById("fetchData");
   const statusDiv = document.getElementById("status");
 
-  const ENDPOINT = "/api/submissions/?offset=0&limit=20";
-
   fetchButton.addEventListener("click", async () => {
     try {
+      console.log("click received");
+
       const [tab] = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
 
+      console.log("current tab", tab);
+
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        args: [ENDPOINT],
+        args: ["/api/submissions/"], // TODO: Move to consts
         func: fetchSubmissions,
       });
+
+      console.log("done running script");
 
       showStatus(
         "Request sent! Check the console for response data.",
@@ -27,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Inline function to display styling
   function showStatus(message, type) {
     statusDiv.textContent = message;
     statusDiv.className = `status ${type}`;
@@ -44,11 +51,10 @@ async function fetchSubmissions(endpoint) {
     lastKey = null;
 
   while (hasMore) {
-    let paginatedUrl = `${url}&offset=${offset}`;
+    let paginatedUrl = `${url}?offset=${offset}&limit=${20}`;
     if (lastKey) {
       paginatedUrl += `&lastkey=${encodeURIComponent(JSON.stringify(lastKey))}`;
     }
-
     try {
       const response = await fetch(paginatedUrl, {
         method: "GET",
@@ -65,7 +71,6 @@ async function fetchSubmissions(endpoint) {
       }
 
       const data = await response.json();
-      console.log("Fetched Submissions:", data.submissions_dump.length);
 
       if (!data.submissions_dump.length || !data.has_next) {
         hasMore = false;
