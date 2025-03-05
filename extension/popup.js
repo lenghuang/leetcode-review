@@ -2,22 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const fetchButton = document.getElementById("fetchData");
   const statusDiv = document.getElementById("status");
 
-  // Do I need &lastKey=?
   const ENDPOINT = "/api/submissions/?offset=0&limit=20";
 
   fetchButton.addEventListener("click", async () => {
     try {
-      // Get the active tab
       const [tab] = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
 
-      // Execute script in the context of the page
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         args: [ENDPOINT],
-        func: fetchDataFromPage,
+        func: fetchSubmissions,
       });
 
       showStatus(
@@ -37,47 +34,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// This function runs in the context of the web page
-function fetchDataFromPage(endpoint) {
-  console.log(`Fetching data from: ${endpoint}`);
+// This function runs inside the webpage to fetch paginated submissions
+async function fetchSubmissions(endpoint) {
+  let url = endpoint.startsWith("/")
+    ? `${window.location.origin}${endpoint}`
+    : endpoint;
+  let hasMore = true,
+    offset = 0,
+    lastKey = null;
 
-  // Determine the full URL (handle both absolute and relative paths)
-  let url = endpoint;
-  if (endpoint.startsWith("/")) {
-    url = `${window.location.origin}${endpoint}`;
-  } else if (!endpoint.startsWith("http")) {
-    url = `${window.location.origin}/${endpoint}`;
-  }
+  while (hasMore) {
+    let paginatedUrl = `${url}&offset=${offset}`;
+    if (lastKey) {
+      paginatedUrl += `&lastkey=${encodeURIComponent(JSON.stringify(lastKey))}`;
+    }
 
-  // Make the fetch request with credentials to include cookies
-  return fetch(url, {
-    method: "GET",
-    credentials: "same-origin", // Include cookies for same-origin requests
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      console.log("Response status:", response.status);
-      console.log("Response headers:", response.headers);
+    try {
+      const response = await fetch(paginatedUrl, {
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
 
-      // Check if the response is JSON
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        return response.json().then((data) => {
-          console.log("Response data:", data);
-          return { success: true, data };
-        });
-      } else {
-        return response.text().then((text) => {
-          console.log("Response text:", text);
-          return { success: true, text };
-        });
+      if (!response.ok) {
+        console.error("Error fetching data:", response.statusText);
+        break;
       }
-    })
-    .catch((error) => {
+
+      const data = await response.json();
+      console.log("Fetched Submissions:", data.submissions_dump.length);
+
+      if (!data.submissions_dump.length || !data.has_next) {
+        hasMore = false;
+      } else {
+        lastKey = data.last_key;
+        offset += 20;
+      }
+    } catch (error) {
       console.error("Fetch error:", error);
-      return { success: false, error: error.message };
-    });
+      break;
+    }
+  }
 }
