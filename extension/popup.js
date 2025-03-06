@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }))
   ) {
     fetchButton.disabled = true;
+    const remainingMinutes = 999; // TODO: implement a "get minutes left" thing from chrome extneion storage
     Utils.showStatus(
       `Please wait ${remainingMinutes.toFixed(
         1
