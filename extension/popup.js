@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const fetchButton = document.getElementById("fetchData");
-  const statusDiv = document.getElementById("status");
+  const mainContent = document.getElementById("mainContent");
   const LEETCODE_DOMAIN = "leetcode.com";
 
   // Disable button if not on LeetCode
@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
   if (!isLeetCodeDomain) {
     fetchButton.disabled = true;
+    mainContent.style.display = "none";
     Utils.showStatus("This extension only works on LeetCode.", "error");
     return;
   }
