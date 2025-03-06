@@ -82,6 +82,13 @@ label {
   ); /* Slightly darker primary on hover */
 }
 
+.button:disabled {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .status-container {
   margin-bottom: 1rem;
   padding: 0.75rem;
