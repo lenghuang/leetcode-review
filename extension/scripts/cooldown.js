@@ -2,7 +2,7 @@
 const Cooldown = {
   COOLDOWN_MINUTES: 5,
 
-  async checkCooldown(fetchButton) {
+  async checkCooldown(onTimeoutResolved) {
     return new Promise((resolve) => {
       chrome.storage.local.get("lastFetchTime", (data) => {
         const lastFetchTime = data.lastFetchTime;
@@ -11,17 +11,8 @@ const Cooldown = {
           const elapsedMinutes = (now - lastFetchTime) / (1000 * 60);
           if (elapsedMinutes < Cooldown.COOLDOWN_MINUTES) {
             const remainingMinutes = Cooldown.COOLDOWN_MINUTES - elapsedMinutes;
-            fetchButton.disabled = true;
-            Utils.showStatus(
-              `Please wait ${remainingMinutes.toFixed(
-                1
-              )} minutes before fetching again.`,
-              "warning"
-            );
-
             setTimeout(() => {
-              fetchButton.disabled = false;
-              Utils.showStatus("", "");
+              if (onTimeoutResolved) onTimeoutResolved();
             }, remainingMinutes * 60 * 1000);
 
             resolve(false); // Cooldown active
@@ -36,8 +27,13 @@ const Cooldown = {
   },
 
   async handleFetchClick() {
-    const fetchButton = document.getElementById("fetchData");
-    if (!(await Cooldown.checkCooldown(fetchButton))) {
+    if (!(await Cooldown.checkCooldown(() => Utils.showStatus("", "")))) {
+      Utils.showStatus(
+        `Please wait ${remainingMinutes.toFixed(
+          1
+        )} minutes before fetching again.`,
+        "warning"
+      );
       return; // Cooldown active
     }
 
@@ -51,7 +47,10 @@ const Cooldown = {
         currentWindow: true,
       });
 
-      Utils.showStatus("Loading...", "secondary");
+      Utils.showStatus(
+        "Request received! Feel free to exit this window.",
+        "secondary"
+      );
 
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
@@ -60,7 +59,7 @@ const Cooldown = {
       });
 
       Utils.showStatus(
-        "Request loaded! Check the console for response data.",
+        "Synced! You'll soon see personalized lesson plans.",
         "success"
       );
 

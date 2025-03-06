@@ -31,7 +31,7 @@ body {
 }
 
 .container {
-  width: 350px;
+  width: 400px;
   padding: 1em 1.5rem;
 }
 
@@ -49,15 +49,23 @@ h2 {
   color: hsl(var(--foreground));
 }
 
-label {
+p {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  color: hsl(var(--foreground));
+}
+
+p.disclaimer {
   display: block;
   margin-bottom: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.5rem;
+  font-weight: 300;
 }
 
 .button {
   display: inline-flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   border-radius: 5px;
@@ -67,6 +75,7 @@ label {
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   border: none;
+  margin-bottom: 0.5rem;
 }
 
 .button.primary {

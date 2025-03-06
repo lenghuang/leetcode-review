@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     LEETCODE_DOMAIN
   );
   if (!isLeetCodeDomain) {
-    fetchButton.disabled = true;
     mainContent.style.display = "none";
     Utils.showStatus("This extension only works on LeetCode.", "error");
     return;
@@ -17,5 +16,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   fetchButton.addEventListener("click", Cooldown.handleFetchClick);
 
   // Initial check on popup open
-  await Cooldown.checkCooldown(fetchButton);
+  if (
+    !(await Cooldown.checkCooldown(() => {
+      fetchButton.disabled = false;
+      Utils.showStatus("", "");
+    }))
+  ) {
+    fetchButton.disabled = true;
+    Utils.showStatus(
+      `Please wait ${remainingMinutes.toFixed(
+        1
+      )} minutes before fetching again.`,
+      "warning"
+    );
+  }
 });

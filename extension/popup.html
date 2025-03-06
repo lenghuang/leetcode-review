@@ -9,11 +9,23 @@
   <body>
     <div class="container">
       <div id="mainContent">
-        <h1>Recode.ai Profile Sync</h1>
+        <h1>Profile Sync</h1>
 
-        <p>Fetch data from <strong>/api/submission</strong></p>
+        <p>Get personalized lessons on Recode.ai with one click!</p>
 
-        <button id="fetchData" class="button primary">Fetch Data</button>
+        <button id="fetchData" class="button primary">Request Sync</button>
+
+        <!-- TODO: add links to the repo / website here -->
+
+        <p class="disclaimer">
+          By pressing this button, we will be using your credentials to download
+          your Leetcode submissions and sending them for use on Recode.ai
+          servers. If you do not consent to this, do not press this button. All
+          authentication is safely stored and Recode.ai will never gain access
+          to your Leetcode login information. These protections are guaranteed
+          by how the information that Google Chrome Extensions restrict access
+          to.
+        </p>
       </div>
 
       <div id="status" class="status-container" style="display: none"></div>
