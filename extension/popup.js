@@ -1,11 +1,11 @@
 const Config = {
   LEETCODE_DOMAIN: "leetcode.com",
-  COOLDOWN_MINUTES: 0.5,
+  COOLDOWN_MINUTES: 5,
   API_ENDPOINT: "/api/submissions/",
   PAGE_SIZE: 20,
-  MAX_PAGES: 3,
+  MAX_PAGES: 10000,
   TIMEOUT_MS_BETWEEN_FETCH: 1000,
-  RECODE_HOST_PROD: "",
+  RECODE_HOST_PROD: "https://leetcode-review.vercel.app",
   RECODE_HOST_DEV: "http://localhost:3000",
   RECODE_PATH: "/api/extension/syncSubmissions",
 };
