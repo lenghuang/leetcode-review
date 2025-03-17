@@ -1,10 +1,13 @@
 const Config = {
   LEETCODE_DOMAIN: "leetcode.com",
-  COOLDOWN_MINUTES: 5,
+  COOLDOWN_MINUTES: 0.5,
   API_ENDPOINT: "/api/submissions/",
   PAGE_SIZE: 20,
-  MAX_PAGES: 10,
+  MAX_PAGES: 3,
   TIMEOUT_MS_BETWEEN_FETCH: 1000,
+  RECODE_HOST_PROD: "",
+  RECODE_HOST_DEV: "http://localhost:3000",
+  RECODE_PATH: "/api/extension/syncSubmissions",
 };
 
 //#region ChromeHelpers
@@ -40,7 +43,8 @@ const fetchSubmissions = async (
   endpoint,
   pageSize,
   maxPages,
-  timeoutDuration
+  timeoutDuration,
+  proxyEndpoint
 ) => {
   // This is executed within the as a script within the tab, so it must have
   // arguments (like endpoint, pageSize, etc) passed to it.
@@ -82,6 +86,17 @@ const fetchSubmissions = async (
         hasMore = false;
       }
 
+      const proxyResponse = await fetch(proxyEndpoint, {
+        method: "POST",
+        body: JSON.stringify({ submissions: data }),
+        headers: {},
+      });
+
+      if (!proxyResponse.ok) {
+        console.warn("Proxy fetch failed:", proxyResponse.statusText);
+        return;
+      }
+
       await new Promise((resolve) => setTimeout(resolve, timeoutDuration)); // Avoid rate limiting
     } catch (error) {
       console.error("Fetch error:", error);
@@ -99,6 +114,7 @@ const executeFetchSubmissions = async () => {
       Config.PAGE_SIZE,
       Config.MAX_PAGES,
       Config.TIMEOUT_MS_BETWEEN_FETCH,
+      `${Config.RECODE_HOST_DEV}${Config.RECODE_PATH}`,
     ],
     func: fetchSubmissions,
   });
