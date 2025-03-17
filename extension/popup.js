@@ -8,7 +8,14 @@ const Config = {
 };
 
 //#region Fetchers
-const fetchSubmissions = async (endpoint, pageSize, maxPages) => {
+const fetchSubmissions = async (
+  endpoint,
+  pageSize,
+  maxPages,
+  timeoutDuration
+) => {
+  // This is executed within the as a script within the tab, so it must have
+  // arguments (like endpoint, pageSize, etc) passed to it.
   let hasMore = true;
   let pageCount = 0;
 
@@ -47,9 +54,7 @@ const fetchSubmissions = async (endpoint, pageSize, maxPages) => {
         hasMore = false;
       }
 
-      await new Promise((resolve) =>
-        setTimeout(resolve, Config.TIMEOUT_MS_BETWEEN_FETCH)
-      ); // Avoid rate limiting
+      await new Promise((resolve) => setTimeout(resolve, timeoutDuration)); // Avoid rate limiting
     } catch (error) {
       console.error("Fetch error:", error);
       break;
@@ -88,7 +93,12 @@ const executeFetchSubmissions = async () => {
   const tab = await getActiveTab();
   await chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    args: [Config.API_ENDPOINT, Config.PAGE_SIZE, Config.MAX_PAGES],
+    args: [
+      Config.API_ENDPOINT,
+      Config.PAGE_SIZE,
+      Config.MAX_PAGES,
+      Config.TIMEOUT_MS_BETWEEN_FETCH,
+    ],
     func: fetchSubmissions,
   });
 };
