@@ -7,6 +7,7 @@ This is my attempt at making a Duolingo-esque website for Leetcode style questio
 - `archive` contains some old code that I gave up on but want to keep to look back on
 - `scripts` contains Python scripts that I used to create questions
 - `site` contains NextJS application to create the frontend
+- `extension` contains a Chrome Extension I used to sync data between Leetcode and my database
 
 Tech stack includes tools like:
 

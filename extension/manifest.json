@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Recode.ai Sync",
+  "version": "1.0",
+  "description": "Syncs your Leetcode submissions with Recode.ai servers",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://leetcode.com/*"],
+  "content_scripts": [
+    {
+      "css": ["popup.css"],
+      "matches": ["https://leetcode.com/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-48x48.png",
+      "48": "icons/icon-48x48.png",
+      "128": "icons/icon-128x128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-48x48.png",
+    "48": "icons/icon-48x48.png",
+    "128": "icons/icon-128x128.png"
+  }
+}
