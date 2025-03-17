@@ -7,7 +7,35 @@ const Config = {
   TIMEOUT_MS_BETWEEN_FETCH: 1000,
 };
 
-//#region Fetchers
+//#region ChromeHelpers
+
+const getActiveTab = async () => {
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  return tab;
+};
+
+const getActiveTabUrl = async () => {
+  return (await getActiveTab())?.url || "";
+};
+
+const checkLastFetchTime = async () => {
+  return new Promise((resolve) => {
+    chrome.storage.local.get("lastFetchTime", (data) => {
+      resolve(data?.lastFetchTime);
+    });
+  });
+};
+
+const storeLastFetchTime = async () => {
+  chrome.storage.local.set({ lastFetchTime: Date.now() });
+};
+
+//#endregion
+
+//#region Fetch Submissions
 const fetchSubmissions = async (
   endpoint,
   pageSize,
@@ -37,7 +65,7 @@ const fetchSubmissions = async (
 
       if (!response.ok) {
         console.error("Fetch failed:", response.statusText);
-        break;
+        return;
       }
 
       const data = await response.json();
@@ -57,36 +85,9 @@ const fetchSubmissions = async (
       await new Promise((resolve) => setTimeout(resolve, timeoutDuration)); // Avoid rate limiting
     } catch (error) {
       console.error("Fetch error:", error);
-      break;
+      return;
     }
   }
-};
-//#endregion
-
-//#region ChromeHelpers
-
-const getActiveTab = async () => {
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
-  return tab;
-};
-
-const getActiveTabUrl = async () => {
-  return (await getActiveTab())?.url || "";
-};
-
-const checkLastFetchTime = async () => {
-  return new Promise((resolve) => {
-    chrome.storage.local.get("lastFetchTime", (data) => {
-      resolve(data?.lastFetchTime);
-    });
-  });
-};
-
-const storeLastFetchTime = async () => {
-  chrome.storage.local.set({ lastFetchTime: Date.now() });
 };
 
 const executeFetchSubmissions = async () => {
@@ -102,15 +103,13 @@ const executeFetchSubmissions = async () => {
     func: fetchSubmissions,
   });
 };
-
 //#endregion
 
 //#region UpdateHTML
 
-const showStatus = (message, type) => {
+const showStatus = (message) => {
   const statusDiv = document.getElementById("status");
   statusDiv.textContent = message;
-  statusDiv.className = `status ${type}`;
   statusDiv.style.display = "block";
 };
 
@@ -143,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Disable button if not on LeetCode
   if (!(await isLeetCodeDomain())) {
     mainContent.style.display = "none";
-    showStatus("This extension only works on LeetCode.", "error");
+    showStatus("This extension only works on LeetCode.");
     return;
   }
 
@@ -151,8 +150,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const minutesLeft = await getCooldownMinutesLeft();
   if (minutesLeft > 0) {
     showStatus(
-      `Please wait ${minutesLeft.toFixed(1)} minutes before fetching again.`,
-      "warning"
+      `Slow down! You have ${minutesLeft.toFixed(
+        1
+      )} minutes before you can sync again.`
     );
     fetchButton.disabled = true;
     return;
@@ -160,10 +160,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Attach the listener to the button
   fetchButton.addEventListener("click", async () => {
-    showStatus("Request received! Feel free to exit this window.", "secondary");
+    showStatus("Syncing! You're safe to close this window without worries.");
     executeFetchSubmissions();
     storeLastFetchTime();
-    // TODO: add a check for LEETCODE_SESSION being present
-    showStatus("Synced! You'll soon see personalized lesson plans.", "success");
   });
 });
