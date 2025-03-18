@@ -1,13 +1,15 @@
+import './popup.css';
+
 const Config = {
-  LEETCODE_DOMAIN: "leetcode.com",
-  API_ENDPOINT: "/api/submissions/",
+  LEETCODE_DOMAIN: 'leetcode.com',
+  API_ENDPOINT: '/api/submissions/',
   PAGE_SIZE: 20,
   TIMEOUT_MS_BETWEEN_FETCH: 1000,
-  RECODE_PATH: "/api/extension/syncSubmissions",
+  RECODE_PATH: '/api/extension/syncSubmissions',
   // COOLDOWN_MINUTES: 5, // prod
   // RECODE_HOST: "https://leetcode-review.vercel.app", // prod
   // MAX_PAGES: 10000, // prod
-  RECODE_HOST: "http://localhost:3000", // dev
+  RECODE_HOST: 'http://localhost:3000', // dev
   MAX_PAGES: 3, // dev
   COOLDOWN_MINUTES: 0.25, // dev
 };
@@ -23,12 +25,12 @@ const getActiveTab = async () => {
 };
 
 const getActiveTabUrl = async () => {
-  return (await getActiveTab())?.url || "";
+  return (await getActiveTab())?.url || '';
 };
 
 const checkLastFetchTime = async () => {
   return new Promise((resolve) => {
-    chrome.storage.local.get("lastFetchTime", (data) => {
+    chrome.storage.local.get('lastFetchTime', (data) => {
       resolve(data?.lastFetchTime);
     });
   });
@@ -54,23 +56,23 @@ const fetchSubmissions = async (
   let pageCount = 0;
 
   let offset = 0;
-  let lastKey = "";
+  let lastKey = '';
 
   while (hasMore && pageCount < maxPages) {
     const paginatedUrl = `${endpoint}?offset=${offset}&limit=${pageSize}&lastkey=${lastKey}`;
 
     try {
       const response = await fetch(paginatedUrl, {
-        method: "GET",
-        credentials: "same-origin",
+        method: 'GET',
+        credentials: 'same-origin',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       });
 
       if (!response.ok) {
-        console.error("Fetch failed:", response.statusText);
+        console.error('Fetch failed:', response.statusText);
         return;
       }
 
@@ -83,25 +85,25 @@ const fetchSubmissions = async (
       ) {
         pageCount++;
         offset += pageSize;
-        lastKey = data.last_key ?? "";
+        lastKey = data.last_key ?? '';
       } else {
         hasMore = false;
       }
 
       const proxyResponse = await fetch(proxyEndpoint, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({ submissions: data }),
         headers: {},
       });
 
       if (!proxyResponse.ok) {
-        console.warn("Proxy fetch failed:", proxyResponse.statusText);
+        console.warn('Proxy fetch failed:', proxyResponse.statusText);
         return;
       }
 
       await new Promise((resolve) => setTimeout(resolve, timeoutDuration)); // Avoid rate limiting
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error('Fetch error:', error);
       return;
     }
   }
@@ -126,9 +128,9 @@ const executeFetchSubmissions = async () => {
 //#region UpdateHTML
 
 const showStatus = (message) => {
-  const statusDiv = document.getElementById("status");
+  const statusDiv = document.getElementById('status');
   statusDiv.textContent = message;
-  statusDiv.style.display = "block";
+  statusDiv.style.display = 'block';
 };
 
 //#endregion
@@ -154,25 +156,25 @@ const isLoggedInToRecode = async () => true;
 
 //#endregion
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Get references to HTML elements
-  const fetchButton = document.getElementById("fetchData");
-  const mainContent = document.getElementById("mainContent");
-  const loggedInContent = document.getElementById("loggedInContent");
-  const loggedOutContent = document.getElementById("loggedOutContent");
+  const fetchButton = document.getElementById('fetchData');
+  const mainContent = document.getElementById('mainContent');
+  const loggedInContent = document.getElementById('loggedInContent');
+  const loggedOutContent = document.getElementById('loggedOutContent');
 
   // Disable button if not on LeetCode
   if (!(await isLeetCodeDomain())) {
-    showStatus("This extension only works on LeetCode.");
+    showStatus('This extension only works on LeetCode.');
     return;
   }
 
   // Display content based on user's login
-  mainContent.style.display = "block";
+  mainContent.style.display = 'block';
   if (await isLoggedInToRecode()) {
-    loggedInContent.style.display = "block";
+    loggedInContent.style.display = 'block';
   } else {
-    loggedOutContent.style.display = "block";
+    loggedOutContent.style.display = 'block';
   }
 
   // Check if cooldown has passed, and disable button if not
@@ -188,7 +190,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Attach the listener to the button
-  fetchButton.addEventListener("click", async () => {
+  fetchButton.addEventListener('click', async () => {
     showStatus("Syncing! You're safe to close this window without worries.");
     executeFetchSubmissions();
     storeLastFetchTime();
