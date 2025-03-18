@@ -150,18 +150,29 @@ const getCooldownMinutesLeft = async () => {
   return 0;
 };
 
+const isLoggedInToRecode = async () => true;
+
 //#endregion
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Get references to HTML elements
   const fetchButton = document.getElementById("fetchData");
   const mainContent = document.getElementById("mainContent");
+  const loggedInContent = document.getElementById("loggedInContent");
+  const loggedOutContent = document.getElementById("loggedOutContent");
 
   // Disable button if not on LeetCode
   if (!(await isLeetCodeDomain())) {
-    mainContent.style.display = "none";
     showStatus("This extension only works on LeetCode.");
     return;
+  }
+
+  // Display content based on user's login
+  mainContent.style.display = "block";
+  if (await isLoggedInToRecode()) {
+    loggedInContent.style.display = "block";
+  } else {
+    loggedOutContent.style.display = "block";
   }
 
   // Check if cooldown has passed, and disable button if not
