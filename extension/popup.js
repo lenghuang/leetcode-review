@@ -1,13 +1,15 @@
 const Config = {
   LEETCODE_DOMAIN: "leetcode.com",
-  COOLDOWN_MINUTES: 5,
   API_ENDPOINT: "/api/submissions/",
   PAGE_SIZE: 20,
-  MAX_PAGES: 10000,
   TIMEOUT_MS_BETWEEN_FETCH: 1000,
-  RECODE_HOST_PROD: "https://leetcode-review.vercel.app",
-  RECODE_HOST_DEV: "http://localhost:3000",
   RECODE_PATH: "/api/extension/syncSubmissions",
+  // COOLDOWN_MINUTES: 5, // prod
+  // RECODE_HOST: "https://leetcode-review.vercel.app", // prod
+  // MAX_PAGES: 10000, // prod
+  RECODE_HOST: "http://localhost:3000", // dev
+  MAX_PAGES: 3, // dev
+  COOLDOWN_MINUTES: 0.25, // dev
 };
 
 //#region ChromeHelpers
@@ -114,7 +116,7 @@ const executeFetchSubmissions = async () => {
       Config.PAGE_SIZE,
       Config.MAX_PAGES,
       Config.TIMEOUT_MS_BETWEEN_FETCH,
-      `${Config.RECODE_HOST_DEV}${Config.RECODE_PATH}`,
+      `${Config.RECODE_HOST}${Config.RECODE_PATH}`,
     ],
     func: fetchSubmissions,
   });
