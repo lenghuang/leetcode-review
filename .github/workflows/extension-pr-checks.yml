@@ -1,0 +1,35 @@
+name: Extension PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "extension/**" # Only run if files in /site/ change
+
+jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: extension/package-lock.json # Cache dependencies only for /site/
+
+      - name: Install Dependencies
+        working-directory: extension
+        run: npm ci # Ensures clean install using package-lock.json
+
+      - name: Run Prettier Check
+        working-directory: extension
+        run: npm run format:check # Check prettier formatted well
+
+      - name: Run Repack
+        working-directory: extension
+        run: npm run repack # Check extension can build and pack
