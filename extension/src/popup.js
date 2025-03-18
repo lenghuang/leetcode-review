@@ -31,7 +31,7 @@ const getActiveTabUrl = async () => {
 const checkLastFetchTime = async () => {
   return new Promise((resolve) => {
     chrome.storage.local.get('lastFetchTime', (data) => {
-      resolve(data?.lastFetchTime);.
+      resolve(data?.lastFetchTime);
     });
   });
 };
