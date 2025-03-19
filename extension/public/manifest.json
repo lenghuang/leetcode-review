@@ -5,12 +5,6 @@
   "description": "Syncs your Leetcode submissions with Recode.ai servers",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": ["https://leetcode.com/*"],
-  "content_scripts": [
-    {
-      "css": ["popup.css"],
-      "matches": ["https://leetcode.com/*"]
-    }
-  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

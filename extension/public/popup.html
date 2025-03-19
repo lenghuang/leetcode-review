@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recode.ai Profile Sync</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="mainContent" style="display: none">
+        <h1>Profile Sync</h1>
+
+        <div id="loggedInContent" style="display: none">
+          <button id="fetchData" class="button primary">Request Sync</button>
+
+          <!-- TODO: add links to the repo / website here -->
+
+          <p class="disclaimer">
+            By pressing this button, we will be using your credentials to
+            download your Leetcode submissions and sending them for use on
+            Recode.ai servers. If you do not consent to this, do not press this
+            button. All authentication is safely stored and Recode.ai will never
+            gain access to your Leetcode login information. These protections
+            are guaranteed by how the information that Google Chrome Extensions
+            restrict access to.
+          </p>
+        </div>
+
+        <div id="loggedOutContent" style="display: none">
+          <button id="loginButton" class="button primary">
+            Sign in to Recode.ai
+          </button>
+        </div>
+      </div>
+
+      <div id="status" class="status-container" style="display: none"></div>
+    </div>
+    <!-- Order matters here for scripts -->
+    <script src="popup.js"></script>
+  </body>
+</html>
