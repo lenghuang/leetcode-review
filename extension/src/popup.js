@@ -152,13 +152,14 @@ const getCooldownMinutesLeft = async () => {
   return 0;
 };
 
-const isLoggedInToRecode = async () => true;
+const isLoggedInToRecode = async () => false;
 
 //#endregion
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Get references to HTML elements
   const fetchButton = document.getElementById('fetchData');
+  const loginButton = document.getElementById('loginButton');
   const mainContent = document.getElementById('mainContent');
   const loggedInContent = document.getElementById('loggedInContent');
   const loggedOutContent = document.getElementById('loggedOutContent');
@@ -173,26 +174,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   mainContent.style.display = 'block';
   if (await isLoggedInToRecode()) {
     loggedInContent.style.display = 'block';
+
+    // Check if cooldown has passed, and disable button if not
+    const minutesLeft = await getCooldownMinutesLeft();
+    if (minutesLeft > 0) {
+      showStatus(
+        `Slow down! You have ${minutesLeft.toFixed(
+          1
+        )} minutes before you can sync again.`
+      );
+      fetchButton.disabled = true;
+      return;
+    }
+
+    // Attach the listener to the button
+    fetchButton.addEventListener('click', async () => {
+      showStatus("Syncing! You're safe to close this window without worries.");
+      executeFetchSubmissions();
+      storeLastFetchTime();
+    });
   } else {
     loggedOutContent.style.display = 'block';
-  }
 
-  // Check if cooldown has passed, and disable button if not
-  const minutesLeft = await getCooldownMinutesLeft();
-  if (minutesLeft > 0) {
-    showStatus(
-      `Slow down! You have ${minutesLeft.toFixed(
-        1
-      )} minutes before you can sync again.`
-    );
-    fetchButton.disabled = true;
-    return;
+    // Attach the listener to the button
+    loginButton.addEventListener('click', async () => {
+      showStatus('Sign in not implemented yet');
+    });
   }
-
-  // Attach the listener to the button
-  fetchButton.addEventListener('click', async () => {
-    showStatus("Syncing! You're safe to close this window without worries.");
-    executeFetchSubmissions();
-    storeLastFetchTime();
-  });
 });
