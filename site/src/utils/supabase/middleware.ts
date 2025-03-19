@@ -1,6 +1,13 @@
 import { createServerClient } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 
+const BROWSE_AUTH_PAGES = [
+  '/extension-sign-in',
+  '/forgot-password',
+  '/sign-in',
+  '/sign-up',
+];
+
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
   // Feel free to remove once you have Supabase connected.
@@ -42,6 +49,15 @@ export const updateSession = async (request: NextRequest) => {
     // protected routes
     if (request.nextUrl.pathname.startsWith('/protected') && user.error) {
       return NextResponse.redirect(new URL('/sign-in', request.url));
+    }
+
+    // only allow log in if not a user
+    if (
+      user &&
+      !user.error &&
+      BROWSE_AUTH_PAGES.includes(request.nextUrl.pathname)
+    ) {
+      return NextResponse.redirect(new URL('/protected', request.url));
     }
 
     return response;

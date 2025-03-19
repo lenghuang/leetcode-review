@@ -5,7 +5,7 @@ const Config = {
   API_ENDPOINT: '/api/submissions/',
   PAGE_SIZE: 20,
   TIMEOUT_MS_BETWEEN_FETCH: 1000,
-  RECODE_PATH: '/api/extension/syncSubmissions',
+  RECODE_SYNC_PATH: '/api/extension/syncSubmissions',
   // COOLDOWN_MINUTES: 5, // prod
   // RECODE_HOST: "https://leetcode-review.vercel.app", // prod
   // MAX_PAGES: 10000, // prod
@@ -118,7 +118,7 @@ const executeFetchSubmissions = async () => {
       Config.PAGE_SIZE,
       Config.MAX_PAGES,
       Config.TIMEOUT_MS_BETWEEN_FETCH,
-      `${Config.RECODE_HOST}${Config.RECODE_PATH}`,
+      `${Config.RECODE_HOST}${Config.RECODE_SYNC_PATH}`,
     ],
     func: fetchSubmissions,
   });

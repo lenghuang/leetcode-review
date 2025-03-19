@@ -12,6 +12,7 @@ const config = (env, argv) =>
     entry: {
       // If you want background or ContentScripts, add more entries
       popup: PATHS.src + '/popup.js',
+      background: PATHS.src + '/background.js',
     },
     devtool: argv.mode === 'production' ? false : 'source-map',
     plugins: [

@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 
 export default async function Login(props: { searchParams: Promise<Message> }) {
+  // pass in isExtension as query param
   const searchParams = await props.searchParams;
   return (
     <form className="flex-1 flex flex-col min-w-64">
