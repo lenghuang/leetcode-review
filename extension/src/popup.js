@@ -1,11 +1,19 @@
 import './popup.css';
 
+// "host_permissions": [
+//     "https://leetcode.com/*",
+//     "https://leetcode-review.vercel.app/",
+//     "http://localhost:3000/*",
+//     "*"
+//   ],
+
 const Config = {
   LEETCODE_DOMAIN: 'leetcode.com',
   API_ENDPOINT: '/api/submissions/',
   PAGE_SIZE: 20,
   TIMEOUT_MS_BETWEEN_FETCH: 1000,
   RECODE_SYNC_PATH: '/api/extension/syncSubmissions',
+  RECODE_LOGIN_PATH: '/sign-in?isExtension=true',
   // COOLDOWN_MINUTES: 5, // prod
   // RECODE_HOST: "https://leetcode-review.vercel.app", // prod
   // MAX_PAGES: 10000, // prod
@@ -152,6 +160,12 @@ const getCooldownMinutesLeft = async () => {
   return 0;
 };
 
+const openRecodeLoginTab = async () => {
+  await chrome.tabs.create({
+    url: `${Config.RECODE_HOST}${Config.RECODE_LOGIN_PATH}`,
+  });
+};
+
 const isLoggedInToRecode = async () => false;
 
 //#endregion
@@ -198,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Attach the listener to the button
     loginButton.addEventListener('click', async () => {
-      showStatus('Sign in not implemented yet');
+      openRecodeLoginTab();
     });
   }
 });

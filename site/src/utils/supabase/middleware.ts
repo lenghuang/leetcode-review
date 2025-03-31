@@ -1,12 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 
-const BROWSE_AUTH_PAGES = [
-  '/extension-sign-in',
-  '/forgot-password',
-  '/sign-in',
-  '/sign-up',
-];
+const BROWSE_AUTH_PAGES = ['/forgot-password', '/sign-in', '/sign-up'];
 
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.

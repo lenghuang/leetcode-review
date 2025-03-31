@@ -5,8 +5,14 @@ import { BrowseHeader } from '@/components/typography/browse-header';
 import { createClient } from '@/utils/supabase/server';
 import { InfoIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';
+import {
+  FormMessage,
+  Message,
+} from '@/components/auth-components/form-message';
 
-export default async function ProtectedPage() {
+export default async function ProtectedPage(props: {
+  searchParams: Promise<Message>;
+}) {
   const supabase = await createClient();
 
   const {
@@ -16,6 +22,8 @@ export default async function ProtectedPage() {
   if (!user) {
     return redirect('/sign-in');
   }
+
+  const searchParams = await props.searchParams;
 
   return (
     <div className="w-full flex flex-col gap-2">
@@ -33,9 +41,10 @@ export default async function ProtectedPage() {
           {JSON.stringify(user, null, 2)}
         </pre>
         <ThemeSwitcherCta />
-        <SubmitButton pendingText="Signing Out..." formAction={signOutAction}>
+        <SubmitButton pendingText="Signing Out..." onClick={signOutAction}>
           Sign out
         </SubmitButton>
+        <FormMessage message={searchParams} />
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
-export type Message =
-  | { success: string }
-  | { error: string }
-  | { message: string };
+type MessageMetaData = {
+  isExtension?: boolean | undefined;
+};
+
+export type Message = MessageMetaData &
+  ({ success: string } | { error: string } | { message: string });
 
 export function FormMessage({ message }: { message: Message }) {
   return (
