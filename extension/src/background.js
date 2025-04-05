@@ -10,32 +10,25 @@ const WatchedUrls = {
 };
 
 /**
- * Checks if a cookie is a Supabase authentication cookie based on its name.
- * @param {chrome.cookies.Cookie} cookie - The cookie object to check.
- * @returns {boolean} True if the cookie is a Supabase auth cookie, false otherwise.
- */
-function isSupabaseAuthCookie(cookie) {
-  // Check if the cookie name starts with "sb-" and ends with
-  // "-auth-token" or "-auth-token-code-verifier".
-  return (
-    cookie.name.startsWith('sb-') &&
-    (cookie.name.endsWith('-auth-token') ||
-      cookie.name.endsWith('-auth-token-code-verifier'))
-  );
-}
-
-/**
  * Extracts Supabase authentication cookies from a list of cookies.
  * @param {chrome.cookies.Cookie[]} cookies - An array of cookie objects.
- * @returns {{[key: string]: string}} An object containing the filtered cookies.
+ * @returns {{authToken: string, codeVerifier: string}} An object containing the filtered cookies.
  */
 function extractSupabaseCookies(cookies) {
-  /** @type {{[key: string]: string}} */
-  const cookieObject = {};
+  /** @type {{authToken: string, codeVerifier: string}} */
+  const cookieObject = {
+    authToken: null,
+    codeVerifier: null,
+  };
 
   cookies.forEach((cookie) => {
-    if (isSupabaseAuthCookie(cookie)) {
-      cookieObject[cookie.name] = cookie.value; // Store the cookie in the object.
+    if (cookie.name.startsWith('sb-') && cookie.name.endsWith('-auth-token')) {
+      cookieObject.authToken = cookie.value;
+    } else if (
+      cookie.name.startsWith('sb-') &&
+      cookie.name.endsWith('-auth-token-code-verifier')
+    ) {
+      cookieObject.codeVerifier = cookie.value;
     }
   });
 
@@ -54,11 +47,11 @@ async function processCookies(tab) {
     const cookies = await chrome.cookies.getAll({ url: tab.url });
 
     // Extract supabase cookies
-    const cookieObject = extractSupabaseCookies(cookies);
+    const { authToken, codeVerifier } = extractSupabaseCookies(cookies);
 
     // Store the filtered cookies in the extension's local storage.
-    console.log('Storing cookies: ', cookieObject);
-    await chrome.storage.local.set({ cookies: cookieObject });
+    console.log('Storing cookies: ', { authToken, codeVerifier });
+    await chrome.storage.local.set({ authToken, codeVerifier });
   } catch (error) {
     // Log any errors that occur during the cookie processing.
     console.error('Error retrieving cookies:', error);

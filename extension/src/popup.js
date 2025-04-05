@@ -1,4 +1,5 @@
 import './popup.css';
+import { createClient } from '@supabase/supabase-js';
 
 const Config = {
   LEETCODE_DOMAIN: 'leetcode.com',
@@ -39,6 +40,85 @@ const checkLastFetchTime = async () => {
 
 const storeLastFetchTime = async () => {
   chrome.storage.local.set({ lastFetchTime: Date.now() });
+};
+
+//#endregion
+
+//#region Supabase Helpers
+
+const getSupabaseTokens = async () => {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['authToken', 'codeVerifier'], (data) => {
+      resolve({
+        accessToken: data.authToken,
+        refreshToken: data.codeVerifier,
+      });
+    });
+  });
+};
+
+const initSupabaseClient = async () => {
+  const { accessToken, refreshToken } = await getSupabaseTokens();
+
+  if (!accessToken || !refreshToken) {
+    console.warn('No Supabase tokens found in storage');
+    return null;
+  }
+
+  try {
+    const supabase = createClient(
+      process.env.CHROME_PUBLIC_SUPABASE_URL ?? '',
+      process.env.CHROME_PUBLIC_SUPABASE_ANON_KEY ?? '',
+      {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false,
+        },
+      }
+    );
+
+    // Set the session manually
+    const { error } = await supabase.auth.setSession({
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    });
+
+    if (error) {
+      console.error('Error setting Supabase session:', error);
+      return null;
+    }
+
+    return supabase;
+  } catch (err) {
+    console.error('Failed to initialize Supabase client:', err);
+    return null;
+  }
+};
+
+const isLoggedInToRecode = async () => {
+  try {
+    const supabase = await initSupabaseClient();
+    if (!supabase) {
+      console.log('Supabase client initialization failed');
+      return false;
+    }
+
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error('Error getting user:', error);
+      return false;
+    }
+
+    return !!user;
+  } catch (error) {
+    console.error('Error in isLoggedInToRecode:', error);
+    return false;
+  }
 };
 
 //#endregion
@@ -158,8 +238,6 @@ const openRecodeLoginTab = async () => {
     url: `${Config.RECODE_HOST}${Config.RECODE_LOGIN_PATH}`,
   });
 };
-
-const isLoggedInToRecode = async () => false;
 
 //#endregion
 
