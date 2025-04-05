@@ -1,12 +1,5 @@
 import './popup.css';
 
-// "host_permissions": [
-//     "https://leetcode.com/*",
-//     "https://leetcode-review.vercel.app/",
-//     "http://localhost:3000/*",
-//     "*"
-//   ],
-
 const Config = {
   LEETCODE_DOMAIN: 'leetcode.com',
   API_ENDPOINT: '/api/submissions/',
