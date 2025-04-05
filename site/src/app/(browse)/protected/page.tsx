@@ -9,6 +9,7 @@ import {
   FormMessage,
   Message,
 } from '@/components/auth-components/form-message';
+import { encodedRedirect } from '@/utils/encodedRedirect';
 
 export default async function ProtectedPage(props: {
   searchParams: Promise<Message>;
@@ -24,6 +25,14 @@ export default async function ProtectedPage(props: {
   }
 
   const searchParams = await props.searchParams;
+  if (!!searchParams.isExtension) {
+    // Keep this consistent with signInChromeExtension response
+    return encodedRedirect(
+      'success',
+      '/protected',
+      'Return to Leetcode to start syncing'
+    );
+  }
 
   return (
     <div className="w-full flex flex-col gap-2">
