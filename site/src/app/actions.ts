@@ -72,11 +72,7 @@ export const signInChromeExtension = async (formData: FormData) => {
     });
   }
 
-  return encodedRedirect(
-    'success',
-    '/protected',
-    'Return to Leetcode to start syncing'
-  );
+  return redirect('/protected/syncing');
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {

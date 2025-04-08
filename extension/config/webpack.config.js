@@ -13,6 +13,10 @@ const config = (env, argv) =>
       // If you want background or ContentScripts, add more entries
       popup: PATHS.src + '/popup.js',
       background: PATHS.src + '/background.js',
+      contentScriptLeetcode: PATHS.src + '/contentScriptLeetcode.js',
+      contentScriptSync: PATHS.src + '/contentScriptSync.js',
+      enum: PATHS.src + '/enum.js',
+      utils: PATHS.src + '/utils.js',
     },
     devtool: argv.mode === 'production' ? false : 'source-map',
     plugins: [

@@ -3,13 +3,25 @@
   "name": "Recode.ai Sync",
   "version": "1.0",
   "description": "Syncs your Leetcode submissions with Recode.ai servers",
-  "permissions": ["activeTab", "scripting", "storage", "cookies", "tabs"],
+  "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "host_permissions": [
-    "https://leetcode.com/*",
-    "https://leetcode-review.vercel.app/*",
-    "http://localhost/*",
-    "https://localhost/*"
+    "*://*.leetcode.com/*",
+    "*://leetcode.com/*",
+    "*://leetcode-review.vercel.app/*",
+    "http://localhost/*"
   ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://leetcode-review.vercel.app/*", "http://localhost/*"],
+      "js": ["contentScriptSync.js"]
+    },
+    {
+      "matches": ["*://*.leetcode.com/*", "*://leetcode.com/*"],
+      "js": ["contentScriptLeetcode.js"]
+    }
+  ],
+
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
