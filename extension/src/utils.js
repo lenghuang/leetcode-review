@@ -1,7 +1,4 @@
-import { Messages, Sources, PopupConfig } from './enum';
-
-export const isValidMessage = (type) => Object.values(Messages).includes(type);
-export const isValidSource = (src) => Object.values(Sources).includes(src);
+import { PopupConfig } from './enum';
 
 export const getActiveTab = async () => {
   const [activeTab] = await chrome.tabs.query({

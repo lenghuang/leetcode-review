@@ -29,8 +29,6 @@ export default function SyncingPage() {
     window.addEventListener(
       'message',
       (event) => {
-        // Only accept messages from the service worker
-        if (event.data.source != Sources.BACKGROUND) return;
         setMessages(JSON.stringify(event, null, 0));
       },
       false

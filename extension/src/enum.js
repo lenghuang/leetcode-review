@@ -6,14 +6,6 @@ export const Messages = {
   DONE_FETCH: 'DoneFetchingLeetcodeData',
 };
 
-export const Sources = {
-  BACKGROUND: 'BackgroundExtensionServiceWorker',
-  WINDOW_RECODE: 'WindowFromRecodeSyncTab',
-  CS_RECODE: 'ContentScriptFromRecodeSyncTab',
-  WINDOW_LEETCODE: 'WindowFromLeetcodeFetchTab',
-  CS_LEETCODE: ' ContentScriptFromLeetcodeFetchTab',
-};
-
 export const PopupConfig = {
   DEV_MODE: true,
   LEETCODE_DOMAIN: 'leetcode.com',
