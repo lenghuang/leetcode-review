@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 export const Messages = {
   START_FETCH: 'StartFetchingLeetcodeSubmissions',
+  START_FETCH_ACK: 'StartFetchingLeetcodeSubmissionsAcknowledged',
   LC_DATA: 'LeetcodeSubmissionData',
   DONE_FETCH: 'DoneFetchingLeetcodeData',
 };
@@ -22,7 +23,7 @@ export default function SyncingPage() {
       'message',
       (event) => {
         console.log(event);
-        setMessages(JSON.stringify(event, null, 0));
+        setMessages(JSON.stringify(event.data, null, 2));
       },
       false
     );

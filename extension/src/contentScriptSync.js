@@ -34,12 +34,10 @@ window.addEventListener('message', async (event) => {
   // We get an indication to start the sync process, let background.js know
   if (message === Messages.START_FETCH) {
     try {
-      const resp = await chrome.runtime.sendMessage({
+      chrome.runtime.sendMessage({
         message,
         data,
       });
-      prefixedLog('Result from initial StartFetch Message', resp);
-      window.postMessage(resp, '*'); // Post the *response*
     } catch (err) {
       prefixedLog('Exception caught', err);
     }
@@ -50,4 +48,15 @@ window.addEventListener('message', async (event) => {
 
   // Actually, is that what I want? How about starting to send data?
   // I think its fine, I can use this to set up displaying a "Connected to Leetcode" UI
+});
+
+// Listen to messages from chrome runtime, aka, the extension's background.js
+chrome.runtime.onMessage.addListener(({ message, data }, sender) => {
+  if (message === Messages.START_FETCH_ACK) {
+    prefixedLog('Received ack from background, send it to site', {
+      message,
+      data,
+    });
+    window.postMessage({ message }, '*');
+  }
 });

@@ -2,6 +2,7 @@
 
 export const Messages = {
   START_FETCH: 'StartFetchingLeetcodeSubmissions',
+  START_FETCH_ACK: 'StartFetchingLeetcodeSubmissionsAcknowledged',
   LC_DATA: 'LeetcodeSubmissionData',
   DONE_FETCH: 'DoneFetchingLeetcodeData',
 };

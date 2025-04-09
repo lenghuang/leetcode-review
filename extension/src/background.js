@@ -31,12 +31,35 @@ chrome.runtime.onMessage.addListener(
                 target: { tabId: targetTab.id },
                 files: ['contentScriptLeetcode.js'],
               });
-              const response = await chrome.tabs.sendMessage(targetTab.id, {
+              chrome.tabs.sendMessage(targetTab.id, {
                 message,
-                data,
               });
-              prefixedLog('received response from LC content script', response);
-              sendResponse(response); // <--- Forward the *response*
+            } catch (error) {
+              prefixedLog('error caught', error);
+            }
+          }
+        }
+      );
+    }
+
+    // We have successfully triggered the fetch process and are connected
+    if (message === Messages.START_FETCH_ACK) {
+      chrome.tabs.query(
+        {
+          url: ['*://leetcode-review.vercel.app/*', 'http://localhost/*'],
+        },
+        async (tabs) => {
+          const targetTab = firstCompleteTab(tabs);
+          if (targetTab) {
+            prefixedLog('targeting tab', targetTab);
+            try {
+              await chrome.scripting.executeScript({
+                target: { tabId: targetTab.id },
+                files: ['contentScriptSync.js'],
+              });
+              chrome.tabs.sendMessage(targetTab.id, {
+                message,
+              });
             } catch (error) {
               prefixedLog('error caught', error);
             }

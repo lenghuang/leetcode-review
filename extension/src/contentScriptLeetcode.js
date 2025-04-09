@@ -15,20 +15,15 @@ const prefixedLog = (...args) => {
 };
 
 // Listen to messages from chrome runtime, aka, the extension's background.js
-chrome.runtime.onMessage.addListener(
-  ({ message, data }, sender, sendResponse) => {
-    if (message === Messages.START_FETCH) {
-      prefixedLog(
-        'Received start message from runtime, sending that data back',
-        {
-          message,
-          data,
-        }
-      );
-      sendResponse({ message, data });
-    }
+chrome.runtime.onMessage.addListener(({ message, data }, sender) => {
+  if (message === Messages.START_FETCH) {
+    prefixedLog('Received start message from runtime, sending that data back', {
+      message,
+      data,
+    });
+    chrome.runtime.sendMessage({ message: Messages.START_FETCH_ACK });
   }
-);
+});
 
 // Listen for messages from the window object and forward them to the background.js
 window.addEventListener('message', (event) => {
