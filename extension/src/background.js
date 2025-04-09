@@ -1,10 +1,5 @@
 'use strict';
 
-// This file is the background service worker. Since it neither has permissions to
-// Leetcode nor Recode's windows, we cannot make API requests here. However, neither
-// of those two can communicate with one another. So we need this background service
-// to proxy messages between LeetCode and Recode.
-
 import { Messages } from './enum';
 
 const firstCompleteTab = (tabs) => tabs.find((t) => t.status === 'complete');
@@ -33,6 +28,7 @@ chrome.runtime.onMessage.addListener(
               });
               chrome.tabs.sendMessage(targetTab.id, {
                 message,
+                data,
               });
             } catch (error) {
               prefixedLog('error caught', error);
@@ -59,10 +55,48 @@ chrome.runtime.onMessage.addListener(
               });
               chrome.tabs.sendMessage(targetTab.id, {
                 message,
+                data,
               });
             } catch (error) {
               prefixedLog('error caught', error);
             }
+          }
+        }
+      );
+    }
+
+    // Handle successful data retrieval
+    if (message === Messages.LC_DATA) {
+      // Forward LeetCode submissions to sync script
+      chrome.tabs.query(
+        {
+          url: ['*://leetcode-review.vercel.app/*', 'http://localhost/*'],
+        },
+        (tabs) => {
+          const targetTab = firstCompleteTab(tabs);
+          if (targetTab) {
+            chrome.tabs.sendMessage(targetTab.id, {
+              message,
+              data,
+            });
+          }
+        }
+      );
+    }
+
+    // Pass through other messages
+    if (message === Messages.DONE_FETCH || message === Messages.FETCH_ERROR) {
+      chrome.tabs.query(
+        {
+          url: ['*://leetcode-review.vercel.app/*', 'http://localhost/*'],
+        },
+        (tabs) => {
+          const targetTab = firstCompleteTab(tabs);
+          if (targetTab) {
+            chrome.tabs.sendMessage(targetTab.id, {
+              message,
+              data,
+            });
           }
         }
       );

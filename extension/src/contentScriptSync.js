@@ -1,18 +1,31 @@
 'use strict';
 
-// This file is injected to /protected/syncing and is used to pass
-// messages between the window of Recode and the extension's background.js
-
 import { Messages } from './enum';
-import { isValidMessage } from './utils';
-
-const uploadSubmissionsToRecode = () => {
-  // TODO: Make fetches to api/submissions
-  console.log('uploadSubmissionsToRecode');
-};
 
 const prefixedLog = (...args) => {
   console.log('[Sync Content Script]', ...args);
+};
+
+const uploadSubmissionsToRecode = async (submissions) => {
+  try {
+    prefixedLog('DUMMY UPLOADING SUBMISSIONS TO RECODE');
+
+    // Send upload confirmation back to the extension
+    // chrome.runtime.sendMessage({
+    //   message: Messages.DONE_FETCH,
+    //   data: result,
+    // });
+  } catch (error) {
+    prefixedLog('Submission upload failed', error);
+
+    chrome.runtime.sendMessage({
+      message: Messages.FETCH_ERROR,
+      data: {
+        source: 'Recode Upload',
+        errorMessage: error.message,
+      },
+    });
+  }
 };
 
 // Listen for messages from the window object and forward them to the background.js
@@ -40,23 +53,40 @@ window.addEventListener('message', async (event) => {
       });
     } catch (err) {
       prefixedLog('Exception caught', err);
+
+      chrome.runtime.sendMessage({
+        message: Messages.FETCH_ERROR,
+        data: {
+          source: 'Sync Initialization',
+          errorMessage: err.message,
+        },
+      });
     }
   }
-
-  // https://developer.chrome.com/docs/extensions/develop/concepts/messaging#simple:~:text=you%20must%20return%20a%20literal%20true
-  // We do not return here since we expect the content scripts to call "sendResponse"
-
-  // Actually, is that what I want? How about starting to send data?
-  // I think its fine, I can use this to set up displaying a "Connected to Leetcode" UI
 });
 
 // Listen to messages from chrome runtime, aka, the extension's background.js
-chrome.runtime.onMessage.addListener(({ message, data }, sender) => {
+chrome.runtime.onMessage.addListener(async ({ message, data }, sender) => {
   if (message === Messages.START_FETCH_ACK) {
     prefixedLog('Received ack from background, send it to site', {
       message,
       data,
     });
+
     window.postMessage({ message }, '*');
+  }
+
+  if (message === Messages.LC_DATA) {
+    prefixedLog('Received data from background, send it to site', {
+      message,
+      data,
+    });
+
+    // If we received LeetCode submissions data, upload to Recode
+    if (data) {
+      await uploadSubmissionsToRecode(data);
+    }
+
+    window.postMessage({ message, data }, '*');
   }
 });

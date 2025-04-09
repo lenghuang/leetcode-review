@@ -1,10 +1,20 @@
 'use strict';
 
 export const Messages = {
+  // Fetch and Sync Messages
   START_FETCH: 'StartFetchingLeetcodeSubmissions',
   START_FETCH_ACK: 'StartFetchingLeetcodeSubmissionsAcknowledged',
   LC_DATA: 'LeetcodeSubmissionData',
   DONE_FETCH: 'DoneFetchingLeetcodeData',
+
+  // Error Handling
+  FETCH_ERROR: 'FetchError',
+};
+
+export const ErrorCodes = {
+  NETWORK_ERROR: 'NetworkError',
+  INJECTION_ERROR: 'ScriptInjectionError',
+  COMMUNICATION_ERROR: 'CommunicationError',
 };
 
 export const PopupConfig = {
