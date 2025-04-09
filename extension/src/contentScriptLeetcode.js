@@ -33,7 +33,10 @@ chrome.runtime.onMessage.addListener(
 // Listen for messages from the window object and forward them to the background.js
 window.addEventListener('message', (event) => {
   // Optional: Check the origin of the message if necessary
-  // if (event.origin !== 'your-origin') return;
+  if (event.origin !== window.location.origin) {
+    prefixedLog('Possible cross-site scripting attack!');
+    return;
+  }
   // https://developer.chrome.com/docs/extensions/develop/concepts/messaging#simple:~:text=you%20must%20return%20a%20literal%20true
   // return true;
 });

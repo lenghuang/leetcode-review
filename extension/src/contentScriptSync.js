@@ -17,22 +17,32 @@ const prefixedLog = (...args) => {
 
 // Listen for messages from the window object and forward them to the background.js
 window.addEventListener('message', async (event) => {
-  // TODO: add cross origin check
+  if (event.origin !== window.location.origin) {
+    prefixedLog('Possible cross-site scripting attack!');
+    return;
+  }
+
+  if (!event.data) {
+    prefixedLog('Empty data');
+    return;
+  }
+
   const { message, data } = event.data;
 
   prefixedLog('Received message from window', { message, data });
 
   // We get an indication to start the sync process, let background.js know
   if (message === Messages.START_FETCH) {
-    await chrome.runtime
-      .sendMessage({
+    try {
+      const resp = await chrome.runtime.sendMessage({
         message,
         data,
-      })
-      .then((resp) =>
-        prefixedLog('Result from initial StartFetch Message', resp)
-      )
-      .catch((err) => prefixedLog('Exception caught', err));
+      });
+      prefixedLog('Result from initial StartFetch Message', resp);
+      window.postMessage(resp, '*'); // Post the *response*
+    } catch (err) {
+      prefixedLog('Exception caught', err);
+    }
   }
 
   // https://developer.chrome.com/docs/extensions/develop/concepts/messaging#simple:~:text=you%20must%20return%20a%20literal%20true

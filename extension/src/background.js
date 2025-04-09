@@ -14,11 +14,6 @@ const prefixedLog = (...args) => console.log('[Background]', ...args);
 // Add a listener for messages from the content scripts
 chrome.runtime.onMessage.addListener(
   ({ message, data }, sender, sendResponse) => {
-    // if (!isValidMessage(type) || !isValidSource(source)) {
-    //   console.warn('Invalid message or source', { type, source, data });
-    //   return;
-    // }
-
     prefixedLog('Received message', { message, data });
 
     // We get an indication to start the sync process, let LC content script know
@@ -31,29 +26,19 @@ chrome.runtime.onMessage.addListener(
           const targetTab = firstCompleteTab(tabs);
           if (targetTab) {
             prefixedLog('targeting tab', targetTab);
-            await chrome.scripting.executeScript({
-              target: { tabId: targetTab.id },
-              files: ['contentScriptLeetcode.js'],
-            });
             try {
-              await chrome.tabs
-                .sendMessage(targetTab.id, {
-                  message,
-                  data,
-                })
-                .then((response) => {
-                  prefixedLog(
-                    'received response from LC content script',
-                    response
-                  );
-                  sendResponse(response);
-                });
+              await chrome.scripting.executeScript({
+                target: { tabId: targetTab.id },
+                files: ['contentScriptLeetcode.js'],
+              });
+              const response = await chrome.tabs.sendMessage(targetTab.id, {
+                message,
+                data,
+              });
+              prefixedLog('received response from LC content script', response);
+              sendResponse(response); // <--- Forward the *response*
             } catch (error) {
-              console.error(
-                '[Background], error sending message to LC content script',
-                error
-              );
-              sendResponse(error);
+              prefixedLog('error caught', error);
             }
           }
         }
