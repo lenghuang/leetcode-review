@@ -2,33 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recode.ai Profile Sync</title>
+    <title>My Chrome Extension</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <div class="container">
-      <div id="mainContent" style="display: none">
-        <h1>Profile Sync</h1>
-
-        <div id="loggedInContent" style="display: none">
-          <button id="fetchData" class="button primary">Go to sync tab</button>
-
-          <!-- TODO: add links to the repo / website here -->
-
-          <p class="disclaimer">TODO: Put last fetch time here</p>
-        </div>
-
-        <div id="loggedOutContent" style="display: none">
-          <button id="loginButton" class="button primary">
-            Sign in to Recode.ai
-          </button>
-        </div>
+    <div class="app">
+      <p class="counter-label">Counter</p>
+      <div id="counter" class="counter"></div>
+      <div class="button-container">
+        <button id="decrementBtn" class="button">-</button>
+        <button id="incrementBtn" class="button">+</button>
       </div>
 
-      <div id="status" class="status-container" style="display: none"></div>
+      <hr class="divider" />
+
+      <p class="title">Chrome Extension is Ready!</p>
+      <p class="subtitle">Start by updating <code>popup.html</code></p>
     </div>
-    <!-- Order matters here for scripts -->
+
     <script src="popup.js"></script>
+
+    <!--
+      This HTML file opens when you click on icon from the toolbar.
+
+      To begin the development, run `npm run watch`.
+      To create a production bundle, use `npm run build`.
+    -->
   </body>
 </html>
