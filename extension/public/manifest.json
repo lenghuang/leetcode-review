@@ -3,7 +3,7 @@
   "name": "Recode.ai Sync",
   "version": "1.0",
   "description": "Syncs your Leetcode submissions with Recode.ai servers",
-  "permissions": ["activeTab", "scripting", "storage", "tabs"],
+  "permissions": ["scripting", "storage", "tabs"],
   "host_permissions": [
     "*://*.leetcode.com/*",
     "*://leetcode.com/*",
