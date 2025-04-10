@@ -1,7 +1,6 @@
 'use strict';
 
 import { Messages, ErrorCodes } from './enum';
-import { isValidMessage } from './utils';
 
 const prefixedLog = (...args) => {
   console.log('[Leetcode Content Script]', ...args);

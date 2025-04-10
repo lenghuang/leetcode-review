@@ -13,12 +13,11 @@
 
   "content_scripts": [
     {
-      "matches": ["*://leetcode-review.vercel.app/*", "http://localhost/*"],
+      "matches": [
+        "*://leetcode-review.vercel.app/protected/syncing",
+        "http://localhost/protected/syncing"
+      ],
       "js": ["contentScriptSync.js"]
-    },
-    {
-      "matches": ["*://*.leetcode.com/*", "*://leetcode.com/*"],
-      "js": ["contentScriptLeetcode.js"]
     }
   ],
 
