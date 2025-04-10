@@ -9,6 +9,10 @@ export const Messages = {
 
   // Error Handling
   FETCH_ERROR: 'FetchError',
+
+  // Login Status Messages
+  CHECK_LOGIN_STATUS: 'CheckLeetcodeLoginStatus',
+  LOGIN_STATUS_RESPONSE: 'LeetcodeLoginStatusResponse',
 };
 
 export const ErrorCodes = {
