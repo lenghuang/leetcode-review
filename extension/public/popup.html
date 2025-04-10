@@ -11,28 +11,12 @@
       <div id="mainContent" style="display: none">
         <h1>Profile Sync</h1>
 
-        <div id="loadingIndicator" class="loading-spinner">
-          <div class="spinner"></div>
-        </div>
-
-        <div id="successBanner" class="success-banner" style="display: none">
-          <h2>🎉 Everything is Ready!</h2>
-          <p>LeetCode and Recode sync are fully configured.</p>
-        </div>
-
         <div id="loggedInContent" style="display: none">
-          <button id="fetchData" class="button primary">Go to Sync Tab</button>
+          <button id="fetchData" class="button primary">Go to sync tab</button>
 
-          <div class="links-container">
-            <a href="https://github.com/your-repo" target="_blank" class="link"
-              >GitHub Repo</a
-            >
-            <a href="https://recode.ai" target="_blank" class="link"
-              >Recode Website</a
-            >
-          </div>
+          <!-- TODO: add links to the repo / website here -->
 
-          <p id="lastFetchTime" class="disclaimer">Last sync: Not available</p>
+          <p class="disclaimer">TODO: Put last fetch time here</p>
         </div>
 
         <div id="loggedOutContent" style="display: none">
@@ -44,7 +28,7 @@
 
       <div id="status" class="status-container" style="display: none"></div>
     </div>
-
+    <!-- Order matters here for scripts -->
     <script src="popup.js"></script>
   </body>
 </html>
