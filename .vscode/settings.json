@@ -11,6 +11,7 @@
     "**/logs": true, // Exclude log files
     "**/__pycache__": true, // Exclude Python pycache
     "**/*.pyc": true, // Exclude Python compiled files
+    "**/.next": true, // Eclude next build
     ".aider*": true // specific to Aider
   }
 }

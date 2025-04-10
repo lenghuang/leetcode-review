@@ -1,6 +1,28 @@
 import { createServerClient } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 
+const BROWSE_AUTH_PAGES = ['/forgot-password', '/sign-in', '/sign-up'];
+
+/**
+ * Creates a new URL by combining a base path with the query parameters from an existing request.
+ *
+ * @param basePath - The base path for the new URL (e.g., '/sign-in', '/protected'). This should be a relative path.
+ * @param requestURL - The original request URL as a string or URL object.  This is used to resolve the `basePath` into a full URL.
+ * @param searchParams - The `URLSearchParams` object from the original request, containing the query parameters to be persisted.
+ * @returns A new `URL` object with the combined base path and query parameters.
+ */
+const createURLWithQueryParams = (
+  basePath: string,
+  requestURL: string | URL,
+  searchParams: URLSearchParams
+): URL => {
+  const redirectUrl = new URL(basePath, requestURL);
+  searchParams.forEach((value, key) => {
+    redirectUrl.searchParams.set(key, value);
+  });
+  return redirectUrl;
+};
+
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
   // Feel free to remove once you have Supabase connected.
@@ -41,7 +63,25 @@ export const updateSession = async (request: NextRequest) => {
 
     // protected routes
     if (request.nextUrl.pathname.startsWith('/protected') && user.error) {
-      return NextResponse.redirect(new URL('/sign-in', request.url));
+      const redirectUrl = createURLWithQueryParams(
+        '/sign-in',
+        request.url,
+        request.nextUrl.searchParams
+      );
+      return NextResponse.redirect(redirectUrl);
+    }
+
+    if (
+      user &&
+      !user.error &&
+      BROWSE_AUTH_PAGES.includes(request.nextUrl.pathname)
+    ) {
+      const redirectUrl = createURLWithQueryParams(
+        '/protected',
+        request.url,
+        request.nextUrl.searchParams
+      );
+      return NextResponse.redirect(redirectUrl);
     }
 
     return response;

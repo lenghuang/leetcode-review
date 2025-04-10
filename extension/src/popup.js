@@ -1,31 +1,53 @@
-import './popup.css';
+'use strict';
 
-const Config = {
-  LEETCODE_DOMAIN: 'leetcode.com',
-  API_ENDPOINT: '/api/submissions/',
-  PAGE_SIZE: 20,
-  TIMEOUT_MS_BETWEEN_FETCH: 1000,
-  RECODE_PATH: '/api/extension/syncSubmissions',
-  // COOLDOWN_MINUTES: 5, // prod
-  // RECODE_HOST: "https://leetcode-review.vercel.app", // prod
-  // MAX_PAGES: 10000, // prod
-  RECODE_HOST: 'http://localhost:3000', // dev
-  MAX_PAGES: 3, // dev
-  COOLDOWN_MINUTES: 0.25, // dev
+import { PopupConfig } from './enum';
+import { getActiveTab, isLeetCodeDomain, getRecodeHost } from './utils';
+
+const showStatus = (message) => {
+  const statusDiv = document.getElementById('status');
+  statusDiv.textContent = message;
+  statusDiv.style.display = 'block';
 };
 
-//#region ChromeHelpers
+const openRecodeLoginTab = async () => {
+  // Get current active tab's position
+  const activeTab = await getActiveTab();
+  if (activeTab) {
+    // Create new tab with adjacent positioning
+    await chrome.tabs.create({
+      url: `${getRecodeHost()}${PopupConfig.RECODE_LOGIN_PATH}`,
+      index: activeTab.index + 1, // Position immediately to the right
+      openerTabId: activeTab.id, // Maintain tab relationship
+    });
+  } else {
+    await chrome.tabs.create({
+      url: `${getRecodeHost()}${PopupConfig.RECODE_LOGIN_PATH}`,
+    });
+  }
+};
 
-const getActiveTab = async () => {
+const getRecodeSyncTab = async () => {
   const [tab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
+    url: `${getRecodeHost()}${PopupConfig.RECODE_SYNCING_PATH}`,
   });
   return tab;
 };
 
-const getActiveTabUrl = async () => {
-  return (await getActiveTab())?.url || '';
+const isRecodeSyncTabOpen = async () => {
+  const tab = await getRecodeSyncTab();
+  return !!tab;
+};
+
+const goToRecodeSyncTab = async () => {
+  const tab = await getRecodeSyncTab();
+  chrome.tabs.update(tab.id, { active: true });
+  chrome.tabs.highlight({ tabs: tab.id });
+};
+
+// should all local storage setters/getters go in one place? and all the tab stuff another?
+
+const storeLastFetchTime = async () => {
+  chrome.storage.local.set({ lastFetchTime: Date.now() });
 };
 
 const checkLastFetchTime = async () => {
@@ -35,124 +57,6 @@ const checkLastFetchTime = async () => {
     });
   });
 };
-
-const storeLastFetchTime = async () => {
-  chrome.storage.local.set({ lastFetchTime: Date.now() });
-};
-
-//#endregion
-
-//#region Fetch Submissions
-const fetchSubmissions = async (
-  endpoint,
-  pageSize,
-  maxPages,
-  timeoutDuration,
-  proxyEndpoint
-) => {
-  // This is executed within the as a script within the tab, so it must have
-  // arguments (like endpoint, pageSize, etc) passed to it.
-  let hasMore = true;
-  let pageCount = 0;
-
-  let offset = 0;
-  let lastKey = '';
-
-  while (hasMore && pageCount < maxPages) {
-    const paginatedUrl = `${endpoint}?offset=${offset}&limit=${pageSize}&lastkey=${lastKey}`;
-
-    try {
-      const response = await fetch(paginatedUrl, {
-        method: 'GET',
-        credentials: 'same-origin',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        console.error('Fetch failed:', response.statusText);
-        return;
-      }
-
-      const data = await response.json();
-
-      if (
-        data.submissions_dump &&
-        data.submissions_dump.length &&
-        data.has_next
-      ) {
-        pageCount++;
-        offset += pageSize;
-        lastKey = data.last_key ?? '';
-      } else {
-        hasMore = false;
-      }
-
-      const proxyResponse = await fetch(proxyEndpoint, {
-        method: 'POST',
-        body: JSON.stringify({ submissions: data }),
-        headers: {},
-      });
-
-      if (!proxyResponse.ok) {
-        console.warn('Proxy fetch failed:', proxyResponse.statusText);
-        return;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, timeoutDuration)); // Avoid rate limiting
-    } catch (error) {
-      console.error('Fetch error:', error);
-      return;
-    }
-  }
-};
-
-const executeFetchSubmissions = async () => {
-  const tab = await getActiveTab();
-  await chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    args: [
-      Config.API_ENDPOINT,
-      Config.PAGE_SIZE,
-      Config.MAX_PAGES,
-      Config.TIMEOUT_MS_BETWEEN_FETCH,
-      `${Config.RECODE_HOST}${Config.RECODE_PATH}`,
-    ],
-    func: fetchSubmissions,
-  });
-};
-//#endregion
-
-//#region UpdateHTML
-
-const showStatus = (message) => {
-  const statusDiv = document.getElementById('status');
-  statusDiv.textContent = message;
-  statusDiv.style.display = 'block';
-};
-
-//#endregion
-
-//#region Helpers
-
-const isLeetCodeDomain = async () => {
-  return (await getActiveTabUrl()).includes(Config.LEETCODE_DOMAIN);
-};
-
-const getCooldownMinutesLeft = async () => {
-  const lastFetchTime = await checkLastFetchTime();
-  const now = Date.now();
-  const elapsedMinutes = (now - lastFetchTime) / (1000 * 60);
-  if (elapsedMinutes < Config.COOLDOWN_MINUTES) {
-    const remainingMinutes = Config.COOLDOWN_MINUTES - elapsedMinutes;
-    return remainingMinutes;
-  }
-  return 0;
-};
-
-const isLoggedInToRecode = async () => false;
 
 //#endregion
 
@@ -172,25 +76,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Display content based on user's login
   mainContent.style.display = 'block';
-  if (await isLoggedInToRecode()) {
+  if (await isRecodeSyncTabOpen()) {
     loggedInContent.style.display = 'block';
-
-    // Check if cooldown has passed, and disable button if not
-    const minutesLeft = await getCooldownMinutesLeft();
-    if (minutesLeft > 0) {
-      showStatus(
-        `Slow down! You have ${minutesLeft.toFixed(
-          1
-        )} minutes before you can sync again.`
-      );
-      fetchButton.disabled = true;
-      return;
-    }
-
-    // Attach the listener to the button
     fetchButton.addEventListener('click', async () => {
-      showStatus("Syncing! You're safe to close this window without worries.");
-      executeFetchSubmissions();
+      goToRecodeSyncTab();
+      // TODO:  Keep this around as a nice lil UI
       storeLastFetchTime();
     });
   } else {
@@ -198,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Attach the listener to the button
     loginButton.addEventListener('click', async () => {
-      showStatus('Sign in not implemented yet');
+      openRecodeLoginTab();
     });
   }
 });

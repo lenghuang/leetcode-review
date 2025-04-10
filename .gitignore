@@ -45,3 +45,6 @@ __pycache__
 
 # baml generated files
 baml_client
+
+# temp
+src-original/

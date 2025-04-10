@@ -1,4 +1,4 @@
-import { signInAction } from '@/app/actions';
+import { signInAction, signInChromeExtension } from '@/app/actions';
 import {
   FormMessage,
   Message,
@@ -10,9 +10,14 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 
 export default async function Login(props: { searchParams: Promise<Message> }) {
+  // pass in isExtension as query param
   const searchParams = await props.searchParams;
+  const submitAction = !!searchParams.isExtension
+    ? signInChromeExtension
+    : signInAction;
+
   return (
-    <form className="flex-1 flex flex-col min-w-64">
+    <form className="flex flex-col min-w-64 max-w-64 mx-auto">
       <BrowseHeader>Sign in</BrowseHeader>
       <p className="text-sm text-foreground">
         Don't have an account?{' '}
@@ -38,7 +43,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
           placeholder="Your password"
           required
         />
-        <SubmitButton pendingText="Signing In..." formAction={signInAction}>
+        <SubmitButton pendingText="Signing In..." formAction={submitAction}>
           Sign in
         </SubmitButton>
         <FormMessage message={searchParams} />

@@ -56,6 +56,25 @@ export const signInAction = async (formData: FormData) => {
   return redirect('/protected');
 };
 
+export const signInChromeExtension = async (formData: FormData) => {
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    return encodedRedirect('error', '/sign-in', error.message, {
+      isExtension: true,
+    });
+  }
+
+  return redirect('/protected/syncing');
+};
+
 export const forgotPasswordAction = async (formData: FormData) => {
   const email = formData.get('email')?.toString();
   const supabase = await createClient();
