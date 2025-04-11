@@ -8,21 +8,23 @@
     "*://*.leetcode.com/*",
     "*://leetcode.com/*",
     "*://leetcode-review.vercel.app/*",
-    "http://localhost/*"
+    "*://localhost/*"
   ],
-
   "content_scripts": [
+    {
+      "matches": ["*://*.leetcode.com/*", "*://leetcode.com/*"],
+      "js": ["contentScriptLc.js"]
+    },
     {
       "matches": [
         "*://leetcode-review.vercel.app/protected/syncing",
-        "http://localhost/protected/syncing"
+        "*://localhost/protected/syncing"
       ],
-      "js": ["contentScriptSync.js"]
+      "js": ["contentScriptRc.js"]
     }
   ],
 
   "action": {
-    "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon-48x48.png",
       "48": "icons/icon-48x48.png",

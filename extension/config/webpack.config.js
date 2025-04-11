@@ -10,8 +10,12 @@ const config = (env, argv) =>
   merge(common, {
     entry: {
       popup: PATHS.src + '/popup.ts',
-      contentScriptSync: PATHS.src + '/contentScriptSync.ts',
+      contentScriptLc: PATHS.src + '/contentScriptLc.ts',
+      contentScriptRc: PATHS.src + '/contentScriptRc.ts',
       background: PATHS.src + '/background.ts',
+      config: PATHS.src + '/config.ts',
+      chromeUtils: PATHS.src + '/chromeUtils.ts',
+      enums: PATHS.src + '/enums.ts',
     },
     devtool: argv.mode === 'production' ? false : 'source-map',
   });
