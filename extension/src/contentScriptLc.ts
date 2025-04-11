@@ -11,8 +11,33 @@ const log = (...args: any[]) => {
 
 // Check if the user is logged in to LeetCode. A 200 response indicates they're
 // logged out and a 302 response indicates that they're logged in.
-const checkStatusCodeForPage = (url: string): boolean => {
-  log('Checking login for url', url);
+const checkStatusCodeForPage = async (
+  urlString: string
+): Promise<{ ok: boolean; redirected: boolean }> => {
+  try {
+    const url = new URL(urlString); // Validate URL
+    // Use fetch to check the URL.
+    const response = await fetch(url, {
+      method: 'GET',
+    });
+    return { ok: response.ok, redirected: response.redirected }; // Check for 200-299 status codes.
+  } catch (error) {
+    console.error(`Error fetching ${urlString}: ${error}`);
+    return { ok: false, redirected: false };
+  }
+};
+const isLoggedInToLeetcode = async () => {
+  const { ok, redirected } = await checkStatusCodeForPage(
+    `${Config.LC_HOST}${Config.LC_LOGIN_PATH}`
+  );
+  log('got status', { ok, redirected });
+  if (redirected) {
+    return true;
+  }
+  if (ok) {
+    return false;
+  }
+  log('Something wrong, returning false, not logged in');
   return false;
 };
 
@@ -44,7 +69,8 @@ window.addEventListener('message', async (event) => {
 
 try {
   log('script loaded');
-  const isLoggedIn = checkStatusCodeForPage('dummyUrl');
+
+  const isLoggedIn = await isLoggedInToLeetcode();
   chrome.runtime.sendMessage({
     message: Messages.LC_IS_LOGGED_IN_NOTIFICATION,
     data: { isLoggedIn },

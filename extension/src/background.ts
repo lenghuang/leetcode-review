@@ -85,3 +85,5 @@ chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
 
   return true; // Indicate that the response will be sent asynchronously
 });
+
+// TODO: an on tab update listener to track if url changes (ie user successfully logs on to leetcode)
