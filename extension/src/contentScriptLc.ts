@@ -1,83 +1,45 @@
 // content_script.ts
 
-import { Messages } from './enums';
+import { Config } from './config';
+import { Messages, MessageData } from './enums';
 
-// Define a type for the data being sent in messages
-interface MessageData {
-  message: Messages;
-  data?: any;
-}
-
-// --- Module: Logging ---
-const loggingModule = {
-  log: (...args: any[]): void => {
-    // TODO: Implement Logging module. The current implementation uses console.log
-  },
-};
-
-// --- Module: Message Handling (To Background Script) ---
-const backgroundMessageHandler = {
-  sendMessageToBackground: async (
-    message: Messages,
-    data?: any
-  ): Promise<void> => {
-    // TODO: Implement Sending messages to background script
-  },
-};
-
-// --- Module: Recode Uploading ---
-const recodeUploader = {
-  uploadSubmissions: async (submissions: any): Promise<void> => {
-    // TODO: Implement uploading of submission to Recode endpoint
-  },
-};
-
-// --- Module: Message Handling (To Window) ---
-const windowMessageHandler = {
-  postMessageToWindow: (message: Messages, data?: any): void => {
-    // TODO: Implement posting message to window
-  },
-};
-
-// --- Event Listener for Window Messages ---
-window.addEventListener(
-  'message',
-  async (event: MessageEvent): Promise<void> => {
-    // TODO: Validate the origin
-    // TODO: Ensure data exists and is not empty
-
-    const { message, data } = event.data as MessageData;
-
-    // Dispatch based on message type
-    switch (message) {
-      case Messages.START_FETCH:
-        // TODO: Handle START_FETCH message
-        break;
-      // Add more cases as needed
-    }
+const log = (...args: any[]) => {
+  if (Config.IS_DEV) {
+    console.log('[ContentScriptLc]', ...args);
   }
-);
+};
 
-// --- Event Listener for Chrome Runtime Messages ---
-chrome.runtime.onMessage.addListener(
-  async ({ message, data }, sender, sendResponse?) => {
-    // Dispatch based on message type
-    switch (message) {
-      // TODO: Handle LC_DATA, LC DONE
+// Check if the user is logged in to LeetCode. A 200 response indicates they're
+// logged out and a 302 response indicates that they're logged in.
+const checkStatusCodeForPage = (url: string): boolean => {
+  log('Checking login for url', url);
+  return false;
+};
 
-      // Ignore below case
+// We have received a message, most likely from background.js who asks us to
+// two things: if the user is logged in to Leetcode, and for us to start sending data.
+chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
+  // Dispatch based on message type
+  switch (payload.message) {
+    case Messages.LC_IS_LOGGED_IN_REQUEST:
+      const isLoggedIn = checkStatusCodeForPage('dummyUrl');
 
-      case Messages.START_FETCH_ACK:
-        // TODO: Handle START_FETCH_ACK message
-        break;
-      case Messages.LC_DATA:
-        // TODO: Handle LC_DATA message
-        break;
-      // Add more cases as needed
-    }
+      // How might i make the data object strongly typed based on the enum
+      chrome.runtime.sendMessage({
+        message: Messages.LC_IS_LOGGED_IN_RESPONSE,
+        data: { isLoggedIn },
+      });
+      break;
+    default:
+      log('Unrecognized message type', { payload, sender });
+      break;
+    // Add more cases as needed
   }
-);
 
+  return true;
+});
+
+// idk if i need this rn
 window.addEventListener('message', async (event) => {
   if (event.origin !== window.location.origin) {
     return;

@@ -1,4 +1,5 @@
 interface IConfig {
+  IS_DEV: boolean;
   RC_HOST: string;
   LC_HOST: string;
   RC_LOGIN_PATH: string;
@@ -14,12 +15,14 @@ const SharedConfig = {
 
 // Development environment configuration
 const DevConfig: IConfig = {
+  IS_DEV: true,
   RC_HOST: 'http://localhost:3000',
   ...SharedConfig, // Include shared config
 };
 
 // Production environment configuration
 const ProdConfig: IConfig = {
+  IS_DEV: false,
   RC_HOST: 'https://www.recode.com', // Replace with your production Recode host
   ...SharedConfig, // Include shared config
 };

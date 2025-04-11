@@ -4,13 +4,13 @@ import { BrowseHeader } from '@/components/typography/browse-header';
 import { useEffect, useState } from 'react';
 
 // Enum for messages to ensure type safety
-export const Messages = {
-  START_FETCH: 'StartFetchingLeetcodeSubmissions',
-  START_FETCH_ACK: 'StartFetchingLeetcodeSubmissionsAcknowledged',
-  LC_DATA: 'LeetcodeSubmissionData',
-  DONE_FETCH: 'DoneFetchingLeetcodeData',
-  FETCH_ERROR: 'FetchError',
-};
+export enum Messages {
+  LC_SENDING_DATA = 'LeetcodeSendingData',
+  LC_DONE_SENDING_DATA = 'LeetcodeDoneSendingData',
+  RC_IS_LOGGED_IN_NOTIFICATION = 'RecodeIsLoggedInNotification', // One way because we just send a message on page load. Maybe add an "ack" for this so we can display "Connected and waiting" UI
+  LC_IS_LOGGED_IN_REQUEST = 'LeetcodeIsLoggedInRequest',
+  LC_IS_LOGGED_IN_RESPONSE = 'LeetcodeIsLoggedInResponse',
+}
 
 export default function SyncingPage() {
   const [messages, setMessages] = useState<string[]>([]);
@@ -21,32 +21,32 @@ export default function SyncingPage() {
 
   useEffect(() => {
     // Send a message to the background script when the page is ready
-    window.postMessage({ message: Messages.START_FETCH }, '*');
+    window.postMessage({ message: Messages.RC_IS_LOGGED_IN_NOTIFICATION }, '*');
 
     // Listen to new messages
     const messageHandler = (event: MessageEvent) => {
       const { message, data } = event.data;
 
-      // Log all incoming messages for debugging
-      console.log('Received message:', { message, data });
-
-      // Update messages state with new message
-      setMessages((prev) => [
-        ...prev,
-        `[${new Date().toISOString()}] ${message}: ${JSON.stringify(data)}`,
-      ]);
-
       // Handle different message types
       switch (message) {
-        case Messages.START_FETCH_ACK:
-          setSyncStatus('fetching');
+        case Messages.LC_DONE_SENDING_DATA:
+          // Log all incoming messages for debugging
+          console.log('Received message:', { message, data });
+
+          // Update messages state with new message
+          setMessages((prev) => [
+            ...prev,
+            `[${new Date().toISOString()}] ${message}: ${JSON.stringify(data)}`,
+          ]);
           break;
-        case Messages.DONE_FETCH:
-          setSyncStatus('success');
-          break;
-        case Messages.FETCH_ERROR:
-          setSyncStatus('error');
-          setErrorDetails(data?.errorMessage || 'Unknown error occurred');
+        case Messages.LC_SENDING_DATA:
+          // Log all incoming messages for debugging
+          console.log('Received message:', { message, data });
+          // Update messages state with new message
+          setMessages((prev) => [
+            ...prev,
+            `[${new Date().toISOString()}] ${message}: ${JSON.stringify(data)}`,
+          ]);
           break;
       }
     };

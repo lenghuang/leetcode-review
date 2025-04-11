@@ -1,88 +1,65 @@
 // content_script.ts
 
-import { Messages } from './enums';
+import { Config } from './config';
+import { Messages, MessageData } from './enums';
 
-// Define a type for the data being sent in messages
-interface MessageData {
-  message: Messages;
-  data?: any;
-}
-
-// --- Module: Logging ---
-const loggingModule = {
-  log: (...args: any[]): void => {
-    // TODO: Implement Logging module. The current implementation uses console.log
-  },
-};
-
-// --- Module: Message Handling (To Background Script) ---
-const backgroundMessageHandler = {
-  sendMessageToBackground: async (
-    message: Messages,
-    data?: any
-  ): Promise<void> => {
-    // TODO: Implement Sending messages to background script
-  },
-};
-
-// --- Module: Recode Uploading ---
-const recodeUploader = {
-  uploadSubmissions: async (submissions: any): Promise<void> => {
-    // TODO: Implement uploading of submission to Recode endpoint
-  },
-};
-
-// --- Module: Message Handling (To Window) ---
-const windowMessageHandler = {
-  postMessageToWindow: (message: Messages, data?: any): void => {
-    // TODO: Implement posting message to window
-  },
-};
-
-// --- Event Listener for Window Messages ---
-window.addEventListener(
-  'message',
-  async (event: MessageEvent): Promise<void> => {
-    // TODO: Validate the origin
-    // TODO: Ensure data exists and is not empty
-
-    const { message, data } = event.data as MessageData;
-
-    // Dispatch based on message type
-    switch (message) {
-      case Messages.START_FETCH:
-        // TODO: Handle START_FETCH message
-        break;
-      // Add more cases as needed
-    }
+const log = (...args: any[]) => {
+  if (Config.IS_DEV) {
+    console.log('[ContentScriptRc]', ...args);
   }
-);
+};
 
-// --- Event Listener for Chrome Runtime Messages ---
-chrome.runtime.onMessage.addListener(
-  async ({ message, data }, sender, sendResponse?) => {
-    // Dispatch based on message type
-    switch (message) {
-      // TODO: Handle LC_DATA, LC DONE
+const forwardLeetcodeDataToRecode = (data: any) => {
+  log('forwardLeetcodeDataToRecode', data);
+};
 
-      // Ignore below case
+const notifyDoneSendingData = () => {
+  log('done sending data');
+};
 
-      case Messages.START_FETCH_ACK:
-        // TODO: Handle START_FETCH_ACK message
-        break;
-      case Messages.LC_DATA:
-        // TODO: Handle LC_DATA message
-        break;
-      // Add more cases as needed
-    }
+const letBackgroundServiceKnow = () => {
+  log('letting background service know');
+  chrome.runtime.sendMessage({
+    message: Messages.RC_IS_LOGGED_IN_NOTIFICATION,
+  });
+};
+
+// We have received a message, most likely from background.js who is letting us know two
+// things: that we are either getting new data from LeetCode, or that we are done.
+chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
+  // Dispatch based on message type
+  switch (payload.message) {
+    case Messages.LC_SENDING_DATA:
+      forwardLeetcodeDataToRecode(payload.data);
+      break;
+    case Messages.LC_DONE_SENDING_DATA:
+      notifyDoneSendingData();
+      break;
+    default:
+      log('Unrecognized message type', { payload, sender });
+      break;
   }
-);
 
+  return true;
+});
+
+// We have received a message, most likely from Recode.ai, notifying us that
+// the user has succesfully loaded and rendered the protected/syncing page.
 window.addEventListener('message', async (event) => {
   if (event.origin !== window.location.origin) {
+    log('possible cross origin request', event);
     return;
   }
 
-  // TODO: this is the layer between my site and my background code.
-  // just need to forward LC_DATA and DOne
+  const { message, data } = event.data as MessageData;
+  log('got message', event.data);
+  switch (message) {
+    case Messages.RC_IS_LOGGED_IN_NOTIFICATION:
+      letBackgroundServiceKnow();
+      break;
+    default:
+      log('Unrecognized message type', { event });
+  }
+
+  return true;
 });
