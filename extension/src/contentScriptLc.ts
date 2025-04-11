@@ -21,15 +21,8 @@ const checkStatusCodeForPage = (url: string): boolean => {
 chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
   // Dispatch based on message type
   switch (payload.message) {
-    case Messages.LC_IS_LOGGED_IN_REQUEST:
-      const isLoggedIn = checkStatusCodeForPage('dummyUrl');
+    // TODO: Actually, only need to handle "start fetch submissions" from popup
 
-      // How might i make the data object strongly typed based on the enum
-      chrome.runtime.sendMessage({
-        message: Messages.LC_IS_LOGGED_IN_RESPONSE,
-        data: { isLoggedIn },
-      });
-      break;
     default:
       log('Unrecognized message type', { payload, sender });
       break;
@@ -48,3 +41,14 @@ window.addEventListener('message', async (event) => {
   // TODO: this is the layer between my site and my background code.
   // just need to forward LC_DATA and DOne
 });
+
+try {
+  log('script loaded');
+  const isLoggedIn = checkStatusCodeForPage('dummyUrl');
+  chrome.runtime.sendMessage({
+    message: Messages.LC_IS_LOGGED_IN_NOTIFICATION,
+    data: { isLoggedIn },
+  });
+} catch (err) {
+  log('somethingw went wrong', err);
+}

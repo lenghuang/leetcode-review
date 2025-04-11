@@ -50,12 +50,7 @@ chrome.action.onClicked.addListener((activeTab: chrome.tabs.Tab) => {
 // Listen for messages from content scripts or popup
 chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
   switch (payload.message) {
-    case Messages.LC_IS_LOGGED_IN_REQUEST:
-      // Here, the popup is asking to know whether not the user is logged in
-      // on LeetCode. To determine this, we send a request to the leetcode content script.
-      log('asking for login', { payload, sender });
-      break;
-    case Messages.LC_IS_LOGGED_IN_RESPONSE:
+    case Messages.LC_IS_LOGGED_IN_NOTIFICATION:
       // Here, the content script is letting us know if the user is logged in or not.
       // We want to forward this to the popup for it to read and interpret
       log('lc Is logged in ', { payload, sender });

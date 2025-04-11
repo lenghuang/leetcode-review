@@ -3,21 +3,21 @@
 import { BrowseHeader } from '@/components/typography/browse-header';
 import { useEffect, useState } from 'react';
 
-// Enum for messages to ensure type safety
 export enum Messages {
+  START_FETCH_REQUEST = 'LeetcodeStartFetchingRequest',
   LC_SENDING_DATA = 'LeetcodeSendingData',
   LC_DONE_SENDING_DATA = 'LeetcodeDoneSendingData',
-  RC_IS_LOGGED_IN_NOTIFICATION = 'RecodeIsLoggedInNotification', // One way because we just send a message on page load. Maybe add an "ack" for this so we can display "Connected and waiting" UI
-  LC_IS_LOGGED_IN_REQUEST = 'LeetcodeIsLoggedInRequest',
-  LC_IS_LOGGED_IN_RESPONSE = 'LeetcodeIsLoggedInResponse',
+  // One way because we just send a message on page load. Maybe add an "ack" for this so we can display "Connected and waiting" UI
+  RC_IS_LOGGED_IN_NOTIFICATION = 'RecodeIsLoggedInNotification',
+  LC_IS_LOGGED_IN_NOTIFICATION = 'LeetcodeIsLoggedInNotification',
 }
 
 export default function SyncingPage() {
   const [messages, setMessages] = useState<string[]>([]);
-  const [syncStatus, setSyncStatus] = useState<
-    'idle' | 'fetching' | 'success' | 'error'
-  >('idle');
-  const [errorDetails, setErrorDetails] = useState<string | null>(null);
+  const [syncStatus] = useState<'idle' | 'fetching' | 'success' | 'error'>(
+    'idle'
+  );
+  const [errorDetails] = useState<string | null>(null);
 
   useEffect(() => {
     // Send a message to the background script when the page is ready
