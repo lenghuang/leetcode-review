@@ -2,22 +2,64 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>My Chrome Extension</title>
+    <title>Recode AI Extension</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <div class="app">
-      <p class="counter-label">Counter</p>
-      <div id="counter" class="counter"></div>
-      <div class="button-container">
-        <button id="decrementBtn" class="button">-</button>
-        <button id="incrementBtn" class="button">+</button>
+    <div class="container">
+      <div class="app">
+        <h1>Recode AI Sync Extension</h1>
+        <p>
+          Welcome to Recode AI! Use this extension to sync your LeetCode
+          submissions with your Recode AI account.
+        </p>
+        <div id="statusArea">
+          <p id="lcStatus">LeetCode Status: Checking...</p>
+          <button
+            id="lcLoginBtn"
+            class="button secondary"
+            style="display: none"
+          >
+            Login to LeetCode
+          </button>
+          <p id="rcStatus">Recode AI Status: Checking...</p>
+          <button
+            id="rcLoginBtn"
+            class="button secondary"
+            style="display: none"
+          >
+            Login to Recode AI
+          </button>
+        </div>
+        <button class="button primary" id="startSyncBtn" style="display: none">
+          Start Syncing
+        </button>
       </div>
 
-      <hr class="divider" />
+      <div class="links-section">
+        <h2>Useful Links</h2>
+        <ul>
+          <li><a href="#" target="_blank">Recode AI Dashboard</a></li>
+          <li><a href="#" target="_blank">Support / FAQ</a></li>
+        </ul>
+      </div>
 
-      <p class="title">Chrome Extension is Ready!</p>
-      <p class="subtitle">Start by updating <code>popup.html</code></p>
+      <div class="sync-process-section">
+        <h2>Syncing Process</h2>
+        <p>Follow these steps to sync your submissions:</p>
+        <ol>
+          <li>Navigate to your LeetCode submissions page.</li>
+          <li>Click the "Start Syncing" button in this popup.</li>
+          <li>The extension will fetch your recent submissions.</li>
+          <li>
+            Submissions will be processed and added to your Recode AI account.
+          </li>
+        </ol>
+        <p class="disclaimer">
+          Note: Syncing may take some time depending on the number of
+          submissions.
+        </p>
+      </div>
     </div>
 
     <script src="popup.js"></script>

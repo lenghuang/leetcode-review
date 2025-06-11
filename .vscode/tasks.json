@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Extension",
+      "type": "npm",
+      "script": "watch",
+      "path": "extension",
+      "group": "build",
+      "problemMatcher": "$tsc-watch" // Assuming TypeScript, adjust as needed
+    },
+    {
+      "label": "Start Site Backend",
+      "type": "shell",
+      "command": "supabase start",
+      "options": {
+        "cwd": "site"
+      },
+      "dependsOrder": "sequence",
+      "group": "build"
+    },
+    {
+      "label": "Start Site Frontend",
+      "type": "npm",
+      "script": "dev",
+      "path": "site",
+      "group": "build",
+      "problemMatcher": "$tsc-watch"
+    },
+    {
+      "label": "Recode Run All",
+      "dependsOn": [
+        "Start Extension",
+        "Start Site Frontend",
+        "Start Site Backend"
+      ],
+      "dependsOrder": "parallel",
+      "group": {
+        "isDefault": true,
+        "kind": "build"
+      }
+    }
+  ]
+}

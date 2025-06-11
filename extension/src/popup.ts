@@ -2,111 +2,121 @@
 
 import './popup.css';
 
-(function () {
-  // We will make use of Storage API to get and store `count` value
-  // More information on Storage API can we found at
-  // https://developer.chrome.com/extensions/storage
+import { Messages, MessageData } from './enums';
 
-  // To get storage access, we have to mention it in `permissions` property of manifest.json file
-  // More information on Permissions can we found at
-  // https://developer.chrome.com/extensions/declare_permissions
-  const counterStorage = {
-    get: (cb: (count: number) => void) => {
-      chrome.storage.sync.get(['count'], (result) => {
-        cb(result.count);
-      });
-    },
-    set: (value: number, cb: () => void) => {
-      chrome.storage.sync.set(
-        {
-          count: value,
-        },
-        () => {
-          cb();
-        }
-      );
-    },
+(function () {
+  const SYNC_RATE_LIMIT_MS = 3 * 60 * 1000; // 3 minutes
+
+  let isLcLoggedIn = false;
+  let isRcLoggedIn = false;
+
+  const lcStatusElement = document.getElementById('lcStatus');
+  const rcStatusElement = document.getElementById('rcStatus');
+  const lcLoginBtn = document.getElementById(
+    'lcLoginBtn'
+  ) as HTMLButtonElement | null;
+  const rcLoginBtn = document.getElementById(
+    'rcLoginBtn'
+  ) as HTMLButtonElement | null;
+  const startSyncButton = document.getElementById(
+    'startSyncBtn'
+  ) as HTMLButtonElement | null;
+
+  const updateUI = () => {
+    if (lcStatusElement) {
+      lcStatusElement.textContent = `LeetCode Status: ${
+        isLcLoggedIn ? 'Logged In' : 'Logged Out'
+      }`;
+    }
+    if (rcStatusElement) {
+      rcStatusElement.textContent = `Recode AI Status: ${
+        isRcLoggedIn ? 'Logged In' : 'Logged Out'
+      }`;
+    }
+
+    if (lcLoginBtn) {
+      lcLoginBtn.style.display = isLcLoggedIn ? 'none' : 'inline-block';
+    }
+    if (rcLoginBtn) {
+      rcLoginBtn.style.display = isRcLoggedIn ? 'none' : 'inline-block';
+    }
+
+    if (startSyncButton) {
+      const canSync = isLcLoggedIn && isRcLoggedIn;
+      startSyncButton.style.display = canSync ? 'inline-block' : 'none';
+      startSyncButton.disabled = !canSync; // Initially disable if not logged in to both
+      if (canSync) {
+        updateButtonState(); // Check rate limit only if logged in to both
+      }
+    }
   };
 
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter')!.innerHTML = initialValue.toString();
+  const updateButtonState = async () => {
+    if (!startSyncButton) return;
 
-    document.getElementById('incrementBtn')!.addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
-      });
-    });
+    const result = await chrome.storage.local.get(['lastSyncTimestamp']);
+    const lastSyncTimestamp = result.lastSyncTimestamp || 0;
+    const now = Date.now();
+    const timeSinceLastSync = now - lastSyncTimestamp;
 
-    document.getElementById('decrementBtn')!.addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
-  }
+    if (timeSinceLastSync < SYNC_RATE_LIMIT_MS) {
+      startSyncButton.disabled = true;
+      const remainingTime = SYNC_RATE_LIMIT_MS - timeSinceLastSync;
+      const minutes = Math.ceil(remainingTime / 60000);
+      startSyncButton.textContent = `Syncing available in ${minutes} min`;
+    } else {
+      startSyncButton.disabled = false;
+      startSyncButton.textContent = 'Start Syncing';
+    }
+  };
 
-  function updateCounter({ type }: { type: string }) {
-    counterStorage.get((count: number) => {
-      let newCount: number;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
+  // Listen for messages from the background script
+  chrome.runtime.onMessage.addListener(
+    (request: MessageData, sender, sendResponse) => {
+      if (request.message === Messages.LC_IS_LOGGED_IN_NOTIFICATION) {
+        isLcLoggedIn = true;
       }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter')!.innerHTML = newCount.toString();
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id!,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            (response) => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
-  }
-
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get((count: number) => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
+      if (request.message === Messages.RC_IS_LOGGED_IN_NOTIFICATION) {
+        isRcLoggedIn = true;
       }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
-
-  // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
-      },
-    },
-    (response) => {
-      console.log(response.message);
+      if (isLcLoggedIn && isRcLoggedIn) {
+        updateUI();
+      }
     }
   );
+
+  if (lcLoginBtn) {
+    lcLoginBtn.addEventListener('click', () => {
+      chrome.runtime.sendMessage({ message: Messages.OPEN_LC_LOGIN });
+    });
+  }
+
+  if (rcLoginBtn) {
+    rcLoginBtn.addEventListener('click', () => {
+      chrome.runtime.sendMessage({ message: Messages.OPEN_RC_LOGIN });
+    });
+  }
+
+  if (startSyncButton) {
+    startSyncButton.addEventListener('click', async () => {
+      if (!isLcLoggedIn || !isRcLoggedIn) {
+        // Should not happen if button is disabled, but as a safeguard
+        console.warn(
+          'Attempted to start sync while not logged in to both platforms.'
+        );
+        return;
+      }
+
+      startSyncButton.disabled = true;
+      startSyncButton.textContent = 'Syncing...';
+
+      const now = Date.now();
+      await chrome.storage.local.set({ lastSyncTimestamp: now });
+
+      chrome.runtime.sendMessage({ message: Messages.START_FETCH_REQUEST });
+
+      // Re-enable button after rate limit duration
+      setTimeout(updateButtonState, SYNC_RATE_LIMIT_MS);
+    });
+  }
 })();
