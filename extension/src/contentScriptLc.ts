@@ -1,14 +1,14 @@
-// content_script.ts
-
 import { Config } from './config';
 import { Messages, MessageData } from './enums';
 
+// Logging Helper
 const log = (...args: any[]) => {
   if (Config.IS_DEV) {
     console.log('[ContentScriptLc]', ...args);
   }
 };
 
+// Utility Functions
 // Check if the user is logged in to LeetCode. A 200 response indicates they're
 // logged out and a 302 response indicates that they're logged in.
 const checkStatusCodeForPage = async (
@@ -147,24 +147,23 @@ const enumerateSubmissions = async () => {
   return allSubmissions;
 };
 
-// Ensure you have a 'log' function defined, e.g.:
-// const log = (...args) => console.log(...args);
+// Message Handlers
+const handleStartFetchRequest = async () => {
+  log('Received START_FETCH_REQUEST in content script');
+  const res = await enumerateSubmissions();
+  log(res);
+};
 
-// We have received a message, most likely from background.js who asks us to
-// two things: if the user is logged in to Leetcode, and for us to start sending data.
+// Event Listeners
 chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
   // Dispatch based on message type
   switch (payload.message) {
-    // TODO: Actually, only need to handle "start fetch submissions" from popup
     case Messages.START_FETCH_REQUEST:
-      log('Received START_FETCH_REQUEST in content script');
-      const res = await enumerateSubmissions();
-      log(res);
+      await handleStartFetchRequest();
       break;
     default:
       log('Unrecognized message type', { payload, sender });
       break;
-    // Add more cases as needed
   }
 
   return true;
@@ -180,6 +179,7 @@ window.addEventListener('message', async (event) => {
   // just need to forward LC_DATA and DOne
 });
 
+// Initialization
 try {
   log('script loaded');
 

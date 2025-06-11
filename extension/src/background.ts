@@ -1,13 +1,18 @@
-// src/background.ts
 'use strict';
 
 import { Config } from './config';
 import { createTabInWindow } from './chromeUtils';
 import { MessageData, Messages } from './enums';
 
+/**
+ * State Variables
+ */
 let lcTabId: number | undefined;
 let rcTabId: number | undefined;
 
+/**
+ * Logging Helper
+ */
 const log = (...args: any[]) => {
   if (Config.IS_DEV) {
     console.log('[Background]', ...args);
@@ -15,7 +20,7 @@ const log = (...args: any[]) => {
 };
 
 /**
- * Initializing
+ * Initialization Logic
  */
 
 const openTwoMoreTabs = async (window: chrome.windows.Window | undefined) => {
@@ -61,62 +66,98 @@ chrome.action.onClicked.addListener((activeTab: chrome.tabs.Tab) => {
  */
 
 // Listen for messages from content scripts or popup
+const handleLcIsLoggedInNotification = (
+  payload: MessageData,
+  sender: chrome.runtime.MessageSender
+) => {
+  log('LC Is logged in ', { payload, sender });
+  // Here, the content script is letting us know if the user is logged in or not.
+  // We want to forward this to the popup for it to read and interpret
+};
+
+const handleRcIsLoggedInNotification = (
+  payload: MessageData,
+  sender: chrome.runtime.MessageSender
+) => {
+  log('RC Is logged in ', { payload, sender });
+  // Here, the RC content script is letting us know that the user is logged in
+  // to recode, and has the extension syncing window open.
+};
+
+const handleLcSendingData = (
+  payload: MessageData,
+  sender: chrome.runtime.MessageSender
+) => {
+  log('LC data', { payload, sender });
+  if (rcTabId !== undefined) {
+    chrome.tabs.sendMessage(rcTabId, payload);
+    log('Forwarded LC_SENDING_DATA to RC tab', rcTabId);
+  } else {
+    log('RC tab ID not stored, cannot forward LC_SENDING_DATA');
+  }
+};
+
+const handleLcDoneSendingData = (
+  payload: MessageData,
+  sender: chrome.runtime.MessageSender
+) => {
+  log('Done sending data, a cleanup call of sorts', { payload, sender });
+  if (rcTabId !== undefined) {
+    chrome.tabs.sendMessage(rcTabId, payload);
+    log('Forwarded LC_DONE_SENDING_DATA to RC tab', rcTabId);
+  } else {
+    log('RC tab ID not stored, cannot forward LC_DONE_SENDING_DATA');
+  }
+};
+
+const handleStartFetchRequest = (
+  payload: MessageData,
+  sender: chrome.runtime.MessageSender
+) => {
+  log('Received START_FETCH_REQUEST in background', { payload, sender });
+  // Send the message to the LC tab if its ID is stored
+  if (lcTabId !== undefined) {
+    chrome.tabs.sendMessage(lcTabId, payload);
+    log('Forwarded START_FETCH_REQUEST to LC tab', lcTabId);
+  } else {
+    log('LC tab ID not stored, cannot forward START_FETCH_REQUEST');
+  }
+};
+
+// Listen for messages from content scripts or popup
 chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
   switch (payload.message) {
     case Messages.LC_IS_LOGGED_IN_NOTIFICATION:
-      // Here, the content script is letting us know if the user is logged in or not.
-      // We want to forward this to the popup for it to read and interpret
-      log('lc Is logged in ', { payload, sender });
+      handleLcIsLoggedInNotification(payload, sender);
       break;
     case Messages.RC_IS_LOGGED_IN_NOTIFICATION:
-      // Here, the RC content script is letting us know that the user is logged in
-      // to recode, and has the extension syncing window open.
-      log('rc Is logged in ', { payload, sender });
+      handleRcIsLoggedInNotification(payload, sender);
       break;
     case Messages.LC_SENDING_DATA:
-      // Here, the LC content script is forwarding us data that we should send to
-      // the RC content script. Actually, do i even need this?
-      log('lc data', { payload, sender });
-      if (rcTabId !== undefined) {
-        chrome.tabs.sendMessage(rcTabId, payload);
-        log('Forwarded LC_SENDING_DATA to RC tab', rcTabId);
-      } else {
-        log('RC tab ID not stored, cannot forward LC_SENDING_DATA');
-      }
+      handleLcSendingData(payload, sender);
       break;
     case Messages.LC_DONE_SENDING_DATA:
-      log('done sending data, a cleanup call of sorts', { payload, sender });
-      if (rcTabId !== undefined) {
-        chrome.tabs.sendMessage(rcTabId, payload);
-        log('Forwarded LC_DONE_SENDING_DATA to RC tab', rcTabId);
-      } else {
-        log('RC tab ID not stored, cannot forward LC_DONE_SENDING_DATA');
-      }
+      handleLcDoneSendingData(payload, sender);
       break;
     case Messages.START_FETCH_REQUEST:
-      log('Received START_FETCH_REQUEST in background', { payload, sender });
-      // Send the message to the LC tab if its ID is stored
-      if (lcTabId !== undefined) {
-        chrome.tabs.sendMessage(lcTabId, payload);
-        log('Forwarded START_FETCH_REQUEST to LC tab', lcTabId);
-      } else {
-        log('LC tab ID not stored, cannot forward START_FETCH_REQUEST');
-      }
+      handleStartFetchRequest(payload, sender);
       break;
     default:
       log('Unrecognized message type', { payload, sender });
-    // TODO: Request Leetcode Logged In (Popup --> Background --> LC Script)
-    // TODO: Leetcode Logged In Data (LC Script --> Background --> Popup)
-    // TODO: Request Recode Logged In (Popup --> Background --> RC Script)
-    // TODO: Recode Logged In Data (RC Script --> Background --> Popup)
-    // TODO: Once the above are both logged in, we can then begin the sync!
-    // We may want to store this in session storage.
-    // Maybe store message data and tab id in session, so on click, we can cross reference that tabs still exist
-    // TODO: Request Leetcode Submissions (Background --> LC Script)
-    // Maybe need a way for popup UI to mark down that sync has begun, and not to close this window
-    // TODO: Leetcode Submission Data (LC Script --> Background --> RC Script)
-    // TODO: Leetcode Submission Done (LC Script --< Background --> RC Script)
+      break;
   }
+
+  // TODO: Request Leetcode Logged In (Popup --> Background --> LC Script)
+  // TODO: Leetcode Logged In Data (LC Script --> Background --> Popup)
+  // TODO: Request Recode Logged In (Popup --> Background --> RC Script)
+  // TODO: Recode Logged In Data (RC Script --> Background --> Popup)
+  // TODO: Once the above are both logged in, we can then begin the sync!
+  // We may want to store this in session storage.
+  // Maybe store message data and tab id in session, so on click, we can cross reference that tabs still exist
+  // TODO: Request Leetcode Submissions (Background --> LC Script)
+  // Maybe need a way for popup UI to mark down that sync has begun, and not to close this window
+  // TODO: Leetcode Submission Data (LC Script --> Background --> RC Script)
+  // TODO: Leetcode Submission Done (LC Script --< Background --> RC Script)
 
   return true; // Indicate that the response will be sent asynchronously
 });

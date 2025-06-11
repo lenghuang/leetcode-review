@@ -1,28 +1,30 @@
-// content_script.ts
-
 import { Config } from './config';
 import { Messages, MessageData } from './enums';
 
+// Logging Helper
 const log = (...args: any[]) => {
   if (Config.IS_DEV) {
     console.log('[ContentScriptRc]', ...args);
   }
 };
 
-const forwardLeetcodeDataToRecode = (data: any) => {
-  log('forwardLeetcodeDataToRecode', data);
+// Message Handlers
+const handleLcSendingData = (payload: MessageData) => {
+  log('forwardLeetcodeDataToRecode', payload);
 };
 
-const notifyDoneSendingData = () => {
+const handleLcDoneSendingData = () => {
   log('done sending data');
 };
 
-const letBackgroundServiceKnow = () => {
+const handleRcIsLoggedInNotification = () => {
   log('letting background service know');
   chrome.runtime.sendMessage({
     message: Messages.RC_IS_LOGGED_IN_NOTIFICATION,
   });
 };
+
+// Event Listeners
 
 // We have received a message, most likely from background.js who is letting us know two
 // things: that we are either getting new data from LeetCode, or that we are done.
@@ -30,10 +32,10 @@ chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
   // Dispatch based on message type
   switch (payload.message) {
     case Messages.LC_SENDING_DATA:
-      forwardLeetcodeDataToRecode(payload.data);
+      handleLcSendingData(payload);
       break;
     case Messages.LC_DONE_SENDING_DATA:
-      notifyDoneSendingData();
+      handleLcDoneSendingData();
       break;
     default:
       log('Unrecognized message type', { payload, sender });
@@ -55,7 +57,7 @@ window.addEventListener('message', async (event) => {
   log('got message', event.data);
   switch (message) {
     case Messages.RC_IS_LOGGED_IN_NOTIFICATION:
-      letBackgroundServiceKnow();
+      handleRcIsLoggedInNotification();
       break;
     default:
       log('Unrecognized message type', { event });
