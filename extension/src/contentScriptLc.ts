@@ -67,20 +67,20 @@ const enumerateSubmissions = async () => {
       // For page 0, 1, 2, 3, 4, it's NOT the start of a new batch.
       // For page 5, it IS the start of a new batch.
       if (page % requestsPerBatch === 0) {
-        log(
-          `Taking a ${
-            batchBreakDelayMs / 1000
-          } second break before starting batch for page ${page}...`
-        );
+        // log(
+        //   `Taking a ${
+        //     batchBreakDelayMs / 1000
+        //   } second break before starting batch for page ${page}...`
+        // );
         await new Promise((resolve) => setTimeout(resolve, batchBreakDelayMs));
-        log(`Resuming requests after break for page ${page}.`);
+        // log(`Resuming requests after break for page ${page}.`);
       } else {
         // It's a request within the current batch (e.g., page 1, 2, 3, 4, 6, 7, etc.)
-        log(
-          `Waiting ${
-            interRequestDelayMs / 1000
-          } seconds before fetching page ${page}...`
-        );
+        // log(
+        //   `Waiting ${
+        //     interRequestDelayMs / 1000
+        //   } seconds before fetching page ${page}...`
+        // );
         await new Promise((resolve) =>
           setTimeout(resolve, interRequestDelayMs)
         );
