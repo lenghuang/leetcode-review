@@ -4,6 +4,7 @@ interface IConfig {
   LC_HOST: string;
   RC_LOGIN_PATH: string;
   LC_LOGIN_PATH: string;
+  LC_SUBMISSIONS_PATH: string;
 }
 
 // Define shared configuration variables
@@ -11,6 +12,7 @@ const SharedConfig = {
   LC_HOST: 'https://leetcode.com',
   RC_LOGIN_PATH: '/sign-in?isExtension=true',
   LC_LOGIN_PATH: '/accounts/login',
+  LC_SUBMISSIONS_PATH: '/api/submissions',
 };
 
 // Development environment configuration

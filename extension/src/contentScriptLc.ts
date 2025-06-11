@@ -26,11 +26,12 @@ const checkStatusCodeForPage = async (
     return { ok: false, redirected: false };
   }
 };
+
 const isLoggedInToLeetcode = async () => {
   const { ok, redirected } = await checkStatusCodeForPage(
     `${Config.LC_HOST}${Config.LC_LOGIN_PATH}`
   );
-  log('got status', { ok, redirected });
+  log('got logged in status', { ok, redirected });
   if (redirected) {
     return true;
   }
@@ -39,6 +40,55 @@ const isLoggedInToLeetcode = async () => {
   }
   log('Something wrong, returning false, not logged in');
   return false;
+};
+
+const enumerateSubmissions = async () => {
+  console.log('enter enumerateSubmssions');
+  let page = 0;
+  const pageSize = 20;
+  const backoffInterval = 250;
+  let lastKey = '';
+  let allSubmissions: object[] = [];
+  let hasNext = true;
+
+  while (hasNext) {
+    const offset = page * pageSize;
+    const url = `https://leetcode.com/api/submissions/?offset=${offset}&limit=${pageSize}&lastkey=${lastKey}`;
+
+    log(url);
+
+    const timeoutMs = 1000 + backoffInterval * page;
+
+    await new Promise((resolve) => setTimeout(resolve, timeoutMs)); // Introduce a timeout
+
+    try {
+      const response = await fetch(url, {
+        referrer: 'https://leetcode.com/submissions/',
+        referrerPolicy: 'strict-origin-when-cross-origin',
+        body: null,
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      log(data);
+      const submissions = data.submissions_dump;
+      allSubmissions = allSubmissions.concat(submissions);
+      hasNext = data.has_next;
+      lastKey = data.last_key; // Assuming last_key is how pagination works; adapt if different
+      page += 1; //Increment the offset by the limit
+    } catch (error) {
+      log('Error fetching submissions:', error);
+      break; // Stop fetching if there's an error
+    }
+  }
+
+  return allSubmissions;
 };
 
 // We have received a message, most likely from background.js who asks us to
@@ -69,6 +119,12 @@ window.addEventListener('message', async (event) => {
 
 try {
   log('script loaded');
+
+  const res = await enumerateSubmissions();
+
+  log(res);
+
+  log('done script loaded');
 
   const isLoggedIn = await isLoggedInToLeetcode();
   chrome.runtime.sendMessage({
