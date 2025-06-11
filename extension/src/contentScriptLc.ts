@@ -125,6 +125,12 @@ const enumerateSubmissions = async () => {
       hasNext = data.has_next;
       lastKey = data.last_key;
       page += 1; // Increment the page counter for the next iteration
+
+      // Send partial data to the background script
+      chrome.runtime.sendMessage({
+        message: Messages.LC_SENDING_DATA,
+        data: data, // Send the entire response body
+      });
     } catch (error) {
       log('Error fetching submissions:', error);
       // Implement more sophisticated error handling if needed:
@@ -134,6 +140,10 @@ const enumerateSubmissions = async () => {
     }
   }
 
+  // Send partial data to the background script
+  chrome.runtime.sendMessage({
+    message: Messages.LC_DONE_SENDING_DATA,
+  });
   return allSubmissions;
 };
 

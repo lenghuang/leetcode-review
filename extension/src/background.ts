@@ -77,9 +77,21 @@ chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
       // Here, the LC content script is forwarding us data that we should send to
       // the RC content script. Actually, do i even need this?
       log('lc data', { payload, sender });
+      if (rcTabId !== undefined) {
+        chrome.tabs.sendMessage(rcTabId, payload);
+        log('Forwarded LC_SENDING_DATA to RC tab', rcTabId);
+      } else {
+        log('RC tab ID not stored, cannot forward LC_SENDING_DATA');
+      }
       break;
     case Messages.LC_DONE_SENDING_DATA:
       log('done sending data, a cleanup call of sorts', { payload, sender });
+      if (rcTabId !== undefined) {
+        chrome.tabs.sendMessage(rcTabId, payload);
+        log('Forwarded LC_DONE_SENDING_DATA to RC tab', rcTabId);
+      } else {
+        log('RC tab ID not stored, cannot forward LC_DONE_SENDING_DATA');
+      }
       break;
     case Messages.START_FETCH_REQUEST:
       log('Received START_FETCH_REQUEST in background', { payload, sender });
