@@ -5,6 +5,9 @@ import { Config } from './config';
 import { createTabInWindow } from './chromeUtils';
 import { MessageData, Messages } from './enums';
 
+let lcTabId: number | undefined;
+let rcTabId: number | undefined;
+
 const log = (...args: any[]) => {
   if (Config.IS_DEV) {
     console.log('[Background]', ...args);
@@ -15,15 +18,25 @@ const log = (...args: any[]) => {
  * Initializing
  */
 
-const openTwoMoreTabs = (window: chrome.windows.Window | undefined) => {
+const openTwoMoreTabs = async (window: chrome.windows.Window | undefined) => {
   // After the window is created, open two more tabs within the same window
   // Check if the window was successfully created and has an ID
   if (window && window.id) {
     // Create a new tab in the created window for the LC Login
-    createTabInWindow(window.id, `${Config.LC_HOST}${Config.LC_LOGIN_PATH}`);
+    const lcTab = await createTabInWindow(
+      window.id,
+      `${Config.LC_HOST}${Config.LC_LOGIN_PATH}`
+    );
+    lcTabId = lcTab?.id;
+    log('LC Tab ID:', lcTabId);
     // TODO: Do we want to load in content scripts here? Do we need to figure out if it's been loaded and store that?
     // Create another new tab in the created window for the RC Login
-    createTabInWindow(window.id, `${Config.RC_HOST}${Config.RC_LOGIN_PATH}`);
+    const rcTab = await createTabInWindow(
+      window.id,
+      `${Config.RC_HOST}${Config.RC_LOGIN_PATH}`
+    );
+    rcTabId = rcTab?.id;
+    log('RC Tab ID:', rcTabId);
   } else {
     // Handle the error case where the window was not created or the ID is missing
     log('Window / Window ID missing', window);
@@ -67,6 +80,16 @@ chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
       break;
     case Messages.LC_DONE_SENDING_DATA:
       log('done sending data, a cleanup call of sorts', { payload, sender });
+      break;
+    case Messages.START_FETCH_REQUEST:
+      log('Received START_FETCH_REQUEST in background', { payload, sender });
+      // Send the message to the LC tab if its ID is stored
+      if (lcTabId !== undefined) {
+        chrome.tabs.sendMessage(lcTabId, payload);
+        log('Forwarded START_FETCH_REQUEST to LC tab', lcTabId);
+      } else {
+        log('LC tab ID not stored, cannot forward START_FETCH_REQUEST');
+      }
       break;
     default:
       log('Unrecognized message type', { payload, sender });

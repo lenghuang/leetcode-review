@@ -146,7 +146,11 @@ chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
   // Dispatch based on message type
   switch (payload.message) {
     // TODO: Actually, only need to handle "start fetch submissions" from popup
-
+    case Messages.START_FETCH_REQUEST:
+      log('Received START_FETCH_REQUEST in content script');
+      const res = await enumerateSubmissions();
+      log(res);
+      break;
     default:
       log('Unrecognized message type', { payload, sender });
       break;
@@ -168,10 +172,6 @@ window.addEventListener('message', async (event) => {
 
 try {
   log('script loaded');
-
-  const res = await enumerateSubmissions();
-
-  log(res);
 
   log('done script loaded');
 

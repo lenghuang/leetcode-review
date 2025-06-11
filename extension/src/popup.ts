@@ -2,98 +2,47 @@
 
 import './popup.css';
 
+import { Messages } from './enums';
+
 (function () {
-  // We will make use of Storage API to get and store `count` value
-  // More information on Storage API can we found at
-  // https://developer.chrome.com/extensions/storage
+  const SYNC_RATE_LIMIT_MS = 3 * 60 * 1000; // 3 minutes
 
-  // To get storage access, we have to mention it in `permissions` property of manifest.json file
-  // More information on Permissions can we found at
-  // https://developer.chrome.com/extensions/declare_permissions
-  const counterStorage = {
-    get: (cb: (count: number) => void) => {
-      chrome.storage.sync.get(['count'], (result) => {
-        cb(result.count);
-      });
-    },
-    set: (value: number, cb: () => void) => {
-      chrome.storage.sync.set(
-        {
-          count: value,
-        },
-        () => {
-          cb();
-        }
-      );
-    },
-  };
+  const startSyncButton = document.getElementById(
+    'startSyncBtn'
+  ) as HTMLButtonElement | null;
 
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter')!.innerHTML = initialValue.toString();
+  if (startSyncButton) {
+    const updateButtonState = async () => {
+      const result = await chrome.storage.local.get(['lastSyncTimestamp']);
+      const lastSyncTimestamp = result.lastSyncTimestamp || 0;
+      const now = Date.now();
+      const timeSinceLastSync = now - lastSyncTimestamp;
 
-    document.getElementById('incrementBtn')!.addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
-      });
-    });
-
-    document.getElementById('decrementBtn')!.addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
-  }
-
-  function updateCounter({ type }: { type: string }) {
-    counterStorage.get((count: number) => {
-      let newCount: number;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
+      if (timeSinceLastSync < SYNC_RATE_LIMIT_MS) {
+        startSyncButton.disabled = true;
+        const remainingTime = SYNC_RATE_LIMIT_MS - timeSinceLastSync;
+        const minutes = Math.ceil(remainingTime / 60000);
+        startSyncButton.textContent = `Syncing available in ${minutes} min`;
       } else {
-        newCount = count;
+        startSyncButton.disabled = false;
+        startSyncButton.textContent = 'Start Syncing';
       }
+    };
 
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter')!.innerHTML = newCount.toString();
+    startSyncButton.addEventListener('click', async () => {
+      startSyncButton.disabled = true;
+      startSyncButton.textContent = 'Syncing...';
 
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          const tab = tabs[0];
+      const now = Date.now();
+      await chrome.storage.local.set({ lastSyncTimestamp: now });
 
-          chrome.tabs.sendMessage(
-            tab.id!,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            (response) => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
+      chrome.runtime.sendMessage({ message: Messages.START_FETCH_REQUEST });
+
+      // // Re-enable button after rate limit duration
+      // setTimeout(updateButtonState, SYNC_RATE_LIMIT_MS);
     });
-  }
 
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get((count: number) => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
-      }
-    });
+    // Update button state when popup is opened
+    // document.addEventListener('DOMContentLoaded', updateButtonState);
   }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
 })();
