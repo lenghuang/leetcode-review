@@ -53,8 +53,8 @@ chrome.action.onClicked.addListener((activeTab: chrome.tabs.Tab) => {
   chrome.windows.create(
     {
       url: chrome.runtime.getURL('popup.html'),
-      height: 500,
-      width: 500,
+      height: 800,
+      width: 400,
       type: 'normal', // Specify the window type for better consistency
     },
     openTwoMoreTabs
