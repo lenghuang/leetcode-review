@@ -83,8 +83,8 @@ try {
 
   const isLoggedIn = await isLoggedInToLeetcode();
   chrome.runtime.sendMessage({
-    message: Messages.LC_IS_LOGGED_IN_NOTIFICATION,
-    data: { isLoggedIn },
+    message: Messages.LOGIN_STATUS_UPDATE,
+    payload: { isLcLoggedIn: isLoggedIn },
   });
 } catch (err) {
   log('somethingw went wrong', err);

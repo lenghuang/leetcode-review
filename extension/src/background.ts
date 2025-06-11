@@ -10,6 +10,9 @@ import { MessageData, Messages } from './enums';
 let lcTabId: number | undefined;
 let rcTabId: number | undefined;
 
+let isLcLoggedIn = false;
+let isRcLoggedIn = false;
+
 /**
  * Logging Helper
  */
@@ -57,7 +60,20 @@ chrome.action.onClicked.addListener((activeTab: chrome.tabs.Tab) => {
       width: 400,
       type: 'normal', // Specify the window type for better consistency
     },
-    openTwoMoreTabs
+    (window) => {
+      openTwoMoreTabs(window);
+      // Send initial login status to all tabs, including the popup
+      chrome.tabs.query({}, (tabs) => {
+        tabs.forEach((tab) => {
+          if (tab.id) {
+            chrome.tabs.sendMessage(tab.id, {
+              message: Messages.LOGIN_STATUS_UPDATE,
+              payload: { isLcLoggedIn, isRcLoggedIn },
+            });
+          }
+        });
+      });
+    }
   );
 });
 
@@ -71,8 +87,20 @@ const handleLcIsLoggedInNotification = (
   sender: chrome.runtime.MessageSender
 ) => {
   log('LC Is logged in ', { payload, sender });
-  // Here, the content script is letting us know if the user is logged in or not.
-  // We want to forward this to the popup for it to read and interpret
+  if (payload.payload && payload.payload.isLcLoggedIn !== undefined) {
+    isLcLoggedIn = payload.payload.isLcLoggedIn;
+    // Send update to all tabs, including the popup
+    chrome.tabs.query({}, (tabs) => {
+      tabs.forEach((tab) => {
+        if (tab.id) {
+          chrome.tabs.sendMessage(tab.id, {
+            message: Messages.LOGIN_STATUS_UPDATE,
+            payload: { isLcLoggedIn, isRcLoggedIn },
+          });
+        }
+      });
+    });
+  }
 };
 
 const handleRcIsLoggedInNotification = (
@@ -80,8 +108,20 @@ const handleRcIsLoggedInNotification = (
   sender: chrome.runtime.MessageSender
 ) => {
   log('RC Is logged in ', { payload, sender });
-  // Here, the RC content script is letting us know that the user is logged in
-  // to recode, and has the extension syncing window open.
+  if (payload.payload && payload.payload.isRcLoggedIn !== undefined) {
+    isRcLoggedIn = payload.payload.isRcLoggedIn;
+    // Send update to all tabs, including the popup
+    chrome.tabs.query({}, (tabs) => {
+      tabs.forEach((tab) => {
+        if (tab.id) {
+          chrome.tabs.sendMessage(tab.id, {
+            message: Messages.LOGIN_STATUS_UPDATE,
+            payload: { isLcLoggedIn, isRcLoggedIn },
+          });
+        }
+      });
+    });
+  }
 };
 
 const handleLcSendingData = (
@@ -125,32 +165,66 @@ const handleStartFetchRequest = (
 };
 
 // Listen for messages from content scripts or popup
-chrome.runtime.onMessage.addListener(async (payload: MessageData, sender) => {
-  switch (payload.message) {
-    case Messages.LC_IS_LOGGED_IN_NOTIFICATION:
-      handleLcIsLoggedInNotification(payload, sender);
-      break;
-    case Messages.RC_IS_LOGGED_IN_NOTIFICATION:
-      handleRcIsLoggedInNotification(payload, sender);
+chrome.runtime.onMessage.addListener(async (request: MessageData, sender) => {
+  switch (request.message) {
+    case Messages.LOGIN_STATUS_UPDATE:
+      // The popup sends this to update the background script's state
+      if (request.payload) {
+        if (request.payload.isLcLoggedIn !== undefined) {
+          isLcLoggedIn = request.payload.isLcLoggedIn;
+        }
+        if (request.payload.isRcLoggedIn !== undefined) {
+          isRcLoggedIn = request.payload.isRcLoggedIn;
+        }
+      }
+      // Then, broadcast the updated status to all tabs (including the popup itself)
+      chrome.tabs.query({}, (tabs) => {
+        tabs.forEach((tab) => {
+          if (tab.id) {
+            chrome.tabs.sendMessage(tab.id, {
+              message: Messages.LOGIN_STATUS_UPDATE,
+              payload: { isLcLoggedIn, isRcLoggedIn },
+            });
+          }
+        });
+      });
       break;
     case Messages.LC_SENDING_DATA:
-      handleLcSendingData(payload, sender);
+      handleLcSendingData(request, sender);
       break;
     case Messages.LC_DONE_SENDING_DATA:
-      handleLcDoneSendingData(payload, sender);
+      handleLcDoneSendingData(request, sender);
       break;
     case Messages.START_FETCH_REQUEST:
-      handleStartFetchRequest(payload, sender);
+      handleStartFetchRequest(request, sender);
+      break;
+    case Messages.OPEN_LC_LOGIN:
+      log('Received OPEN_LC_LOGIN in background', { sender });
+      if (lcTabId !== undefined) {
+        chrome.tabs.update(lcTabId, {
+          active: true,
+          url: `${Config.LC_HOST}${Config.LC_LOGIN_PATH}`,
+        });
+      } else {
+        log('LC tab ID not stored, cannot open LC login page');
+      }
+      break;
+    case Messages.OPEN_RC_LOGIN:
+      log('Received OPEN_RC_LOGIN in background', { sender });
+      if (rcTabId !== undefined) {
+        chrome.tabs.update(rcTabId, {
+          active: true,
+          url: `${Config.RC_HOST}${Config.RC_LOGIN_PATH}`,
+        });
+      } else {
+        log('RC tab ID not stored, cannot open RC login page');
+      }
       break;
     default:
-      log('Unrecognized message type', { payload, sender });
+      log('Unrecognized message type', { request, sender });
       break;
   }
 
-  // TODO: Request Leetcode Logged In (Popup --> Background --> LC Script)
-  // TODO: Leetcode Logged In Data (LC Script --> Background --> Popup)
-  // TODO: Request Recode Logged In (Popup --> Background --> RC Script)
-  // TODO: Recode Logged In Data (RC Script --> Background --> Popup)
   // TODO: Once the above are both logged in, we can then begin the sync!
   // We may want to store this in session storage.
   // Maybe store message data and tab id in session, so on click, we can cross reference that tabs still exist

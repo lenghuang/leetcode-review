@@ -13,7 +13,27 @@
           Welcome to Recode AI! Use this extension to sync your LeetCode
           submissions with your Recode AI account.
         </p>
-        <button class="button primary" id="startSyncBtn">Start Syncing</button>
+        <div id="statusArea">
+          <p id="lcStatus">LeetCode Status: Checking...</p>
+          <button
+            id="lcLoginBtn"
+            class="button secondary"
+            style="display: none"
+          >
+            Login to LeetCode
+          </button>
+          <p id="rcStatus">Recode AI Status: Checking...</p>
+          <button
+            id="rcLoginBtn"
+            class="button secondary"
+            style="display: none"
+          >
+            Login to Recode AI
+          </button>
+        </div>
+        <button class="button primary" id="startSyncBtn" style="display: none">
+          Start Syncing
+        </button>
       </div>
 
       <div class="links-section">

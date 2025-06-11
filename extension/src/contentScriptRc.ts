@@ -20,7 +20,8 @@ const handleLcDoneSendingData = () => {
 const handleRcIsLoggedInNotification = () => {
   log('letting background service know');
   chrome.runtime.sendMessage({
-    message: Messages.RC_IS_LOGGED_IN_NOTIFICATION,
+    message: Messages.LOGIN_STATUS_UPDATE,
+    payload: { isRcLoggedIn: true },
   });
 };
 
@@ -56,8 +57,9 @@ window.addEventListener('message', async (event) => {
   const { message, data } = event.data as MessageData;
   log('got message', event.data);
   switch (message) {
-    case Messages.RC_IS_LOGGED_IN_NOTIFICATION:
-      handleRcIsLoggedInNotification();
+    case Messages.LOGIN_STATUS_UPDATE:
+      // This content script doesn't need to handle incoming LOGIN_STATUS_UPDATE messages,
+      // as it only reports its own login status.
       break;
     default:
       log('Unrecognized message type', { event });
