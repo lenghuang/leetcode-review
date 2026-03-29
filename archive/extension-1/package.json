@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "adm-zip": "^0.5.16",
-    "copy-webpack-plugin": "^10.2.4",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.11.0",
     "dotenv-webpack": "^8.1.0",
     "file-loader": "^6.2.0",
